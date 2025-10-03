@@ -38,6 +38,7 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
     temp.push(<CellWidget value={Cell.Green} />)
     data.push(<div className='row'>{temp}</div>);
 
-    return <div className='column'> {data} </div>;
-
+    return <div>
+        <div className='column'> {data} </div>
+    </div>
 }

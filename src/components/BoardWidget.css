@@ -3,7 +3,7 @@
     flex: auto;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .column {
@@ -11,5 +11,5 @@
     flex: auto;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: center;
 }
