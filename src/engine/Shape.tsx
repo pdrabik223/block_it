@@ -33,20 +33,22 @@ export class Shape {
     public data: Cell[][] = [[]];
     public shapeName: Shapes;
     public size: number;
+    public none: Cell = Cell.None;
+
     constructor(shape: Shapes, cell: Cell) {
         this.shapeName = shape;
-        let none = Cell.None;
+
         switch (shape) {
             case Shapes.Dot:
                 this.data = [[cell]];
                 this.size = 1;
                 return;
             case Shapes.Tuple:
-                this.data = [[cell, cell], [none, none]];
+                this.data = [[cell, cell], [this.none, this.none]];
                 this.size = 2;
                 return;
             case Shapes.Triple:
-                this.data = [[cell, cell], [cell, none]];
+                this.data = [[cell, cell], [cell, this.none]];
                 this.size = 2;
                 return;
             case Shapes.Square:
@@ -55,131 +57,131 @@ export class Shape {
                 return;
             case Shapes.Cross:
                 this.data = [
-                    [none, cell, none],
+                    [this.none, cell, this.none],
                     [cell, cell, cell],
-                    [none, cell, none],];
+                    [this.none, cell, this.none],];
                 this.size = 3;
                 return;
             case Shapes.TripleLine:
                 this.data = [
-                    [none, none, none],
+                    [this.none, this.none, this.none],
                     [cell, cell, cell],
-                    [none, none, none],];
+                    [this.none, this.none, this.none],];
                 this.size = 3;
                 return;
             case Shapes.TripleT:
                 this.data = [
-                    [none, none, none],
+                    [this.none, this.none, this.none],
                     [cell, cell, cell],
-                    [none, cell, none],];
+                    [this.none, cell, this.none],];
                 this.size = 3;
                 return;
             case Shapes.BigTripleT:
                 this.data = [
                     [cell, cell, cell],
-                    [none, cell, none],
-                    [none, cell, none],];
+                    [this.none, cell, this.none],
+                    [this.none, cell, this.none],];
                 this.size = 3;
                 return;
             case Shapes.TripleC:
                 this.data = [
-                    [cell, cell, none],
-                    [cell, none, none],
-                    [cell, cell, none],];
+                    [cell, cell, this.none],
+                    [cell, this.none, this.none],
+                    [cell, cell, this.none],];
                 this.size = 3;
                 return;
             case Shapes.Bolt:
                 this.data = [
-                    [cell, none, none],
-                    [cell, cell, none],
-                    [none, cell, cell,],];
+                    [cell, this.none, this.none],
+                    [cell, cell, this.none],
+                    [this.none, cell, cell,],];
                 this.size = 3;
                 return;
             case Shapes.TripleL:
                 this.data = [
-                    [cell, none, none],
-                    [cell, none, none],
-                    [cell, cell, none]];
+                    [cell, this.none, this.none],
+                    [cell, this.none, this.none],
+                    [cell, cell, this.none]];
                 this.size = 3;
                 return;
             case Shapes.BigTripleL:
                 this.data = [
-                    [cell, none, none],
-                    [cell, none, none],
+                    [cell, this.none, this.none],
+                    [cell, this.none, this.none],
                     [cell, cell, cell]];
                 this.size = 3;
                 return;
             case Shapes.TripleP:
                 this.data = [
-                    [cell, cell, none],
-                    [cell, cell, none],
-                    [cell, none, none]];
+                    [cell, cell, this.none],
+                    [cell, cell, this.none],
+                    [cell, this.none, this.none]];
                 this.size = 3;
                 return;
             case Shapes.OffsetCross:
                 this.data = [
-                    [none, none, cell],
+                    [this.none, this.none, cell],
                     [cell, cell, cell],
-                    [none, cell, none]];
+                    [this.none, cell, this.none]];
                 this.size = 3;
                 return;
             case Shapes.Snake:
                 this.data = [
-                    [none, cell, cell],
-                    [none, cell, none],
-                    [cell, cell, none]];
+                    [this.none, cell, cell],
+                    [this.none, cell, this.none],
+                    [cell, cell, this.none]];
                 this.size = 3;
                 return;
             case Shapes.TripleW:
                 this.data = [
-                    [none, cell, cell],
-                    [cell, cell, none],
-                    [cell, none, none]];
+                    [this.none, cell, cell],
+                    [cell, cell, this.none],
+                    [cell, this.none, this.none]];
                 this.size = 3;
                 return;
             case Shapes.QuadrupleLine:
                 this.data = [
-                    [none, cell, none, none],
-                    [none, cell, none, none],
-                    [none, cell, none, none],
-                    [none, cell, none, none]];
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, this.none, this.none]];
 
                 this.size = 4;
                 return;
             case Shapes.QuadrupleL:
                 this.data = [
-                    [none, cell, none, none],
-                    [none, cell, none, none],
-                    [none, cell, none, none],
-                    [none, cell, cell, none]];
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, cell, this.none]];
 
                 this.size = 4;
                 return;
             case Shapes.QuadrupleOffsetL:
                 this.data = [
-                    [none, cell, none, none],
-                    [none, cell, none, none],
-                    [none, cell, cell, none],
-                    [none, cell, none, none]];
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, cell, this.none],
+                    [this.none, cell, this.none, this.none]];
 
                 this.size = 4;
                 return;
             case Shapes.QuadrupleBolt:
                 this.data = [
-                    [none, none, cell, none],
-                    [none, cell, cell, none],
-                    [none, cell, none, none],
-                    [none, cell, none, none]];
+                    [this.none, this.none, cell, this.none],
+                    [this.none, cell, cell, this.none],
+                    [this.none, cell, this.none, this.none],
+                    [this.none, cell, this.none, this.none]];
 
                 this.size = 4;
                 return;
             case Shapes.PentaLine:
                 this.data = [
-                    [none, none, cell, none, none],
-                    [none, none, cell, none, none],
-                    [none, none, cell, none, none],
-                    [none, none, cell, none, none],
-                    [none, none, cell, none, none]];
+                    [this.none, this.none, cell, this.none, this.none],
+                    [this.none, this.none, cell, this.none, this.none],
+                    [this.none, this.none, cell, this.none, this.none],
+                    [this.none, this.none, cell, this.none, this.none],
+                    [this.none, this.none, cell, this.none, this.none]];
 
                 this.size = 5;
                 return;

@@ -8,7 +8,7 @@ import { Shape, Shapes } from './engine/Shape';
 function App() {
   return (
     <>
-      <BoardWidget board={new Board()} />
+      <BoardWidget board={new Board()} highlightShape={new Shape(Shapes.OffsetCross, Cell.Blue)} />
       <div className='row' style={{ flexWrap: 'wrap' }}>
 
         <ShapeWidget shape={new Shape(Shapes.Dot, Cell.Orange)} />
