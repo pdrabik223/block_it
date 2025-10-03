@@ -1,0 +1,50 @@
+.cell_base {
+  height: 30px;
+  width: 30px;
+  margin: 2px;
+}
+
+.cell_base:hover {
+  filter: brightness(2);
+
+}
+
+.cell_red {
+
+  background-color: rgb(255, 86, 86);
+}
+
+.cell_border {
+
+  background-color: rgb(17, 17, 17);
+}
+
+.cell_blue {
+
+  background-color: rgb(59, 59, 253);
+}
+
+.cell_green {
+
+  background-color: rgb(43, 129, 43);
+}
+
+
+.cell_orange {
+
+  background-color: rgb(249, 195, 96);
+}
+
+.cell_empty {
+
+  background-color: gray;
+}
+
+.cell_none {
+  background-color: transparent;
+
+}
+
+.cell_none:hover {
+  filter: brightness(0);
+}

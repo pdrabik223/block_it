@@ -1,0 +1,15 @@
+.row {
+    display: flex;
+    flex: auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.column {
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
