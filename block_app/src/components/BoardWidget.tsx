@@ -15,7 +15,8 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
         for (let y = 0; y < Board.width; y++) {
 
             temp.push(
-                <CellWidget value={props.board.get(x, y)} />
+                <div className='selectable_cell'>
+                    <CellWidget value={props.board.get(x, y)} /></div>
             );
         }
         data.push(<div className='row'>{temp}</div>);

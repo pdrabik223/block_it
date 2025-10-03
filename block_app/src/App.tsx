@@ -1,37 +1,16 @@
 import './App.css'
-import { Board, Cell, Shape, Shapes } from './engine/engine'
+import { Board, Cell } from './engine/engine'
 import { BoardWidget } from './components/BoardWidget';
-import { CellWidget } from './components/CellWidget';
-import type { JSX } from 'react';
+import { ShapeWidget } from './components/ShapeWidget';
+import { Shape, Shapes } from './engine/Shape';
 
-interface ShapeWidgetProps { shape: Shape }
-const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps) => {
-
-  let data: JSX.Element[] = []
-
-  for (let x = 0; x < props.shape.size; x++) {
-
-    let temp = [];
-    for (let y = 0; y < props.shape.size; y++) {
-
-      temp.push(
-        <CellWidget value={props.shape.get(x, y)} />
-      );
-    }
-    data.push(<div className='row'>{temp}</div>);
-  }
-
-  return <div>
-    <div className='column'> {data} </div>
-  </div>
-}
 
 function App() {
   return (
     <>
       <BoardWidget board={new Board()} />
       <div className='row' style={{ flexWrap: 'wrap' }}>
-        
+
         <ShapeWidget shape={new Shape(Shapes.Dot, Cell.Orange)} />
         <ShapeWidget shape={new Shape(Shapes.Tuple, Cell.Blue)} />
         <ShapeWidget shape={new Shape(Shapes.Triple, Cell.Red)} />

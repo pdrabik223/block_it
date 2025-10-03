@@ -4,7 +4,7 @@
   margin: 2px;
 }
 
-.cell_base:hover {
+.selectable_cell:hover {
   filter: brightness(2);
 
 }
