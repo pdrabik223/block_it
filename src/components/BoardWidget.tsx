@@ -1,10 +1,12 @@
 
 import './BoardWidget.css'
 import type { JSX } from 'react';
-import { Shape, Shapes } from '../engine/Shape';
+import { Shape } from '../engine/Shape';
 import { Board, Cell } from '../engine/engine';
 import { CellWidget } from './CellWidget';
 import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from "react";
+
 
 interface BoardWidgetProps {
     board: Board,
@@ -30,6 +32,19 @@ function idsToReplace(shapePlacement: number, shape: Shape) {
     var cells: Cell[] = []
     let x = Math.floor(shapePlacement / Board.width);
     let y = shapePlacement % Board.width;
+
+    switch (shape.size) {
+        case 3:
+        case 4:
+            x -= 1;
+            y -= 1;
+            break;
+        case 5:
+            x -= 2;
+            y -= 2;
+            break;
+    }
+
     for (let sx = 0; sx < shape.size; sx++) {
         for (let sy = 0; sy < shape.size; sy++) {
             if (shape.get(sx, sy) != shape.none) {
@@ -95,26 +110,20 @@ interface SelectableCellProps {
     onHoverEvent: (v: number, is_hovering: boolean) => void,
     onPress: (v: number) => void,
     cellPosition: number,
-
 }
 
-import React, { useState } from "react";
-
 export const SelectableCell: React.FC<SelectableCellProps> = (props: SelectableCellProps) => {
-    // const [hovering, sethovering] = useState(false);
 
     return <div
         className='selectable_cell'
         key={uuidv4()}
         onClick={() => props.onPress(props.cellPosition)}
         onMouseEnter={() => {
-            // sethovering(true);
             props.onHoverEvent(props.cellPosition, true);
 
         }}
         onMouseLeave={() => {
 
-            // sethovering(false);
             props.onHoverEvent(props.cellPosition, false);
         }}
 

@@ -1,0 +1,12 @@
+
+.selectable_shape {
+  filter: brightness(0.6);
+}
+
+.selected {
+  filter: brightness(1);
+}
+
+.selectable_shape:hover {
+  filter: brightness(1);
+}
