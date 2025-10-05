@@ -1,0 +1,6 @@
+.circle {
+    border-radius: 50%;
+    border: 2px solid rgb(127, 127, 127);
+    /* background-color: #FFFFFF; */
+    position: absolute;
+}

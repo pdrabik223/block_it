@@ -19,8 +19,8 @@ export const SelectableShape: React.FC<SelectableShapeProps> = (props: Selectabl
     let class_name: string = props.isSelected ? "brightness(1)" : "brightness(0.6)"
 
     return <div
-    style={{ filter: class_name }}
-    className='selectable_shape'
+        style={{ filter: class_name }}
+        className='selectable_shape'
         key={uuidv4()}
         onClick={() => {
             props.onPress(props.shapeId);

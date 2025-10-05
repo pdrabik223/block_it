@@ -7,6 +7,9 @@ import { CellWidget } from './CellWidget.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from "react";
 
+import { FullScreenOverlay } from './FullScreenOverlay.tsx';
+import { RadialToolTip } from './RadialTooltip.tsx';
+
 
 interface BoardWidgetProps {
     board: Board,
@@ -29,6 +32,7 @@ function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
 
 export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps) => {
     const [shapePlacement, setShapePlacement] = useState<number>(-1);
+    const [tooltipPos, setTooltipPos] = useState<{ x: number, y: number } | null>(null);
 
     var ids_to_replace: number[] | null = null;
     var cells: Cell[] = [];
@@ -58,7 +62,7 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
                 <SelectableCell
                     cellPosition={x * Board.height + y}
                     onHoverEvent={(v, b) => { if (b) { if (shapePlacement != v) setShapePlacement(v) } else { if (shapePlacement == v) setShapePlacement(-1) } }}
-                    onPress={(v) => { if (props.highlightShape != null) props.board.addShape(shapePlacement, props.highlightShape); setShapePlacement(v) }}>
+                    onPress={(v, e) => { setTooltipPos({ x: e.clientX, y: e.clientY }); }}>
                     {cell_widget}
                 </SelectableCell>
             );
@@ -72,14 +76,21 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
     data.push(<div key={uuidv4()} className='row'>{temp}</div>);
 
     return <div>
-        <div className='column'> {data} </div>
+        <div className='column'> {data}</div>
+
+        <FullScreenOverlay show={tooltipPos != null} onOutsideTap={() => setTooltipPos(null)}>
+            <RadialToolTip position={tooltipPos!}>testyjesm</RadialToolTip>
+        </FullScreenOverlay>
     </div>
 }
+
+
 
 interface SelectableCellProps {
     children: React.ReactNode,
     onHoverEvent: (v: number, is_hovering: boolean) => void,
-    onPress: (v: number) => void,
+    // onPress receives the cell position and the original MouseEvent
+    onPress: (v: number, e: MouseEvent) => void,
     cellPosition: number,
 }
 
@@ -88,7 +99,7 @@ export const SelectableCell: React.FC<SelectableCellProps> = (props: SelectableC
     return <div
         className='selectable_cell'
         key={uuidv4()}
-        onClick={() => props.onPress(props.cellPosition)}
+        onClick={(e) => props.onPress(props.cellPosition, e.nativeEvent as MouseEvent)}
         onMouseEnter={() => {
             props.onHoverEvent(props.cellPosition, true);
 
