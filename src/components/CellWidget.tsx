@@ -13,7 +13,7 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
 
     if (props.highlight != null) {
         switch (props.highlight) {
-            case PlacementState.NotConnected:
+
             case PlacementState.None:
                 optionalStyling["filter"] = "grayscale(70%)";
                 break;

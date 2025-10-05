@@ -4,3 +4,8 @@
     /* background-color: #FFFFFF; */
     position: absolute;
 }
+
+.button_dir:hover{
+    filter: brightness(0.9);
+    background-color: rgba(194, 194, 194, 0.788);
+}

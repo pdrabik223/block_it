@@ -37,9 +37,10 @@ interface BoardEditWidgetProps {
 }
 export const BoardEditWidget: React.FC<BoardEditWidgetProps> = (props: BoardEditWidgetProps) => {
     const [selected, setSelected] = useState(-1)
+    const [reDrawWidget, setReDrawWidget] = useState(false)
 
     return <>
-        <BoardWidget board={props.board} highlightShape={(selected != -1) ? props.shapes[selected] : undefined} />
+        <BoardWidget refreshShapes={() => setReDrawWidget(!reDrawWidget)} board={props.board} highlightShape={(selected != -1) ? props.shapes[selected] : undefined} />
         <div className='row' style={{ flexWrap: 'wrap' }}>
             {props.shapes.map((object, i) =>
                 <SelectableShape onPress={(id) => { setSelected(id) }} shapeId={i} isSelected={(selected == i)}>

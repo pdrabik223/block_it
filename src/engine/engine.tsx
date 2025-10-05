@@ -14,7 +14,6 @@ export const enum Cell {
 export enum PlacementState {
     OutOfBunds,
     OverlappingExisting,
-    NotConnected,
     TouchingEdge,
     TouchingSameColorCorner,
     None
@@ -194,6 +193,21 @@ export class Board {
         if (y >= Board.width) throw new Error(`y (${y}) is greater than or equal to Board.width (${Board.width})`);
 
         this.data[x * Board.width + y] = value;
+    }
+    isValidPlacement(shapePlacementState: PlacementState[]): boolean {
+        for (let cell of shapePlacementState) {
+            switch (cell) {
+                case PlacementState.OutOfBunds:
+                case PlacementState.OverlappingExisting:
+                case PlacementState.TouchingEdge:
+                    return false;
+            }
+        }
+        if (-1 == shapePlacementState.indexOf(PlacementState.TouchingSameColorCorner))
+            return false;
+        return true;
+
+
     }
 
 }

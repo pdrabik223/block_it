@@ -195,4 +195,35 @@ export class Shape {
 
         return this.data[x][y];
     }
+
+    rotate(rotateClockwise: boolean) {
+        if (rotateClockwise)
+            return this.rotate90deg();
+        // rotate 3 times because I'm lazy
+        this.rotate90deg();
+        this.rotate90deg();
+        this.rotate90deg();
+
+    }
+    rotate90deg() {
+        const n = this.size;
+
+        for (let i = 0; i < n / 2; i++) {
+
+            for (let j = i; j < n - i - 1; j++) {
+
+                // Swap elements in clockwise order
+                let temp = this.data[i][j];
+                this.data[i][j] = this.data[n - 1 - j][i];                  // Move P4 to P1
+                this.data[n - 1 - j][i] = this.data[n - 1 - i][n - 1 - j];  // Move P3 to P4
+                this.data[n - 1 - i][n - 1 - j] = this.data[j][n - 1 - i];  // Move P2 to P3
+                this.data[j][n - 1 - i] = temp;                             // Move P1 to P2
+            }
+        }
+    }
+
+    flipLR() {
+
+
+    }
 }

@@ -14,7 +14,8 @@ import { RadialToolTip } from './RadialTooltip.tsx';
 interface BoardWidgetProps {
     board: Board,
     highlight?: number,
-    highlightShape?: Shape
+    highlightShape?: Shape,
+    refreshShapes: () => void
 }
 
 
@@ -33,10 +34,12 @@ function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
 export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps) => {
     const [shapePlacement, setShapePlacement] = useState<number>(-1);
     const [tooltipPos, setTooltipPos] = useState<{ x: number, y: number } | null>(null);
+    const [reDrawWidget, setReDrawWidget] = useState(false)
 
     var ids_to_replace: number[] | null = null;
     var cells: Cell[] = [];
     var errors: PlacementState[] = [];
+
     if (props.highlightShape != null && shapePlacement != -1) {
         [ids_to_replace, cells, errors] = props.board.combineShape(shapePlacement, props.highlightShape)
     }
@@ -52,12 +55,14 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
         for (let y = 0; y < Board.width; y++) {
 
             let cell_widget = <CellWidget value={props.board.get(x, y)} />
+
             if (ids_to_replace != null) {
                 let shapeCellId = ids_to_replace.indexOf(x * Board.height + y)
                 if (props.highlightShape != null && shapeCellId != -1) {
                     cell_widget = <CellWidget highlight={errors[shapeCellId]} value={cells[shapeCellId]} />
                 }
             }
+
             temp.push(
                 <SelectableCell
                     cellPosition={x * Board.height + y}
@@ -69,17 +74,26 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
         }
         temp.push(<CellWidget value={Cell.Border} />);
         data.push(<div key={uuidv4()} className='row'>{temp}</div>);
-
     }
     // add bottom border
     temp = horizontalBorder(Cell.Orange, Cell.Green);
     data.push(<div key={uuidv4()} className='row'>{temp}</div>);
 
+
+    let applyFunction = undefined;
+    if (props.highlightShape && shapePlacement != -1)
+        if (props.board.isValidPlacement(errors))
+            applyFunction = () => {
+                props.board.addShape(shapePlacement, props.highlightShape!)
+                setReDrawWidget(!reDrawWidget);
+                props.refreshShapes();
+                setTooltipPos(null);
+            }
+
     return <div>
         <div className='column'> {data}</div>
-
-        <FullScreenOverlay show={tooltipPos != null} onOutsideTap={() => setTooltipPos(null)}>
-            <RadialToolTip position={tooltipPos!}>testyjesm</RadialToolTip>
+        <FullScreenOverlay show={tooltipPos != null} >
+            <RadialToolTip apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); props.refreshShapes() }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
         </FullScreenOverlay>
     </div>
 }

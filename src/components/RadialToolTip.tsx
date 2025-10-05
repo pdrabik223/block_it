@@ -1,15 +1,17 @@
 import type React from 'react';
 
 import "./RadialToolTip.css"
+import type { Shape } from '../engine/Shape.tsx';
 
 
 export interface RadialToolTipProps {
-    children: React.ReactNode,
+
     position: { x: number, y: number },
-    rotate?: (rotateR: boolean) => void
-    flip?: () => void
+    highlightShape?: Shape,
     apply?: () => void
     cancelShape?: () => void
+    onOutsideTap: () => void
+    refreshBoard: () => void
 }
 
 
@@ -19,6 +21,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
         left: props.position.x + 'px', top: props.position.y + 'px',
         height: '400px',
         width: '400px',
+        zIndex: 10
     }}>
         <div className='circle' style={{
             left: "-50%",
@@ -26,13 +29,20 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
             height: "100%",
             width: "100%"
         }} >
+            <button
+                onClick={() => {
+                    if (props.highlightShape) {
+                        props.highlightShape.rotate(true);
+                        props.refreshBoard();
+                    }
 
-            <button style={{
-                position: 'absolute',
-                left: "60%",
-                top: "15%",
-
-            }}>Rotate R</button>
+                }}
+                style={{
+                    zIndex: 10,
+                    position: 'absolute',
+                    left: "60%",
+                    top: "15%",
+                }}>Rotate R</button>
 
             <button style={{
                 position: 'absolute',
@@ -40,11 +50,20 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                 top: "10%",
             }}>Flip</button>
 
-            <button style={{
-                position: 'absolute',
-                left: "14%",
-                top: "15%",
-            }}>Rotate L</button>
+            <button
+                onClick={() => {
+                    if (props.highlightShape) {
+                        props.highlightShape.rotate(false);
+                        props.refreshBoard();
+                    }
+
+                }}
+                style={{
+
+                    position: 'absolute',
+                    left: "14%",
+                    top: "15%",
+                }}>Rotate L</button>
 
             <button style={{
                 position: 'absolute',
@@ -53,20 +72,36 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
 
             }}>Cancel Shape</button>
 
-            <button style={{
-                position: 'absolute',
-                left: "40%",
-                top: "75%",
-            }}>Apply</button>
+            <button
+                onClick={props.apply}
+
+                style={{
+                    position: 'absolute',
+                    left: "40%",
+                    top: "75%",
+                }}>Apply</button>
 
         </div>
-        <div className='circle' style={{
-            left: "-10%", top: "-10%",
-            height: "20%",
-            width: "20%"
-        }} >
+        <div className='circle button_dir'
+            onClick={props.onOutsideTap}
+            style={{
+                left: "-10%", top: "-10%",
+                height: "20%",
+                width: "20%",
+                display: 'flex',
+                flex: 'auto',
+                flexDirection: 'column',
+                flexWrap: 'nowrap',
+                justifyContent: 'center',
+                cursor: 'pointer'
+
+            }}
+        >
+
+
+            Close
 
         </div>
-    </div>;
+    </div >;
 };
 
