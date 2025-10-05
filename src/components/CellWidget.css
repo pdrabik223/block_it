@@ -4,10 +4,10 @@
   margin: 2px;
 }
 
-.selectable_cell:hover {
+/* .selectable_cell:hover {
   filter: brightness(2);
 
-}
+} */
 
 .cell_red {
 

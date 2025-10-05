@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { Board } from "../engine/engine";
-import type { Shape } from "../engine/Shape";
-import { ShapeWidget } from "./ShapeWidget";
-import { BoardWidget } from "./BoardWidget";
+import { Board } from "../engine/engine.tsx";
+import type { Shape } from "../engine/Shape.tsx";
+import { ShapeWidget } from "./ShapeWidget.tsx";
+import { BoardWidget } from "./BoardWidget.tsx";
 
 import './BoardEditWidget.css'
 

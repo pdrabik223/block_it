@@ -1,9 +1,9 @@
 
 import './BoardWidget.css'
 import type { JSX } from 'react';
-import { Shape } from '../engine/Shape';
-import { Board, Cell } from '../engine/engine';
-import { CellWidget } from './CellWidget';
+import { Shape } from '../engine/Shape.tsx';
+import { Board, Cell, PlacementState } from '../engine/engine.tsx';
+import { CellWidget } from './CellWidget.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from "react";
 
@@ -27,44 +27,14 @@ function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
 
 
 
-function idsToReplace(shapePlacement: number, shape: Shape) {
-    var ids_to_replace: number[] = []
-    var cells: Cell[] = []
-    let x = Math.floor(shapePlacement / Board.width);
-    let y = shapePlacement % Board.width;
-
-    switch (shape.size) {
-        case 3:
-        case 4:
-            x -= 1;
-            y -= 1;
-            break;
-        case 5:
-            x -= 2;
-            y -= 2;
-            break;
-    }
-
-    for (let sx = 0; sx < shape.size; sx++) {
-        for (let sy = 0; sy < shape.size; sy++) {
-            if (shape.get(sx, sy) != shape.none) {
-                ids_to_replace.push((x + sx) * Board.width + (sy + y))
-                cells.push(shape.get(sx, sy))
-            }
-        }
-    }
-    return [ids_to_replace, cells];
-}
-
 export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps) => {
     const [shapePlacement, setShapePlacement] = useState<number>(-1);
 
-
     var ids_to_replace: number[] | null = null;
     var cells: Cell[] = [];
-
+    var errors: PlacementState[] = [];
     if (props.highlightShape != null && shapePlacement != -1) {
-        [ids_to_replace, cells] = idsToReplace(shapePlacement, props.highlightShape)
+        [ids_to_replace, cells, errors] = props.board.combineShape(shapePlacement, props.highlightShape)
     }
 
     let data: JSX.Element[] = []
@@ -76,18 +46,19 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
 
         let temp = [<CellWidget value={Cell.Border} />];
         for (let y = 0; y < Board.width; y++) {
-            let cell_widget;
 
-            if (ids_to_replace != null && props.highlightShape != null && ids_to_replace.indexOf(x * Board.height + y) != -1)
-                cell_widget = <CellWidget value={cells[ids_to_replace.indexOf(x * Board.height + y)]} />
-            else
-                cell_widget = <CellWidget value={props.board.get(x, y)} />
-
+            let cell_widget = <CellWidget value={props.board.get(x, y)} />
+            if (ids_to_replace != null) {
+                let shapeCellId = ids_to_replace.indexOf(x * Board.height + y)
+                if (props.highlightShape != null && shapeCellId != -1) {
+                    cell_widget = <CellWidget highlight={errors[shapeCellId]} value={cells[shapeCellId]} />
+                }
+            }
             temp.push(
                 <SelectableCell
                     cellPosition={x * Board.height + y}
-                    onHoverEvent={(v, b) => { if (b) { setShapePlacement(v) } else setShapePlacement(-1) }}
-                    onPress={(v) => console.log(v)}>
+                    onHoverEvent={(v, b) => { if (b) { if (shapePlacement != v) setShapePlacement(v) } else { if (shapePlacement == v) setShapePlacement(-1) } }}
+                    onPress={(v) => { if (props.highlightShape != null) props.board.addShape(shapePlacement, props.highlightShape); setShapePlacement(v) }}>
                     {cell_widget}
                 </SelectableCell>
             );

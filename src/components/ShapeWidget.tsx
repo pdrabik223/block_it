@@ -1,5 +1,5 @@
-import type { Shape } from '../engine/Shape';
-import { CellWidget } from './CellWidget';
+import type { Shape } from '../engine/Shape.tsx';
+import { CellWidget } from './CellWidget.tsx';
 import type { JSX } from 'react';
 import './ShapeWidget.css'
 import { v4 as uuidv4 } from 'uuid';

@@ -1,7 +1,7 @@
 import './App.css'
-import { Board, Cell } from './engine/engine'
-import { Shape, Shapes } from './engine/Shape';
-import { BoardEditWidget } from './components/BoardEditWidget';
+import { Board, Cell } from './engine/engine.tsx'
+import { Shape, Shapes } from './engine/Shape.tsx';
+import { BoardEditWidget } from './components/BoardEditWidget.tsx';
 
 function App() {
   return (
