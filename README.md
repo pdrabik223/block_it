@@ -3,6 +3,8 @@
 ## Task Board
 
 1. Create ui for playing the game yourself
+    - Make the board editor more responsive, currently in prod env it works ok, but with dev struggles. Also we do a lot of unnecessary calculations and redrawings -> this could be optimized
+    - 
 2. Implement engine checking for correct moves
 3. Make a engine that calculates the best move in position
 
