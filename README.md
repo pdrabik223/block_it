@@ -9,3 +9,18 @@
 
 # Framework
 We can go full react mode, no backend all frontend app -> react + typescript 
+
+
+# Run prod version
+1. Install serve
+``` bash
+npm install -g serve
+```
+2. Build project in prod mode
+``` bash
+npm run build
+```
+3. Serve project locally 
+``` bash
+serve -s dist
+```
