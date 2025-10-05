@@ -5,11 +5,13 @@ import { Shape } from '../engine/Shape';
 import { Board, Cell } from '../engine/engine';
 import { CellWidget } from './CellWidget';
 import { v4 as uuidv4 } from 'uuid';
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { ShapeWidget } from './ShapeWidget';
 
 
 interface BoardWidgetProps {
     board: Board,
+    onCellSelect: (v: number) => void
     highlight?: number,
     highlightShape?: Shape
 }
@@ -57,15 +59,7 @@ function idsToReplace(shapePlacement: number, shape: Shape) {
 }
 
 export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps) => {
-    const [shapePlacement, setShapePlacement] = useState<number>(-1);
 
-
-    var ids_to_replace: number[] | null = null;
-    var cells: Cell[] = [];
-
-    if (props.highlightShape != null && shapePlacement != -1) {
-        [ids_to_replace, cells] = idsToReplace(shapePlacement, props.highlightShape)
-    }
 
     let data: JSX.Element[] = []
 
@@ -78,16 +72,13 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
         for (let y = 0; y < Board.width; y++) {
             let cell_widget;
 
-            if (ids_to_replace != null && props.highlightShape != null && ids_to_replace.indexOf(x * Board.height + y) != -1)
-                cell_widget = <CellWidget value={cells[ids_to_replace.indexOf(x * Board.height + y)]} />
-            else
-                cell_widget = <CellWidget value={props.board.get(x, y)} />
+            cell_widget = <CellWidget value={props.board.get(x, y)} />
 
             temp.push(
                 <SelectableCell
                     cellPosition={x * Board.height + y}
-                    onHoverEvent={(v, b) => { if (b) { setShapePlacement(v) } else setShapePlacement(-1) }}
-                    onPress={(v) => console.log(v)}>
+                    // onHoverEvent={(v, b) => { if (b) { props.onCellSelect(v) } else setShapePlacement(-1) }}
+                    onPress={(v) => props.onCellSelect(v)}>
                     {cell_widget}
                 </SelectableCell>
             );
@@ -100,14 +91,13 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
     temp = horizontalBorder(Cell.Orange, Cell.Green);
     data.push(<div key={uuidv4()} className='row'>{temp}</div>);
 
-    return <div>
+    return <BoardOverlay shape={props.highlightShape}>
         <div className='column'> {data} </div>
-    </div>
+    </BoardOverlay>
 }
 
 interface SelectableCellProps {
     children: React.ReactNode,
-    onHoverEvent: (v: number, is_hovering: boolean) => void,
     onPress: (v: number) => void,
     cellPosition: number,
 }
@@ -118,16 +108,64 @@ export const SelectableCell: React.FC<SelectableCellProps> = (props: SelectableC
         className='selectable_cell'
         key={uuidv4()}
         onClick={() => props.onPress(props.cellPosition)}
-        onMouseEnter={() => {
-            props.onHoverEvent(props.cellPosition, true);
-
-        }}
-        onMouseLeave={() => {
-
-            props.onHoverEvent(props.cellPosition, false);
-        }}
-
     >
         {props.children}
     </div>
+}
+
+
+interface BoardOverlayInterface {
+    children: React.ReactNode,
+    shape?: Shape
+}
+
+function getShapePosition(
+    mouse_x: number,
+    mouse_y: number,
+    shape_size: number,
+    div_width: number
+) {
+    console.log(div_width)
+
+
+    let square_size = 32; //px
+    let board_size = 32 * 22;
+    let board_x = (div_width - board_size) / 2
+
+
+    let pointer_offset = (shape_size / 2) * square_size
+
+    let x = mouse_x - pointer_offset - (square_size);
+    let y = mouse_y - pointer_offset - (square_size);
+    // basic bounding box
+    if (x < board_x)
+        x = board_x
+    if (x > board_x + board_size)
+        x = board_x + board_size
+
+
+
+    return [x + 'px', y + 'px'];
+}
+
+export const BoardOverlay: React.FC<BoardOverlayInterface> = (props: BoardOverlayInterface) => {/* assuming cellSize: number 32,*/
+    const [position, setPosition] = useState([0, 0]);
+    const ref = useRef<HTMLDivElement>(null);
+    useEffect(() => { }, [ref.current]);
+    let left, top;
+
+    if (props.shape != null && ref.current != null)
+        [left, top] = getShapePosition(position[0], position[1], props.shape?.size, ref.current?.offsetWidth)
+
+    return <div
+        id='overlay_size'
+        onMouseMove={(event) => { setPosition([event.clientX, event.clientY]); }}
+        style={{ backgroundColor: 'orange', position: "relative" }}>
+        <div ref={ref}>{props.children}</div>
+        {props.shape != null ? <div style={{ position: "absolute", left: left, top: top }}>
+            <ShapeWidget shape={props.shape} />
+        </div> : null}
+    </div>
+
+
 }
