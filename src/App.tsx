@@ -4,8 +4,10 @@ import { Shape, Shapes } from './engine/Shape.tsx';
 import { BoardEditWidget } from './components/BoardEditWidget.tsx';
 
 function App() {
+  let board = new Board();
+
   return (
-    <BoardEditWidget board={new Board()} shapes={[
+    <BoardEditWidget board={board} shapes={[
       new Shape(Shapes.Dot, Cell.Orange),
       new Shape(Shapes.Tuple, Cell.Blue),
       new Shape(Shapes.Triple, Cell.Red),
