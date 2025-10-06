@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from "react";
 
 import { FullScreenOverlay } from './FullScreenOverlay.tsx';
-import { RadialToolTip } from './RadialTooltip.tsx';
+import { RadialToolTip } from './RadialToolTip.tsx';
 
 
 interface BoardWidgetProps {
@@ -17,7 +17,6 @@ interface BoardWidgetProps {
     highlightShape?: Shape,
     refreshShapes: () => void
 }
-
 
 function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
 
@@ -28,8 +27,6 @@ function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
     temp.push(<CellWidget value={right_cell} />)
     return temp;
 }
-
-
 
 export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps) => {
     const [shapePlacement, setShapePlacement] = useState<number>(-1);

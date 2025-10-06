@@ -18,7 +18,7 @@ export interface RadialToolTipProps {
 export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTipProps) => {
     return <div style={{
         position: 'absolute',
-        left: props.position.x + 'px', top: props.position.y + 'px',
+        left: `${props.position.x}px`, top: `${props.position.y}px`,
         height: '400px',
         width: '400px',
         zIndex: 10
@@ -66,7 +66,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                 }}>Rotate L</button>
 
             <button style={{
-                position: 'absolute',
+                position: `absolute`,
                 left: "60%",
                 top: "60%",
 

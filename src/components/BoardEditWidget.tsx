@@ -24,7 +24,6 @@ export const SelectableShape: React.FC<SelectableShapeProps> = (props: Selectabl
         key={uuidv4()}
         onClick={() => {
             props.onPress(props.shapeId);
-
         }}>
         {props.children}
     </div>
