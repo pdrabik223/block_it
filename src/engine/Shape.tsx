@@ -35,6 +35,19 @@ export class Shape {
     public size: number;
     public none: Cell = Cell.None;
 
+    points(): number {
+        let sum = 0;
+        for (let x of this.data) {
+            for (let y of x) {
+                if (y != this.none) {
+                    sum++;
+                }
+
+            }
+        }
+        return sum;
+    }
+
     constructor(shape: Shapes, cell: Cell) {
         this.shapeName = shape;
 

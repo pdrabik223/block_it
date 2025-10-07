@@ -4,11 +4,6 @@
   margin: 2px;
 }
 
-/* .selectable_cell:hover {
-  filter: brightness(2);
-
-} */
-
 .cell_red {
 
   background-color: rgb(255, 86, 86);

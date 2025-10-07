@@ -17,7 +17,7 @@ interface BoardWidgetProps {
     highlightShape?: Shape,
     refreshShapes: () => void,
     onMoveMade: () => void
-    popShape: (highlightShape: Shape) => void
+
 }
 
 function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
@@ -88,7 +88,7 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
                 props.refreshShapes();
                 setTooltipPos(null);
                 props.onMoveMade();
-                props.popShape(props.highlightShape!)
+
             }
 
     return <div>

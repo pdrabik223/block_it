@@ -4,8 +4,7 @@ import type CSS from "csstype";
 import { Cell, PlacementState } from "../engine/engine.tsx"
 import { v4 as uuidv4 } from 'uuid';
 
-
-interface CellWidgetProps { value: Cell, highlight?: PlacementState }
+interface CellWidgetProps { value: Cell, highlight?: PlacementState, size?: number }
 
 export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) => {
 
@@ -35,6 +34,10 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
         }
     }
 
+    if (props.size != null) {
+        optionalStyling["width"] = `${props.size}px`
+        optionalStyling["height"] = `${props.size}px`
+    }
 
     switch (props.value) {
         case Cell.Blue:
@@ -46,11 +49,11 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
         case Cell.Red:
             return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_red'> </div>
         case Cell.Empty:
-            return <div key={uuidv4()} className='cell_base cell_empty'> </div>
+            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_empty'> </div>
         case Cell.Border:
-            return <div key={uuidv4()} className='cell_base cell_border'> </div>
+            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_border'> </div>
         case Cell.None:
-            return <div key={uuidv4()} className='cell_base cell_none'> </div>
+            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_none'> </div>
 
     }
 }
