@@ -64,6 +64,7 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
 
             temp.push(
                 <SelectableCell
+                    key={uuidv4()}
                     cellPosition={x * Board.height + y}
                     onHoverEvent={(v, b) => { if (b) { if (shapePlacement != v) setShapePlacement(v) } else { if (shapePlacement == v) setShapePlacement(-1) } }}
                     onPress={(v, e) => { setTooltipPos({ x: e.clientX, y: e.clientY }); }}>
