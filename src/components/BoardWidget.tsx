@@ -2,7 +2,7 @@
 import './BoardWidget.css'
 import type { JSX } from 'react';
 import { Shape } from '../engine/Shape.tsx';
-import { Board, Cell, PlacementState } from '../engine/engine.tsx';
+import { Board, Cell, PlacementState } from '../engine/Board.tsx';
 import { CellWidget } from './CellWidget.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from "react";

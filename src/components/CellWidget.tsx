@@ -1,7 +1,7 @@
 
 import './CellWidget.css'
 import type CSS from "csstype";
-import { Cell, PlacementState } from "../engine/engine.tsx"
+import { Cell, PlacementState } from "../engine/Board.tsx"
 import { v4 as uuidv4 } from 'uuid';
 
 interface CellWidgetProps { value: Cell, highlight?: PlacementState, size?: number }

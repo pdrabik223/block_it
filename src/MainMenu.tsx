@@ -2,7 +2,7 @@ import { useImperativeHandle, useRef, useState } from 'react';
 
 import { GameLoop } from './components/BoardEditWidget.tsx';
 import { CellWidget } from './components/CellWidget.tsx';
-import { Cell } from './engine/engine.tsx';
+import { Cell } from './engine/Board.tsx';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface MainMenuProps { }

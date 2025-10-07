@@ -1,4 +1,4 @@
-import { Cell } from "./engine.tsx";
+import { Cell } from "./Board.tsx";
 
 export const enum Shapes {
     // one width

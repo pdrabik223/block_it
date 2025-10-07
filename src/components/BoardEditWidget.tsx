@@ -1,6 +1,6 @@
 import React, { useState, type JSX } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { Board, Cell } from "../engine/engine.tsx";
+import { Board, Cell } from "../engine/Board.tsx";
 import { Shape, Shapes } from "../engine/Shape.tsx";
 import { ShapeWidget } from "./ShapeWidget.tsx";
 import { BoardWidget } from "./BoardWidget.tsx";
