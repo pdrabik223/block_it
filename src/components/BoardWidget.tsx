@@ -9,6 +9,7 @@ import React, { useState } from "react";
 
 import { FullScreenOverlay } from './FullScreenOverlay.tsx';
 import { RadialToolTip } from './RadialToolTip.tsx';
+import { SelectableCell } from './SelectableCell.tsx';
 
 
 interface BoardWidgetProps {
@@ -101,30 +102,3 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
 
 
 
-interface SelectableCellProps {
-    children: React.ReactNode,
-    onHoverEvent: (v: number, is_hovering: boolean) => void,
-    // onPress receives the cell position and the original MouseEvent
-    onPress: (v: number, e: MouseEvent) => void,
-    cellPosition: number,
-}
-
-export const SelectableCell: React.FC<SelectableCellProps> = (props: SelectableCellProps) => {
-
-    return <div
-        className='selectable_cell'
-        key={uuidv4()}
-        onClick={(e) => props.onPress(props.cellPosition, e.nativeEvent as MouseEvent)}
-        onMouseEnter={() => {
-            props.onHoverEvent(props.cellPosition, true);
-
-        }}
-        onMouseLeave={() => {
-
-            props.onHoverEvent(props.cellPosition, false);
-        }}
-
-    >
-        {props.children}
-    </div>
-}

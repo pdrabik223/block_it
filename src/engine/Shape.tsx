@@ -30,7 +30,6 @@ export const enum Shapes {
 }
 export const enum NoRotations {
     Zero,
-    // One,
     Two,
     Four,
 
@@ -41,7 +40,7 @@ export class Shape {
     public size: number;
     public none: Cell = Cell.None;
     public canBeFlipped: boolean = false;
-    public canBeRotated: NoRotations = NoRotations.Four;
+    public numberOfRotations: NoRotations = NoRotations.Four;
 
     points(): number {
         let sum = 0;
@@ -61,23 +60,23 @@ export class Shape {
                 this.data = [[cell]];
                 this.size = 1;
                 // this.canBeFlipped = false;
-                this.canBeRotated = NoRotations.Zero
+                this.numberOfRotations = NoRotations.Zero
                 return;
             case Shapes.Tuple:
                 this.data = [[cell, cell], [this.none, this.none]];
                 this.size = 2;
                 // this.canBeFlipped = false;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 return;
             case Shapes.Triple:
                 this.data = [[cell, cell], [cell, this.none]];
                 this.size = 2;
-                this.canBeRotated = NoRotations.Zero
+                this.numberOfRotations = NoRotations.Zero
                 return;
             case Shapes.Square:
                 this.data = [[cell, cell], [cell, cell]];
                 this.size = 2;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 return;
             case Shapes.Cross:
                 this.data = [
@@ -85,7 +84,7 @@ export class Shape {
                     [cell, cell, cell],
                     [this.none, cell, this.none],];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Zero
+                this.numberOfRotations = NoRotations.Zero
                 return;
             case Shapes.TripleLine:
                 this.data = [
@@ -93,7 +92,7 @@ export class Shape {
                     [cell, cell, cell],
                     [this.none, this.none, this.none],];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Two
+                this.numberOfRotations = NoRotations.Two
                 return;
             case Shapes.TripleT:
                 this.data = [
@@ -101,7 +100,7 @@ export class Shape {
                     [cell, cell, cell],
                     [this.none, cell, this.none],];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
 
                 return;
             case Shapes.BigTripleT:
@@ -110,7 +109,7 @@ export class Shape {
                     [this.none, cell, this.none],
                     [this.none, cell, this.none],];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 return;
             case Shapes.TripleC:
                 this.data = [
@@ -118,7 +117,7 @@ export class Shape {
                     [cell, this.none, this.none],
                     [cell, cell, this.none],];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 return;
             case Shapes.Bolt:
                 this.data = [
@@ -126,7 +125,7 @@ export class Shape {
                     [cell, cell, this.none],
                     [this.none, cell, cell,],];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 return;
             case Shapes.TripleL:
                 this.data = [
@@ -134,7 +133,7 @@ export class Shape {
                     [cell, this.none, this.none],
                     [cell, cell, this.none]];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
             case Shapes.BigTripleL:
@@ -143,7 +142,7 @@ export class Shape {
                     [cell, this.none, this.none],
                     [cell, cell, cell]];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
 
                 return;
             case Shapes.TripleP:
@@ -152,7 +151,7 @@ export class Shape {
                     [cell, cell, this.none],
                     [cell, this.none, this.none]];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
             case Shapes.OffsetCross:
@@ -161,7 +160,7 @@ export class Shape {
                     [cell, cell, cell],
                     [this.none, cell, this.none]];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
             case Shapes.Snake:
@@ -170,7 +169,7 @@ export class Shape {
                     [this.none, cell, this.none],
                     [cell, cell, this.none]];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
             case Shapes.TripleW:
@@ -179,7 +178,7 @@ export class Shape {
                     [cell, cell, this.none],
                     [cell, this.none, this.none]];
                 this.size = 3;
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
             case Shapes.QuadrupleLine:
@@ -188,7 +187,7 @@ export class Shape {
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none]];
-                this.canBeRotated = NoRotations.Two
+                this.numberOfRotations = NoRotations.Two
                 this.size = 4;
                 return;
             case Shapes.QuadrupleL:
@@ -197,7 +196,7 @@ export class Shape {
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, cell, this.none]];
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
@@ -207,7 +206,7 @@ export class Shape {
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, cell, this.none],
                     [this.none, cell, this.none, this.none]];
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
@@ -217,7 +216,7 @@ export class Shape {
                     [this.none, cell, cell, this.none],
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none]];
-                this.canBeRotated = NoRotations.Four
+                this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
@@ -228,7 +227,7 @@ export class Shape {
                     [this.none, this.none, cell, this.none, this.none],
                     [this.none, this.none, cell, this.none, this.none],
                     [this.none, this.none, cell, this.none, this.none]];
-                this.canBeRotated = NoRotations.Two
+                this.numberOfRotations = NoRotations.Two
 
                 this.size = 5;
                 return;

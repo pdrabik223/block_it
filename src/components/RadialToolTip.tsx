@@ -19,7 +19,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
 
     function getRotateRButton() {
 
-        if (props.highlightShape && props.highlightShape.canBeRotated != NoRotations.Zero)
+        if (props.highlightShape && props.highlightShape.numberOfRotations != NoRotations.Zero)
             return <button
                 onClick={() => {
                     props.highlightShape!.rotate(true);
@@ -50,7 +50,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
     }
 
     function getRotateLButton() {
-        if (props.highlightShape && props.highlightShape.canBeRotated != NoRotations.Zero)
+        if (props.highlightShape && props.highlightShape.numberOfRotations != NoRotations.Zero)
             return <button
                 onClick={() => {
                     props.highlightShape!.rotate(false);
