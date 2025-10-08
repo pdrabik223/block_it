@@ -15,7 +15,6 @@ interface BoardWidgetProps {
     board: Board,
     highlight?: number,
     highlightShape?: Shape,
-    refreshShapes: () => void,
     onMoveMade: () => void
 
 }
@@ -86,7 +85,7 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
             applyFunction = () => {
                 props.board.addShape(shapePlacement, props.highlightShape!)
                 setReDrawWidget(!reDrawWidget);
-                props.refreshShapes();
+                // props.refreshShapes();
                 setTooltipPos(null);
                 props.onMoveMade();
 
@@ -95,7 +94,7 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
     return <div>
         <div className='column'> {data}</div>
         <FullScreenOverlay show={tooltipPos != null} >
-            <RadialToolTip apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); props.refreshShapes() }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
+            <RadialToolTip apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
         </FullScreenOverlay>
     </div>
 }

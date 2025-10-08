@@ -1,7 +1,7 @@
 import React, { useState, type JSX } from "react";
 
 import { Board, Cell } from "../engine/Board.tsx";
-import { Shape, Shapes } from "../engine/Shape.tsx";
+import { Shape, shapeList, Shapes } from "../engine/Shape.tsx";
 import { ShapeWidget } from "./ShapeWidget.tsx";
 import { BoardWidget } from "./BoardWidget.tsx";
 
@@ -14,31 +14,10 @@ import { SelectableShape } from "./SelectableShape.tsx";
 
 
 function initShapeList(cell: Cell) {
-    return [
-        new Shape(Shapes.Dot, cell),
-        new Shape(Shapes.Tuple, cell),
-        new Shape(Shapes.Triple, cell),
-        new Shape(Shapes.Square, cell),
-        new Shape(Shapes.TripleLine, cell),
-        new Shape(Shapes.Cross, cell),
-        new Shape(Shapes.TripleT, cell),
-        new Shape(Shapes.BigTripleT, cell),
-        new Shape(Shapes.TripleC, cell),
-        new Shape(Shapes.Bolt, cell),
-        new Shape(Shapes.TripleL, cell),
-        new Shape(Shapes.BigTripleL, cell),
-        new Shape(Shapes.TripleP, cell),
-        new Shape(Shapes.OffsetCross, cell),
-        new Shape(Shapes.Snake, cell),
-        new Shape(Shapes.TripleW, cell),
-        new Shape(Shapes.QuadrupleLine, cell),
-        new Shape(Shapes.QuadrupleL, cell),
-        new Shape(Shapes.QuadrupleOffsetL, cell),
-        new Shape(Shapes.QuadrupleBolt, cell),
-        new Shape(Shapes.PentaLine, cell)
-
-
-    ]
+    let list = []
+    for (let shape of shapeList())
+        list.push(new Shape(shape, cell))
+    return list
 }
 
 function checkIfPLayerWon(shapes: Shape[][]) {
@@ -106,7 +85,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     }
 
     function onMoveMade(id?: number): void {
-        if (id != undefined)
+        if (id !== undefined)
             shapes[currentPLayerID()].splice(id, 1);
 
         setSelected(-1);
@@ -158,7 +137,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     return <>
         {getTitle()}
         {getButtons()}
-        <BoardWidget refreshShapes={() => { }} onMoveMade={() => onMoveMade(selected)} board={board} highlightShape={getHighlightedShape()} />
+        <BoardWidget onMoveMade={() => onMoveMade(selected)} board={board} highlightShape={getHighlightedShape()} />
 
         {getShapeWidgets()}
 
