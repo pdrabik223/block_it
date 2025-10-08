@@ -234,6 +234,16 @@ export class Shape {
 
     flipLR() {
 
+        const n = this.size;
+
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < Math.floor(n / 2); j++) {
+                const k = n - 1 - j;
+                const tmp = this.data[i][j];
+                this.data[i][j] = this.data[i][k];
+                this.data[i][k] = tmp;
+            }
+        }
 
     }
 }

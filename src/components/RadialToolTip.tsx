@@ -44,11 +44,20 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                     top: "15%",
                 }}>Rotate R</button>
 
-            <button style={{
-                position: 'absolute',
-                left: "42%",
-                top: "10%",
-            }}>Flip</button>
+            <button
+                onClick={
+                    () => {
+                        if (props.highlightShape) {
+                            props.highlightShape.flipLR();
+                            props.refreshBoard();
+                        }
+                    }
+                }
+                style={{
+                    position: 'absolute',
+                    left: "42%",
+                    top: "10%",
+                }}>Flip</button>
 
             <button
                 onClick={() => {
