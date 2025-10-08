@@ -62,10 +62,13 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
     function gameEnded(): boolean {
         // all players abandoned game
+        // add case for moment when player has no moves left
         if (nextPLayerID() == null) return true;
 
         // one player won and round ended
         if (checkIfPLayerWon(shapes) && currentPLayerID() == 3) return true;
+
+
         return false;
 
     }
