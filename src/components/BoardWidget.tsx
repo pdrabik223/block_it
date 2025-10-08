@@ -43,6 +43,45 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
         [ids_to_replace, cells, errors] = props.board.combineShape(shapePlacement, props.highlightShape)
     }
 
+    let applyFunction = undefined;
+    if (props.highlightShape && shapePlacement != -1)
+        if (props.board.isValidPlacement(errors))
+            applyFunction = () => {
+                props.board.addShape(shapePlacement, props.highlightShape!)
+                setReDrawWidget(!reDrawWidget);
+                // props.refreshShapes();
+                setTooltipPos(null);
+                props.onMoveMade();
+            }
+
+    return <div>
+        <InnerBoardWidget
+            board={props.board}
+            ids_to_replace={ids_to_replace}
+            cells={cells}
+            errors={errors}
+            highlightShape={props.highlightShape}
+            onHoverEvent={(v, b) => { if (b) { if (shapePlacement != v) setShapePlacement(v) } else { if (shapePlacement == v) setShapePlacement(-1) } }}
+            onPress={(_, e) => { setTooltipPos({ x: e.clientX, y: e.clientY }); }}
+        />
+        <FullScreenOverlay show={tooltipPos != null} >
+            <RadialToolTip apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
+        </FullScreenOverlay>
+    </div>
+}
+
+interface InnerBoardWidgetProps {
+    board: Board,
+    ids_to_replace: number[] | null;
+    cells: Cell[];
+    errors: PlacementState[];
+    highlightShape?: Shape
+    onHoverEvent: (v: number, is_hovering: boolean) => void
+    onPress: (v: number, e: MouseEvent) => void
+}
+
+export const InnerBoardWidget: React.FC<InnerBoardWidgetProps> = (props: InnerBoardWidgetProps) => {
+
     let data: JSX.Element[] = []
 
     let temp = horizontalBorder(Cell.Red, Cell.Blue);
@@ -55,10 +94,10 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
 
             let cell_widget = <CellWidget value={props.board.get(x, y)} />
 
-            if (ids_to_replace != null) {
-                let shapeCellId = ids_to_replace.indexOf(x * Board.height + y)
+            if (props.ids_to_replace != null) {
+                let shapeCellId = props.ids_to_replace.indexOf(x * Board.height + y)
                 if (props.highlightShape != null && shapeCellId != -1) {
-                    cell_widget = <CellWidget highlight={errors[shapeCellId]} value={cells[shapeCellId]} />
+                    cell_widget = <CellWidget highlight={props.errors[shapeCellId]} value={props.cells[shapeCellId]} />
                 }
             }
 
@@ -66,8 +105,8 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
                 <SelectableCell
                     key={uuidv4()}
                     cellPosition={x * Board.height + y}
-                    onHoverEvent={(v, b) => { if (b) { if (shapePlacement != v) setShapePlacement(v) } else { if (shapePlacement == v) setShapePlacement(-1) } }}
-                    onPress={(_, e) => { setTooltipPos({ x: e.clientX, y: e.clientY }); }}>
+                    onHoverEvent={props.onHoverEvent}
+                    onPress={props.onPress}>
                     {cell_widget}
                 </SelectableCell>
             );
@@ -79,26 +118,8 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
     temp = horizontalBorder(Cell.Orange, Cell.Green);
     data.push(<div key={uuidv4()} className='row'>{temp}</div>);
 
+    return <div className='column'> {data}</div>
 
-    let applyFunction = undefined;
-    if (props.highlightShape && shapePlacement != -1)
-        if (props.board.isValidPlacement(errors))
-            applyFunction = () => {
-                props.board.addShape(shapePlacement, props.highlightShape!)
-                setReDrawWidget(!reDrawWidget);
-                // props.refreshShapes();
-                setTooltipPos(null);
-                props.onMoveMade();
-
-            }
-
-    return <div>
-        <div className='column'> {data}</div>
-        <FullScreenOverlay show={tooltipPos != null} >
-            <RadialToolTip apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
-        </FullScreenOverlay>
-    </div>
 }
-
 
 

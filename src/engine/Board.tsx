@@ -18,6 +18,32 @@ export enum PlacementState {
     TouchingSameColorCorner,
     None
 }
+const enum CellCorner {
+    TopLeft,
+    TopRight,
+    BottomRight,
+    BottomLeft,
+}
+
+class Move {
+    position: number
+    orientation: CellCorner
+    shapeId: number
+    shape: Shape
+    constructor(position: number,
+        shapeId: number,
+        shape: Shape,
+        orientation: CellCorner,
+
+    ) {
+        this.position = position
+        this.shape = shape
+        this.shapeId = shapeId
+        this.orientation = orientation
+    }
+}
+
+
 export class Board {
 
     public data: Cell[] = [];
@@ -51,6 +77,97 @@ export class Board {
         }
     }
 
+
+    getCellPlacementWithOffset(cellPLacement: number, offset: CellCorner): number | null {
+
+        let x = Math.floor(cellPLacement / Board.width);
+        let y = cellPLacement % Board.width;
+
+
+        switch (offset) {
+            case CellCorner.TopLeft:
+                --x
+                --y
+                break;
+            case CellCorner.TopRight:
+                --x
+                ++y
+                break;
+            case CellCorner.BottomRight:
+                ++x
+                ++y
+                break;
+            case CellCorner.BottomLeft:
+                ++x
+                --y
+                break;
+        }
+
+        if (x < 0 || x >= Board.width) return null;
+        if (y < 0 || y >= Board.height) return null;
+        return x * Board.width + y;
+    }
+
+    getHangingCorners(color: Cell): [number, CellCorner][] {
+        let hangingCorners: [number, CellCorner][] = []
+
+        // corner cases but check if they are covered by something
+        switch (color) {
+            case Cell.Red:
+                if (this.data[0] == Cell.Empty)
+                    hangingCorners.push([0, CellCorner.BottomRight])
+                break;
+            case Cell.Blue:
+                if (this.data[Board.width - 1] == Cell.Empty)
+                    hangingCorners.push([Board.width - 1, CellCorner.BottomLeft])
+                break
+            case Cell.Green:
+                if (this.data[(Board.height - 1) * Board.width + Board.width - 1] == Cell.Empty)
+                    hangingCorners.push([(Board.height - 1) * Board.width + Board.width - 1, CellCorner.TopLeft])
+                break
+            case Cell.Orange:
+                if (this.data[(Board.height - 1) * Board.width] == Cell.Empty)
+                    hangingCorners.push([(Board.height - 1) * Board.width, CellCorner.TopRight])
+                break;
+        }
+
+
+
+        // user placed cells
+        let listOfSameColorCells: number[] = []
+
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i] == color) listOfSameColorCells.push(i)
+        }
+
+        const offsets = [CellCorner.BottomRight, CellCorner.BottomLeft, CellCorner.TopLeft, CellCorner.TopRight]
+
+        for (let position of listOfSameColorCells) {
+            for (let offset of offsets) {
+                let result = this.getCellPlacementWithOffset(position, offset)
+                if (result !== null) {
+                    if (this.data[result] == Cell.Empty)
+                        hangingCorners.push([result, offset])
+                }
+            }
+        }
+
+
+        return hangingCorners;
+    }
+
+    getAllPossibleMovesForShapes(shapes: Shape[], color: Cell): Move[] {
+
+        console.log(this.getHangingCorners(color))
+        // let possibleMoves = []
+
+        // for (let shape in shapes) {
+
+
+        // }
+
+        return []
+    }
     checkBoundingBoxError(x: number, y: number) {
         if (x < 0) return true;
         if (y < 0) return true;

@@ -59,16 +59,30 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     });
 
     let noPlayers = 4;
+    let [gameEndedCache, iteration] = [false, 0]
 
     function gameEnded(): boolean {
+        if (iteration == gameIteration) return gameEndedCache;
         // all players abandoned game
         // add case for moment when player has no moves left
-        if (nextPLayerID() == null) return true;
+        let playerColors = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
+        board.getAllPossibleMovesForShapes(shapes[currentPLayerID()], playerColors[currentPLayerID()])
+
+        if (nextPLayerID() == null) {
+            gameEndedCache = true;
+            iteration = gameIteration;
+            return true;
+        }
 
         // one player won and round ended
-        if (checkIfPLayerWon(shapes) && currentPLayerID() == 3) return true;
+        if (checkIfPLayerWon(shapes) && currentPLayerID() == 3) {
+            gameEndedCache = true;
+            iteration = gameIteration;
+            return true;
+        }
 
-
+        gameEndedCache = false;
+        iteration = gameIteration;
         return false;
 
     }
@@ -106,6 +120,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
         return gameEnded() ? null : <h2 className={textColors[currentPLayerID()]} style={{ backgroundColor: "transparent" }}>{getPlayerNames()[currentPLayerID()]}</h2>;
     }
+
     function getButtons() {
         if (!gameEnded())
             return <div className="abandon_game_button" >
@@ -113,6 +128,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
                 <Button onClick={() => setGameIteration(gameIteration + 1)} style={{ margin: "1%" }}> Skip turn </Button>
             </div>
     }
+
     function getShapeWidgets() {
         if (!gameEnded())
             return <div className='row' style={{ flexWrap: 'wrap' }}>
