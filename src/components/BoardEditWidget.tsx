@@ -105,8 +105,10 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         return null;
     }
 
-    function onMoveMade(id: number): void {
-        shapes[currentPLayerID()].splice(id, 1);
+    function onMoveMade(id?: number): void {
+        if (id != undefined)
+            shapes[currentPLayerID()].splice(id, 1);
+
         setSelected(-1);
 
         if (nextPLayerID() != null)
@@ -127,7 +129,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     function getButtons() {
         if (!gameEnded())
             return <div className="abandon_game_button" >
-                <button style={{ margin: "1%" }} onClick={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade(currentPLayerID()) }}> Abandon Game </button>
+                <button style={{ margin: "1%" }} onClick={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}> Abandon Game </button>
                 <button onClick={() => setGameIteration(gameIteration + 1)} style={{ margin: "1%" }}> Skip turn </button>
             </div>
     }
@@ -196,8 +198,8 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
 
         var total = 0;
 
-        for (let shape of props.shapes[playerID]) {
-            total += shape.points();
+        for (let i = 0; i < props.shapes[playerID].length; i++) {
+            total += props.shapes[playerID][i].points();
         }
         scoreBoard.push(new PlayerResultInfo(props.playerNames[playerID], total, textColors[playerID]))
     }
