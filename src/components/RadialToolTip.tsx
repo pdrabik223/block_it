@@ -2,6 +2,7 @@ import type React from 'react';
 
 import "./RadialToolTip.css"
 import { NoRotations, type Shape } from '../engine/Shape.tsx';
+import { Button } from './Button.tsx';
 
 
 export interface RadialToolTipProps {
@@ -20,7 +21,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
     function getRotateRButton() {
 
         if (props.highlightShape && props.highlightShape.numberOfRotations != NoRotations.Zero)
-            return <button
+            return <Button
                 onClick={() => {
                     props.highlightShape!.rotate(true);
                     props.refreshBoard();
@@ -30,11 +31,11 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                     position: 'absolute',
                     left: "60%",
                     top: "15%",
-                }}>Rotate R</button>
+                }}>Rotate R</Button>
     }
     function getFlipButton() {
         if (props.highlightShape && props.highlightShape.canBeFlipped)
-            return <button
+            return <Button
                 onClick={
                     () => {
                         props.highlightShape!.flipLR();
@@ -45,13 +46,13 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                     position: 'absolute',
                     left: "42%",
                     top: "10%",
-                }}>Flip</button>
+                }}>Flip</Button>
 
     }
 
     function getRotateLButton() {
         if (props.highlightShape && props.highlightShape.numberOfRotations != NoRotations.Zero)
-            return <button
+            return <Button
                 onClick={() => {
                     props.highlightShape!.rotate(false);
                     props.refreshBoard();
@@ -60,18 +61,18 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                     position: 'absolute',
                     left: "14%",
                     top: "15%",
-                }}>Rotate L</button>
+                }}>Rotate L</Button>
     }
     function getApplyButton() {
         if (props.apply != undefined)
-            return <button
+            return <Button
                 onClick={props.apply}
 
                 style={{
                     position: 'absolute',
                     left: "40%",
                     top: "75%",
-                }}>Apply</button>
+                }}>Apply</Button>
 
     }
     return <div style={{
@@ -91,12 +92,12 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
             {getFlipButton()}
             {getRotateLButton()}
             {getApplyButton()}
-            <button style={{
+            <Button style={{
                 position: `absolute`,
                 left: "60%",
                 top: "60%",
 
-            }}>Cancel Shape</button>
+            }}>Cancel Shape</Button>
 
 
         </div>

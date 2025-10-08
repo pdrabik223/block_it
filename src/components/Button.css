@@ -1,0 +1,16 @@
+.fancy_button_red:hover {
+    border-color: rgb(255, 86, 86);
+}
+
+
+.fancy_button_blue:hover {
+    border-color: rgb(59, 59, 253);
+}
+
+.fancy_button_green:hover {
+    border-color: rgb(43, 129, 43);
+}
+
+.fancy_button_orange:hover {
+    border-color: rgb(249, 195, 96);
+}

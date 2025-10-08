@@ -3,6 +3,7 @@ import { GameLoop, PlayerInfo } from './components/BoardEditWidget.tsx';
 import { CellWidget } from './components/CellWidget.tsx';
 import { Cell } from './engine/Board.tsx';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from './components/Button.tsx';
 
 export const enum GameModes {
     Game2player,
@@ -66,9 +67,9 @@ export const MainMenu: React.FC<{}> = () => {
     if (gameMode == null) return <>
         <div className='column'>
             <h1>Block it</h1>
-            <button style={{ margin: "4px" }}>Tutorial</button>
-            <button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game2player)}>2 Player Game</button>
-            <button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game4player)}>4 Player Game</button>
+            <Button style={{ margin: "4px" }}>Tutorial</Button>
+            <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game2player)}>2 Player Game</Button>
+            <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game4player)}>4 Player Game</Button>
         </div>
     </>;
 
@@ -79,8 +80,8 @@ export const MainMenu: React.FC<{}> = () => {
             <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
             <PlayerInfoBlock ref={inputRefs[2]} cell={Cell.Green} />
             <PlayerInfoBlock ref={inputRefs[3]} cell={Cell.Orange} />
-            <button style={{ margin: "4px" }} onClick={() => { handleClick(); setIsPlaying(true) }}>Start</button>
-            <button style={{ margin: "4px" }} onClick={() => { setGameMode(null); setIsPlaying(false); }}>Back</button>
+            <Button style={{ margin: "4px" }} onClick={() => { handleClick(); setIsPlaying(true) }}>Start</Button>
+            <Button style={{ margin: "4px" }} onClick={() => { setGameMode(null); setIsPlaying(false); }}>Back</Button>
         </div>
     </>;
 
@@ -90,8 +91,8 @@ export const MainMenu: React.FC<{}> = () => {
             <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} />
             <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
 
-            <button style={{ margin: "4px" }} onClick={() => setIsPlaying(true)}>Start</button>
-            <button style={{ margin: "4px" }} onClick={() => { setGameMode(null); setIsPlaying(false); }}>Back</button>
+            <Button style={{ margin: "4px" }} onClick={() => setIsPlaying(true)}>Start</Button>
+            <Button style={{ margin: "4px" }} onClick={() => { setGameMode(null); setIsPlaying(false); }}>Back</Button>
         </div>
     </>;
 };
@@ -117,7 +118,7 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
 
 
     return <div key={uuidv4()} className='row' style={{ margin: "4px" }}>
-        <button style={{ margin: "4px", width: "42%" }} onClick={() => setIsPlayer(!isPlayer)}>{isPlayer ? "Player" : "Engine"}</button>
+        <Button style={{ margin: "4px", width: "42%" }} onClick={() => setIsPlayer(!isPlayer)}>{isPlayer ? "Player" : "Engine"}</Button>
         {isPlayer ? <input onChange={(v) => setUsername(v.currentTarget.value)} minLength={1} style={{ margin: "4px" }} value={username}></input> : <select style={{ margin: "4px", width: "100%" }}>
             {EngineOptions}
         </select>}

@@ -1,5 +1,6 @@
 import React, { type JSX } from "react";
 import type { Shape } from "../engine/Shape.tsx";
+import { Button } from "./Button.tsx";
 
 export interface ScoreBoardProps {
     shapes: Shape[][];
@@ -68,7 +69,7 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
             <div className="column">
                 {column}
             </div>
-            <button onClick={props.returnToMainMenu}>Main menu</button>
+            <Button onClick={props.returnToMainMenu}>Main menu</Button>
         </div>
     </div>;
 };

@@ -11,6 +11,7 @@ import { FullScreenOverlay } from "./FullScreenOverlay.tsx";
 import './CellWidget.css'
 import { SelectableShape } from "./SelectableShape.tsx";
 import { ScoreBoard } from "./ScoreBoard.tsx";
+import { Button } from "./Button.tsx";
 
 
 
@@ -105,8 +106,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     function getButtons() {
         if (!gameEnded())
             return <div className="abandon_game_button" >
-                <button style={{ margin: "1%" }} onClick={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}> Abandon Game </button>
-                <button onClick={() => setGameIteration(gameIteration + 1)} style={{ margin: "1%" }}> Skip turn </button>
+                <Button style={{ margin: "1%" }} onClick={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}> Abandon Game </Button>
+                <Button onClick={() => setGameIteration(gameIteration + 1)} style={{ margin: "1%" }}> Skip turn </Button>
             </div>
     }
     function getShapeWidgets() {
