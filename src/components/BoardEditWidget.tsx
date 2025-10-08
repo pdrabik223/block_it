@@ -1,5 +1,5 @@
 import React, { useState, type JSX } from "react";
-import { v4 as uuidv4 } from 'uuid';
+
 import { Board, Cell } from "../engine/Board.tsx";
 import { Shape, Shapes } from "../engine/Shape.tsx";
 import { ShapeWidget } from "./ShapeWidget.tsx";
@@ -8,57 +8,10 @@ import { BoardWidget } from "./BoardWidget.tsx";
 import './BoardEditWidget.css'
 import { FullScreenOverlay } from "./FullScreenOverlay.tsx";
 
+import './CellWidget.css'
+import { SelectableShape } from "./SelectableShape.tsx";
 
-interface SelectableShapeProps {
-    children: React.ReactNode,
-    onPress: (v: number) => void,
-    isSelected: boolean,
-    shapeId: number
-}
 
-export const SelectableShape: React.FC<SelectableShapeProps> = (props: SelectableShapeProps) => {
-
-    let class_name: string = props.isSelected ? "brightness(1)" : "brightness(0.6)"
-
-    return <div
-        style={{ filter: class_name }}
-        className='selectable_shape'
-        key={uuidv4()}
-        onClick={() => {
-            props.onPress(props.shapeId);
-        }}>
-        {props.children}
-    </div>
-}
-
-interface BoardEditWidgetProps {
-    board: Board;
-    shapes: Shape[];
-    onMoveMade: (id: number) => void;
-}
-
-export const BoardEditWidget: React.FC<BoardEditWidgetProps> = (props: BoardEditWidgetProps) => {
-    const [selected, setSelected] = useState(-1)
-    const [reDrawWidget, setReDrawWidget] = useState(false)
-
-    return <>
-        <BoardWidget onMoveMade={() => props.onMoveMade(selected)} refreshShapes={() => setReDrawWidget(!reDrawWidget)} board={props.board} highlightShape={(selected != -1) ? props.shapes[selected] : undefined} />
-        <div className='row' style={{ flexWrap: 'wrap' }}>
-            {props.shapes.map((object, i) =>
-                <SelectableShape onPress={(id) => { setSelected(id) }} shapeId={i} isSelected={(selected == i)}>
-                    <ShapeWidget shape={object} />
-                </SelectableShape>)}
-        </div>
-    </>
-}
-
-interface GameLoopProps {
-    // must be the same length as colors
-    playerNames: string[]
-    returnToMainMenu: () => void
-    // Assuming colors are ordered correctly Cell.Red, Cell.Blue, Cell.Green, Cell.Yellow
-    // colors: Cell[]
-}
 
 function initShapeList(cell: Cell) {
     return [
@@ -95,9 +48,26 @@ function checkIfPLayerWon(shapes: Shape[][]) {
     return null;
 }
 
+export class PlayerInfo {
+
+    name: string;
+    isEngine: boolean;
+    endedPLay: boolean = false;
+
+    constructor(name: string, isEngine: boolean) {
+        this.name = name;
+        this.isEngine = isEngine;
+    }
+}
+
+interface GameLoopProps {
+    playerNames: PlayerInfo[]
+    returnToMainMenu: () => void
+}
+
 export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
-
+    const [selected, setSelected] = useState(-1)
     const [gameIteration, setGameIteration] = useState(0);
     const [board, setBoard] = useState(new Board());
     const [shapes, setShapes] = useState(() => {
@@ -109,17 +79,89 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
     let noPlayers = 4;
 
-
     let playerWon = checkIfPLayerWon(shapes)
 
+    function gameEnded(): boolean {
+        // all players abandoned game
+        if (nextPLayerID() == null) return true;
 
+        // one player won and round ended
+        if (checkIfPLayerWon(shapes) && currentPLayerID() == 3) return true;
+        return false;
+
+    }
+
+    function currentPLayerID() {
+        return gameIteration % noPlayers;
+    }
+
+    function nextPLayerID() {
+
+        for (let i = 1; i <= props.playerNames.length; i++) {
+            let nextid = (gameIteration + i) % noPlayers;
+            let endedPlay = props.playerNames[nextid].endedPLay;
+            if (!endedPlay) return nextid;
+        }
+        return null;
+    }
+
+    function onMoveMade(id: number): void {
+        shapes[currentPLayerID()].splice(id, 1);
+        setSelected(-1);
+
+        if (nextPLayerID() != null)
+            setGameIteration(nextPLayerID()!);
+
+        else {
+            playerWon = 1;
+            setGameIteration(currentPLayerID() + 1)
+        }
+    }
+
+
+    function getTitle(): JSX.Element | null {
+        let textColors = ['cell_red', 'cell_blue', 'cell_green', 'cell_orange']
+
+        return gameEnded() ? null : <h2 className={textColors[currentPLayerID()]} style={{ backgroundColor: "transparent" }}>{getPlayerNames()[currentPLayerID()]}</h2>;
+    }
+    function getButtons() {
+        if (!gameEnded())
+            return <div className="abandon_game_button" >
+                <button style={{ margin: "1%" }} onClick={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade(currentPLayerID()) }}> Abandon Game </button>
+                <button onClick={() => setGameIteration(gameIteration + 1)} style={{ margin: "1%" }}> Skip turn </button>
+            </div>
+    }
+    function getShapeWidgets() {
+        if (!gameEnded())
+            return <div className='row' style={{ flexWrap: 'wrap' }}>
+                {shapes[currentPLayerID()].map((object, i) =>
+                    <SelectableShape onPress={setSelected} shapeId={i} isSelected={(selected == i)}>
+                        <ShapeWidget shape={object} />
+                    </SelectableShape>)}
+            </div>
+    }
+
+    function getPlayerNames() {
+        let names = [];
+        for (let name of props.playerNames) {
+            names.push(name.name)
+        }
+        return names;
+    }
+
+    function getHighlightedShape() {
+        return (selected != -1) ? shapes[currentPLayerID()][selected] : undefined
+    }
 
     return <>
-        {(playerWon != null && gameIteration % noPlayers == 0) ? null : <h2>{props.playerNames[gameIteration % noPlayers]}</h2>}
-        <BoardEditWidget onMoveMade={(id: number) => { shapes[gameIteration % noPlayers].splice(id, 1); setGameIteration(gameIteration + 1); }} board={board} shapes={shapes[gameIteration % noPlayers]}></BoardEditWidget>
-        <FullScreenOverlay show={playerWon != null && gameIteration % noPlayers == 0}>
+        {getTitle()}
+        {getButtons()}
+        <BoardWidget refreshShapes={() => { }} onMoveMade={() => onMoveMade(selected)} board={board} highlightShape={getHighlightedShape()} />
 
-            <ScoreBoard returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={props.playerNames}></ScoreBoard>
+        {getShapeWidgets()}
+
+        <FullScreenOverlay show={gameEnded()}>
+            <ScoreBoard returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={getPlayerNames()}></ScoreBoard>
         </FullScreenOverlay>
     </>
 }
@@ -131,40 +173,56 @@ export interface ScoreBoardProps {
     returnToMainMenu: () => void
 }
 
+class PlayerResultInfo {
+    name: string
+    points: number
+    color: string
+    constructor(name: string,
+        points: number,
+        color: string) {
+
+        this.name = name
+        this.points = points
+        this.color = color
+    }
+}
+
 export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) => {
 
-    let scoreBoard = new Map<string, number>()
-    for (let shapeId = 0; shapeId < props.playerNames.length; shapeId++) {
-        let total = 0;
-        for (let shape of props.shapes[shapeId]) {
+    let scoreBoard = new Array<PlayerResultInfo>()
+    let textColors = ['cell_red', 'cell_blue', 'cell_green', 'cell_orange']
+
+    for (let playerID = 0; playerID < props.playerNames.length; playerID++) {
+
+        var total = 0;
+
+        for (let shape of props.shapes[playerID]) {
             total += shape.points();
         }
-        scoreBoard.set(props.playerNames[shapeId], total)
+        scoreBoard.push(new PlayerResultInfo(props.playerNames[playerID], total, textColors[playerID]))
     }
-    scoreBoard = new Map([...scoreBoard.entries()].sort());
-
 
     let column: JSX.Element[] = []
-
-
 
     for (let player of scoreBoard) {
 
         column.push(
-            <div className='row'>
-                <h2>{player[0]}</h2>
-                <h2>{player[1]}</h2>
+            <div className='row' >
+                <h2 className={player.color} style={{ backgroundColor: "transparent" }}>{player.name}</h2>
+                <h2 style={{ width: "4rem", backgroundColor: "transparent" }} className={player.color}>{player.points}</h2>
             </div>
         )
 
     }
 
-    return <div>
-        <h1>Game Over!</h1>
-        <div className="column" style={{ justifyContent: 'center' }}>
-            {column}
+    return <div className="column" style={{ height: "100%" }} >
+        <div>
+            <h1>Game Over!</h1>
+            <div className="column">
+                {column}
+            </div>
+            <button onClick={props.returnToMainMenu}>Main menu</button>
         </div>
-        <button onClick={props.returnToMainMenu}>Main menu</button>
     </div>;
 };
 

@@ -1,6 +1,6 @@
 import { useImperativeHandle, useRef, useState } from 'react';
 
-import { GameLoop } from './components/BoardEditWidget.tsx';
+import { GameLoop, PlayerInfo } from './components/BoardEditWidget.tsx';
 import { CellWidget } from './components/CellWidget.tsx';
 import { Cell } from './engine/Board.tsx';
 import { v4 as uuidv4 } from 'uuid';
@@ -43,9 +43,8 @@ export const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
     const [gameMode, setGameMode] = useState<GameModes | null>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-    const [playerNames, setPlayerNames] = useState<Array<string>>(["X", "Y", "Z", "A"]);
-    const [isEngine, setIsEngine] = useState<Array<boolean>>([false, false, false, false]);
-
+    const [playerInfo, setplayerInfo] = useState<Array<PlayerInfo>>([new PlayerInfo("X", false), new PlayerInfo("X", false), new PlayerInfo("X", false), new PlayerInfo("X", false)]);
+   
     const inputRefs = [
         useRef<PlayerInfoRef>(null),
         useRef<PlayerInfoRef>(null),
@@ -54,17 +53,13 @@ export const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
     ]
 
     if (isPlaying) {
-        return <GameLoop returnToMainMenu={() => { setGameMode(null); setIsPlaying(false); }} playerNames={playerNames} />;
+        return <GameLoop returnToMainMenu={() => { setGameMode(null); setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
     const handleClick = () => {
-
-
         for (let i = 0; i < inputRefs.length; i++) {
             let [isPlayer, name] = inputRefs[i].current!.getState()
-            playerNames[i] = name;
-            isEngine[i] = !isPlayer;
-
+            playerInfo[i] = new PlayerInfo(name, isPlayer);
         }
     };
 

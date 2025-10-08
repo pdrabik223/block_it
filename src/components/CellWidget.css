@@ -5,29 +5,34 @@
 }
 
 .cell_red {
-
   background-color: rgb(255, 86, 86);
+  color: rgb(255, 86, 86);
 }
 
 .cell_border {
-
   background-color: rgb(17, 17, 17);
+
 }
 
 .cell_blue {
 
   background-color: rgb(59, 59, 253);
+  color: rgb(59, 59, 253);
 }
 
 .cell_green {
 
   background-color: rgb(43, 129, 43);
+  color: rgb(43, 129, 43);
+
 }
 
 
 .cell_orange {
 
   background-color: rgb(249, 195, 96);
+  color: rgb(249, 195, 96);
+
 }
 
 .cell_empty {

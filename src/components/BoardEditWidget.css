@@ -1,5 +1,6 @@
 .selectable_shape {
   filter: brightness(0.6);
+  margin: 0.5%;
 }
 
 .selected {
@@ -24,4 +25,12 @@
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
+}
+
+#abandon_game_button {
+  display: fixed;
+  left: unset;
+  right: 0;
+  top: 0;
+  bottom: unset;
 }

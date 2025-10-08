@@ -37,14 +37,11 @@ export class Shape {
 
     points(): number {
         let sum = 0;
-        for (let x of this.data) {
-            for (let y of x) {
-                if (y != this.none) {
+        for (let x of this.data)
+            for (let y of x)
+                if (y != this.none)
                     sum++;
-                }
-
-            }
-        }
+       
         return sum;
     }
 
