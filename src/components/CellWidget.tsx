@@ -39,22 +39,25 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
         optionalStyling["height"] = `${props.size}px`
     }
 
+    let className = "cell_base ";
+
     switch (props.value) {
         case Cell.Blue:
-            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_blue'> </div>
+            className += 'cell_blue'; break;
         case Cell.Green:
-            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_green'> </div>
+            className += 'cell_green'; break;
         case Cell.Orange:
-            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_orange'> </div>
+            className += 'cell_orange'; break;
         case Cell.Red:
-            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_red'> </div>
+            className += 'cell_red'; break;
         case Cell.Empty:
-            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_empty'> </div>
+            className += 'cell_empty'; break;
         case Cell.Border:
-            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_border'> </div>
+            className += 'cell_border'; break;
         case Cell.None:
-            return <div key={uuidv4()} style={optionalStyling} className='cell_base cell_none'> </div>
-
+            className += 'cell_none'; break;
     }
+
+    return <div key={uuidv4()} style={optionalStyling} className={className}> </div>
 }
 

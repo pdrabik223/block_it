@@ -1,11 +1,8 @@
 import { useImperativeHandle, useRef, useState } from 'react';
-
 import { GameLoop, PlayerInfo } from './components/BoardEditWidget.tsx';
 import { CellWidget } from './components/CellWidget.tsx';
 import { Cell } from './engine/Board.tsx';
 import { v4 as uuidv4 } from 'uuid';
-
-export interface MainMenuProps { }
 
 export const enum GameModes {
     Game2player,
@@ -33,18 +30,21 @@ export const usernames = [
     "Geralt of Rivia"
 ];
 
-
 interface PlayerInfoRef {
     getState: () => [boolean, string];
 }
 
-export const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
+export const MainMenu: React.FC<{}> = () => {
 
     const [gameMode, setGameMode] = useState<GameModes | null>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-    const [playerInfo, setplayerInfo] = useState<Array<PlayerInfo>>([new PlayerInfo("X", false), new PlayerInfo("X", false), new PlayerInfo("X", false), new PlayerInfo("X", false)]);
-   
+    const [playerInfo] = useState<Array<PlayerInfo>>([
+        new PlayerInfo("X", false),
+        new PlayerInfo("X", false),
+        new PlayerInfo("X", false),
+        new PlayerInfo("X", false)]);
+
     const inputRefs = [
         useRef<PlayerInfoRef>(null),
         useRef<PlayerInfoRef>(null),
@@ -99,18 +99,19 @@ export const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
 interface PlayerInfoBlockProps { ref: React.RefObject<PlayerInfoRef | null>; cell: Cell }
 
 export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInfoBlockProps) => {
-    let engines = new Array<string>("Randy", "Martin")
+
+    let engines = new Array<string>("Randy")
 
     const [isPlayer, setIsPlayer] = useState(true);
     const [username, setUsername] = useState<string>(usernames[Math.floor(Math.random() * usernames.length)]);
     const [engine, setEngine] = useState<string>(engines[0]);
-
 
     useImperativeHandle(props.ref, () => ({
         getState: () => [isPlayer, isPlayer ? username : engine],
     }));
 
     let EngineOptions = [];
+
     for (let value of engines)
         EngineOptions.push(<option key={uuidv4()} onChange={(e) => setEngine(e.currentTarget.value)}>{value}</option>)
 

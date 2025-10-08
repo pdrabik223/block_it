@@ -48,7 +48,6 @@ export class Shape {
             for (let y of x)
                 if (y != this.none)
                     sum++;
-
         return sum;
     }
 
@@ -59,25 +58,24 @@ export class Shape {
             case Shapes.Dot:
                 this.data = [[cell]];
                 this.size = 1;
-                // this.canBeFlipped = false;
                 this.numberOfRotations = NoRotations.Zero
                 return;
             case Shapes.Tuple:
                 this.data = [[cell, cell], [this.none, this.none]];
                 this.size = 2;
-                // this.canBeFlipped = false;
                 this.numberOfRotations = NoRotations.Four
                 return;
             case Shapes.Triple:
                 this.data = [[cell, cell], [cell, this.none]];
                 this.size = 2;
-                this.numberOfRotations = NoRotations.Zero
+                this.numberOfRotations = NoRotations.Four
                 return;
             case Shapes.Square:
                 this.data = [[cell, cell], [cell, cell]];
                 this.size = 2;
-                this.numberOfRotations = NoRotations.Four
+                this.numberOfRotations = NoRotations.Zero
                 return;
+
             case Shapes.Cross:
                 this.data = [
                     [this.none, cell, this.none],
@@ -86,6 +84,7 @@ export class Shape {
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Zero
                 return;
+
             case Shapes.TripleLine:
                 this.data = [
                     [this.none, this.none, this.none],
@@ -94,6 +93,7 @@ export class Shape {
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Two
                 return;
+
             case Shapes.TripleT:
                 this.data = [
                     [this.none, this.none, this.none],
@@ -101,8 +101,8 @@ export class Shape {
                     [this.none, cell, this.none],];
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
-
                 return;
+
             case Shapes.BigTripleT:
                 this.data = [
                     [cell, cell, cell],
@@ -111,6 +111,7 @@ export class Shape {
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
+
             case Shapes.TripleC:
                 this.data = [
                     [cell, cell, this.none],
@@ -119,6 +120,7 @@ export class Shape {
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
+
             case Shapes.Bolt:
                 this.data = [
                     [this.none, this.none, this.none],
@@ -127,6 +129,7 @@ export class Shape {
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
+
             case Shapes.TripleL:
                 this.data = [
                     [cell, this.none, this.none],
@@ -136,6 +139,7 @@ export class Shape {
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
+
             case Shapes.BigTripleL:
                 this.data = [
                     [cell, this.none, this.none],
@@ -143,8 +147,8 @@ export class Shape {
                     [cell, cell, cell]];
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
-
                 return;
+
             case Shapes.TripleP:
                 this.data = [
                     [cell, cell, this.none],
@@ -154,6 +158,7 @@ export class Shape {
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
+
             case Shapes.OffsetCross:
                 this.data = [
                     [this.none, this.none, cell],
@@ -163,6 +168,7 @@ export class Shape {
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
+
             case Shapes.Snake:
                 this.data = [
                     [this.none, cell, cell],
@@ -172,6 +178,7 @@ export class Shape {
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
+
             case Shapes.TripleW:
                 this.data = [
                     [this.none, cell, cell],
@@ -181,6 +188,7 @@ export class Shape {
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
+
             case Shapes.QuadrupleLine:
                 this.data = [
                     [this.none, cell, this.none, this.none],
@@ -190,6 +198,7 @@ export class Shape {
                 this.numberOfRotations = NoRotations.Two
                 this.size = 4;
                 return;
+
             case Shapes.QuadrupleL:
                 this.data = [
                     [this.none, cell, this.none, this.none],
@@ -200,6 +209,7 @@ export class Shape {
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
+
             case Shapes.QuadrupleOffsetL:
                 this.data = [
                     [this.none, cell, this.none, this.none],
@@ -210,6 +220,7 @@ export class Shape {
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
+
             case Shapes.QuadrupleBolt:
                 this.data = [
                     [this.none, this.none, cell, this.none],
@@ -220,6 +231,7 @@ export class Shape {
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
+
             case Shapes.PentaLine:
                 this.data = [
                     [this.none, this.none, cell, this.none, this.none],
@@ -228,7 +240,6 @@ export class Shape {
                     [this.none, this.none, cell, this.none, this.none],
                     [this.none, this.none, cell, this.none, this.none]];
                 this.numberOfRotations = NoRotations.Two
-
                 this.size = 5;
                 return;
         }

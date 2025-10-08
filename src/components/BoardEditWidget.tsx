@@ -1,7 +1,7 @@
 import React, { useState, type JSX } from "react";
 
 import { Board, Cell } from "../engine/Board.tsx";
-import { Shape, shapeList, Shapes } from "../engine/Shape.tsx";
+import { Shape, shapeList } from "../engine/Shape.tsx";
 import { ShapeWidget } from "./ShapeWidget.tsx";
 import { BoardWidget } from "./BoardWidget.tsx";
 
@@ -49,8 +49,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
     const [selected, setSelected] = useState(-1)
     const [gameIteration, setGameIteration] = useState(0);
-    const [board, setBoard] = useState(new Board());
-    const [shapes, setShapes] = useState(() => {
+    const [board] = useState(new Board());
+    const [shapes] = useState(() => {
         return [(initShapeList(Cell.Red)),
         (initShapeList(Cell.Blue)),
         (initShapeList(Cell.Green)),
@@ -58,8 +58,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     });
 
     let noPlayers = 4;
-
-    let playerWon = checkIfPLayerWon(shapes)
 
     function gameEnded(): boolean {
         // all players abandoned game
@@ -93,9 +91,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
         if (nextPLayerID() != null)
             setGameIteration(nextPLayerID()!);
-
         else {
-            playerWon = 1;
             setGameIteration(currentPLayerID() + 1)
         }
     }
