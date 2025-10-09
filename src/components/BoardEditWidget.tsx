@@ -58,6 +58,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         (initShapeList(Cell.Green)),
         (initShapeList(Cell.Orange))]
     });
+    const [engineStatus, setEngineStatus] = useState<JSX.Element>(<p>Idle</p>)
 
     let noPlayers = 4;
     let [gameEndedCache, iteration] = [false, -1]
@@ -74,68 +75,67 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         }
 
         // one player won and round ended
-        if (checkIfPLayerWon(shapes) != null && currentPLayerID() == 0) {
+        if (checkIfPLayerWon(shapes) != null && currentPLayerID()[1] == 0) {
             gameEndedCache = true;
             iteration = gameIteration;
             return true;
         }
-        
+
         let playerColors = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
-        let moves = board.getAllPossibleMovesForShapes(shapes[currentPLayerID()], playerColors[currentPLayerID()])
+        let moves = board.getAllPossibleMovesForShapes(shapes[currentPLayerID()[1]], playerColors[currentPLayerID()[1]])
         console.log(moves)
         gameEndedCache = false;
         iteration = gameIteration;
         return false;
-
     }
 
-    function currentPLayerID() {
-        return gameIteration % noPlayers;
+    function currentPLayerID(): [isEngine: boolean, id: number] {
+        return [props.playerNames[gameIteration % noPlayers].isEngine, gameIteration % noPlayers];
     }
 
-    function nextPLayerID() {
+    function nextPLayerID(): [isEngine: boolean, id: number] | null {
 
         for (let i = 1; i <= props.playerNames.length; i++) {
             let nextid = (gameIteration + i) % noPlayers;
             let endedPlay = props.playerNames[nextid].endedPLay;
-            if (!endedPlay) return nextid;
+            if (!endedPlay) return [props.playerNames[nextid].isEngine, nextid];
         }
         return null;
     }
 
     function onMoveMade(id?: number): void {
         if (id !== undefined)
-            shapes[currentPLayerID()].splice(id, 1);
+            shapes[currentPLayerID()[1]].splice(id, 1);
 
         setSelected(-1);
 
         if (nextPLayerID() != null)
-            setGameIteration(nextPLayerID()!);
+
+            setGameIteration(nextPLayerID()![1]);
         else {
-            setGameIteration(currentPLayerID() + 1)
+            setGameIteration(currentPLayerID()[1] + 1)
         }
     }
-
 
     function getTitle(): JSX.Element | null {
         let textColors = ['cell_red', 'cell_blue', 'cell_green', 'cell_orange']
 
-        return gameEnded() ? null : <h2 className={textColors[currentPLayerID()]} style={{ backgroundColor: "transparent" }}>{getPlayerNames()[currentPLayerID()]}</h2>;
+        return gameEnded() ? null : <h2 className={textColors[currentPLayerID()[1]]} style={{ backgroundColor: "transparent" }}>{getPlayerNames()[currentPLayerID()[1]]}</h2>;
     }
 
     function getButtons() {
         if (!gameEnded())
             return <div className="abandon_game_button" >
-                <Button style={{ margin: "1%" }} onClick={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}> Abandon Game </Button>
+                <Button style={{ margin: "1%" }} onClick={() => { props.playerNames[currentPLayerID()[1]].endedPLay = true; onMoveMade() }}> Abandon Game </Button>
                 <Button onClick={() => setGameIteration(gameIteration + 1)} style={{ margin: "1%" }}> Skip turn </Button>
             </div>
     }
 
-    function getShapeWidgets() {
+    function getShapeWidgets(lockSelection: boolean) {
         if (!gameEnded())
             return <div className='row' style={{ flexWrap: 'wrap' }}>
-                {shapes[currentPLayerID()].map((object, i) =>
-                    <SelectableShape onPress={setSelected} shapeId={i} isSelected={(selected == i)}>
+                {shapes[currentPLayerID()[1]].map((object, i) =>
+                    <SelectableShape lockSelection={lockSelection} onPress={setSelected} shapeId={i} isSelected={(selected == i)}>
                         <ShapeWidget shape={object} />
                     </SelectableShape>)}
             </div>
@@ -150,7 +150,17 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     }
 
     function getHighlightedShape() {
-        return (selected != -1) ? shapes[currentPLayerID()][selected] : undefined
+        return (selected != -1) ? shapes[currentPLayerID()[1]][selected] : undefined
+    }
+
+    if (currentPLayerID()[0] && !gameEnded()) {
+
+        return <>
+            {getTitle()}
+            {engineStatus}
+            <BoardWidget onMoveMade={() => onMoveMade(selected)} board={board} highlightShape={getHighlightedShape()} />
+            {getShapeWidgets(true)}
+        </>
     }
 
     return <>
@@ -158,7 +168,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         {getButtons()}
         <BoardWidget onMoveMade={() => onMoveMade(selected)} board={board} highlightShape={getHighlightedShape()} />
 
-        {getShapeWidgets()}
+        {getShapeWidgets(false)}
 
         <FullScreenOverlay show={gameEnded()}>
             <ScoreBoard returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={getPlayerNames()}></ScoreBoard>

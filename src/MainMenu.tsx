@@ -59,8 +59,8 @@ export const MainMenu: React.FC<{}> = () => {
 
     const handleClick = () => {
         for (let i = 0; i < inputRefs.length; i++) {
-            let [isPlayer, name] = inputRefs[i].current!.getState()
-            playerInfo[i] = new PlayerInfo(name, isPlayer);
+            let [isEngine, name] = inputRefs[i].current!.getState()
+            playerInfo[i] = new PlayerInfo(name, isEngine);
         }
     };
 
@@ -108,7 +108,7 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
     const [engine, setEngine] = useState<string>(engines[0]);
 
     useImperativeHandle(props.ref, () => ({
-        getState: () => [isPlayer, isPlayer ? username : engine],
+        getState: () => [!isPlayer, isPlayer ? username : engine],
     }));
 
     let EngineOptions = [];

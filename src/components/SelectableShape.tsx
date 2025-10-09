@@ -4,7 +4,8 @@ interface SelectableShapeProps {
     children: React.ReactNode,
     onPress: (v: number) => void,
     isSelected: boolean,
-    shapeId: number
+    shapeId: number,
+    lockSelection: boolean
 }
 
 export const SelectableShape: React.FC<SelectableShapeProps> = (props: SelectableShapeProps) => {
@@ -15,9 +16,11 @@ export const SelectableShape: React.FC<SelectableShapeProps> = (props: Selectabl
         style={{ filter: class_name }}
         className='selectable_shape'
         key={uuidv4()}
-        onClick={() => {
-            props.onPress(props.shapeId);
-        }}>
+        onClick={
+            props.lockSelection ? undefined :
+                () => {
+                    props.onPress(props.shapeId);
+                }}>
         {props.children}
     </div>
 }
