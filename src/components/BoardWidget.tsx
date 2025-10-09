@@ -2,7 +2,7 @@
 import './BoardWidget.css'
 import type { JSX } from 'react';
 import { Shape } from '../engine/Shape.tsx';
-import { Board, Cell, PlacementState } from '../engine/Board.tsx';
+
 import { CellWidget } from './CellWidget.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from "react";
@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import { FullScreenOverlay } from './FullScreenOverlay.tsx';
 import { RadialToolTip } from './RadialToolTip.tsx';
 import { SelectableCell } from './SelectableCell.tsx';
+import { Cell, PlacementState } from '../engine/enum_definitions.tsx';
+import { Board } from '../engine/Board.tsx';
 
 
 interface BoardWidgetProps {

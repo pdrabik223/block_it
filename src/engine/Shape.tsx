@@ -1,4 +1,5 @@
-import { Cell } from "./Board.tsx";
+import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_definitions.tsx"
+
 
 export const enum Shapes {
     // one width
@@ -41,6 +42,7 @@ export class Shape {
     public none: Cell = Cell.None;
     public canBeFlipped: boolean = false;
     public numberOfRotations: NoRotations = NoRotations.Four;
+    public cellColor: Cell;
 
     points(): number {
         let sum = 0;
@@ -50,10 +52,18 @@ export class Shape {
                     sum++;
         return sum;
     }
+    isequal(other: Shape): boolean {
+        if (this.shapeName !== other.shapeName) return false;
 
+        for (let x = 0; x < this.data.length; x++)
+            for (let y = 0; y < this.data[x].length; y++)
+                if (this.data[x][y] != other.data[x][y]) return false;
+
+        return true;
+    }
     constructor(shape: Shapes, cell: Cell) {
         this.shapeName = shape;
-
+        this.cellColor = cell;
         switch (shape) {
             case Shapes.Dot:
                 this.data = [[cell]];
@@ -260,8 +270,9 @@ export class Shape {
         this.rotate90deg();
         this.rotate90deg();
         this.rotate90deg();
-
+        return this;
     }
+
     rotate90deg() {
         const n = this.size;
 
@@ -277,6 +288,7 @@ export class Shape {
                 this.data[j][n - 1 - i] = temp;                             // Move P1 to P2
             }
         }
+        return this;
     }
 
     flipLR() {
@@ -291,33 +303,98 @@ export class Shape {
                 this.data[i][k] = tmp;
             }
         }
+        return this;
+    }
 
+    copy(): Shape {
+        let copy = new Shape(this.shapeName, this.cellColor);
+        for (let x = 0; x < this.size; x++)
+            for (let y = 0; y < this.size; y++)
+                copy.data[x][y] = this.data[x][y]
+        return copy
+    }
+
+    checkIfEmpty(x: number, y: number): boolean {
+        if (x < 0 || y < 0) return true;
+        if (x >= this.size || y >= this.size) return true;
+        return this.get(x, y) == this.none
+    }
+    checkCellCorners(x: number, y: number): CellCorner[] {
+
+        let result: CellCorner[] = []
+        const top = 0;
+        const left = 1;
+        const bottom = 2;
+        const right = 3;
+
+        let coordinates = [
+            [x - 1, y], // top
+            [x, y - 1], // left
+            [x + 1, y], // bottom
+            [x, y + 1]] // right
+
+        if (this.checkIfEmpty(coordinates[left][0], coordinates[left][1]) &&
+            this.checkIfEmpty(coordinates[top][0], coordinates[top][1])) {
+            // if top and left are empty 
+            result.push(CellCorner.TopLeft)
+        }
+
+        if (this.checkIfEmpty(coordinates[right][0], coordinates[right][1]) &&
+            this.checkIfEmpty(coordinates[top][0], coordinates[top][1])) {
+            // if top and right are empty 
+            result.push(CellCorner.TopRight)
+        }
+
+        if (this.checkIfEmpty(coordinates[left][0], coordinates[left][1]) &&
+            this.checkIfEmpty(coordinates[bottom][0], coordinates[bottom][1])) {
+            // if bottom and left are empty 
+            result.push(CellCorner.BottomLeft)
+        }
+
+        if (this.checkIfEmpty(coordinates[right][0], coordinates[right][1]) &&
+            this.checkIfEmpty(coordinates[bottom][0], coordinates[bottom][1])) {
+            // if bottom and right are empty 
+            result.push(CellCorner.BottomRight)
+        }
+
+        return result
+    }
+
+    getHangingCorners(): [[number, number], CellCorner][] {
+        let result: [[number, number], CellCorner][] = []
+        for (let x = 0; x < this.size; x++)
+            for (let y = 0; y < this.size; y++)
+                if (this.data[x][y] != this.none) {
+                    for (let fc of this.checkCellCorners(x, y))
+                        result.push([[x, y], fc])
+                }
+        return result;
     }
 }
 
 export function shapeList() {
     return [
         Shapes.Dot,
-        Shapes.Tuple,
-        Shapes.Triple,
-        Shapes.Square,
-        Shapes.TripleLine,
-        Shapes.Cross,
-        Shapes.TripleT,
-        Shapes.BigTripleT,
-        Shapes.TripleC,
-        Shapes.Bolt,
-        Shapes.TripleL,
-        Shapes.BigTripleL,
+        // Shapes.Tuple,
+        // Shapes.Triple,
+        // Shapes.Square,
+        // Shapes.TripleLine,
+        // Shapes.Cross,
+        // Shapes.TripleT,
+        // Shapes.BigTripleT,
+        // Shapes.TripleC,
+        // Shapes.Bolt,
+        // Shapes.TripleL,
+        // Shapes.BigTripleL,
         Shapes.TripleP,
-        Shapes.OffsetCross,
-        Shapes.Snake,
-        Shapes.TripleW,
-        Shapes.QuadrupleLine,
-        Shapes.QuadrupleL,
-        Shapes.QuadrupleOffsetL,
-        Shapes.QuadrupleBolt,
-        Shapes.PentaLine
+        // Shapes.OffsetCross,
+        // Shapes.Snake,
+        // Shapes.TripleW,
+        // Shapes.QuadrupleLine,
+        // Shapes.QuadrupleL,
+        // Shapes.QuadrupleOffsetL,
+        // Shapes.QuadrupleBolt,
+        // Shapes.PentaLine
 
     ]
 }

@@ -1,9 +1,9 @@
 import { useImperativeHandle, useRef, useState } from 'react';
 import { GameLoop, PlayerInfo } from './components/BoardEditWidget.tsx';
 import { CellWidget } from './components/CellWidget.tsx';
-import { Cell } from './engine/Board.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from './components/Button.tsx';
+import { Cell } from './engine/enum_definitions.tsx';
 
 export const enum GameModes {
     Game2player,

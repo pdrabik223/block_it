@@ -1,6 +1,6 @@
 import React, { useState, type JSX } from "react";
 
-import { Board, Cell } from "../engine/Board.tsx";
+import { Board } from "../engine/Board.tsx";
 import { Shape, shapeList } from "../engine/Shape.tsx";
 import { ShapeWidget } from "./ShapeWidget.tsx";
 import { BoardWidget } from "./BoardWidget.tsx";
@@ -12,6 +12,7 @@ import './CellWidget.css'
 import { SelectableShape } from "./SelectableShape.tsx";
 import { ScoreBoard } from "./ScoreBoard.tsx";
 import { Button } from "./Button.tsx";
+import { Cell } from "../engine/enum_definitions.tsx";
 
 
 
@@ -59,14 +60,12 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     });
 
     let noPlayers = 4;
-    let [gameEndedCache, iteration] = [false, 0]
+    let [gameEndedCache, iteration] = [false, -1]
 
     function gameEnded(): boolean {
         if (iteration == gameIteration) return gameEndedCache;
         // all players abandoned game
         // add case for moment when player has no moves left
-        let playerColors = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
-        board.getAllPossibleMovesForShapes(shapes[currentPLayerID()], playerColors[currentPLayerID()])
 
         if (nextPLayerID() == null) {
             gameEndedCache = true;
@@ -75,12 +74,15 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         }
 
         // one player won and round ended
-        if (checkIfPLayerWon(shapes) && currentPLayerID() == 3) {
+        if (checkIfPLayerWon(shapes) != null && currentPLayerID() == 0) {
             gameEndedCache = true;
             iteration = gameIteration;
             return true;
         }
-
+        
+        let playerColors = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
+        let moves = board.getAllPossibleMovesForShapes(shapes[currentPLayerID()], playerColors[currentPLayerID()])
+        console.log(moves)
         gameEndedCache = false;
         iteration = gameIteration;
         return false;

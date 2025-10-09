@@ -1,8 +1,10 @@
 
 import './CellWidget.css'
 import type CSS from "csstype";
-import { Cell, PlacementState } from "../engine/Board.tsx"
+// import { Cell, PlacementState } from "./engi"
+
 import { v4 as uuidv4 } from 'uuid';
+import { Cell, PlacementState } from '../engine/enum_definitions.tsx';
 
 interface CellWidgetProps { value: Cell, highlight?: PlacementState, size?: number }
 

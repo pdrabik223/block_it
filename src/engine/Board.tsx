@@ -1,45 +1,32 @@
 // import type { Shape } from "./Shape";
 
-import type { Shape } from "./Shape.tsx";
-
-export const enum Cell {
-    Red = 1,
-    Orange = 2,
-    Green = 3,
-    Blue = 4,
-    Empty = 5,
-    Border = 6,
-    None = 7,
-}
-export enum PlacementState {
-    OutOfBunds,
-    OverlappingExisting,
-    TouchingEdge,
-    TouchingSameColorCorner,
-    None
-}
-const enum CellCorner {
-    TopLeft,
-    TopRight,
-    BottomRight,
-    BottomLeft,
-}
+import { NoRotations, Shape } from "./Shape.tsx";
+import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_definitions.tsx"
 
 class Move {
+
+    // cell corner in described from perfective of the position
     position: number
     orientation: CellCorner
     shapeId: number
     shape: Shape
+    shapePositionX: number
+    shapePositionY: number
+    idsToReplace: number[]
     constructor(position: number,
         shapeId: number,
         shape: Shape,
         orientation: CellCorner,
-
+        shapePositionX: number,
+        shapePositionY: number, idsToReplace: number[]
     ) {
         this.position = position
         this.shape = shape
         this.shapeId = shapeId
         this.orientation = orientation
+        this.shapePositionX = shapePositionX
+        this.shapePositionY = shapePositionY
+        this.idsToReplace = idsToReplace
     }
 }
 
@@ -76,7 +63,6 @@ export class Board {
 
         }
     }
-
 
     getCellPlacementWithOffset(cellPLacement: number, offset: CellCorner): number | null {
 
@@ -115,19 +101,19 @@ export class Board {
         switch (color) {
             case Cell.Red:
                 if (this.data[0] == Cell.Empty)
-                    hangingCorners.push([0, CellCorner.BottomRight])
+                    hangingCorners.push([0, CellCorner.TopLeft])
                 break;
             case Cell.Blue:
                 if (this.data[Board.width - 1] == Cell.Empty)
-                    hangingCorners.push([Board.width - 1, CellCorner.BottomLeft])
+                    hangingCorners.push([Board.width - 1, CellCorner.TopRight])
                 break
             case Cell.Green:
                 if (this.data[(Board.height - 1) * Board.width + Board.width - 1] == Cell.Empty)
-                    hangingCorners.push([(Board.height - 1) * Board.width + Board.width - 1, CellCorner.TopLeft])
+                    hangingCorners.push([(Board.height - 1) * Board.width + Board.width - 1, CellCorner.BottomRight])
                 break
             case Cell.Orange:
                 if (this.data[(Board.height - 1) * Board.width] == Cell.Empty)
-                    hangingCorners.push([(Board.height - 1) * Board.width, CellCorner.TopRight])
+                    hangingCorners.push([(Board.height - 1) * Board.width, CellCorner.BottomLeft])
                 break;
         }
 
@@ -147,7 +133,7 @@ export class Board {
                 let result = this.getCellPlacementWithOffset(position, offset)
                 if (result !== null) {
                     if (this.data[result] == Cell.Empty)
-                        hangingCorners.push([result, offset])
+                        hangingCorners.push([result, reverseCellCorner(offset)])
                 }
             }
         }
@@ -156,17 +142,69 @@ export class Board {
         return hangingCorners;
     }
 
+    getShapePermutations(shape: Shape): Shape[] {
+
+
+        let permutations: Shape[] = [];
+        switch (shape.numberOfRotations) {
+            case NoRotations.Zero:
+                permutations.push(shape.copy());
+                break;
+
+            case NoRotations.Two:
+                permutations.push(shape.copy());
+                permutations.push(shape.copy().rotate90deg());
+                break;
+
+            case NoRotations.Four:
+                let temp = shape.copy()
+                permutations.push(temp.copy());
+                temp.rotate90deg()
+                permutations.push(temp.copy());
+                temp.rotate90deg()
+                permutations.push(temp.copy());
+                temp.rotate90deg()
+                permutations.push(temp.copy());
+                break;
+        }
+        let currentPermutations = permutations.length;
+        if (shape.canBeFlipped) {
+            for (let i = 0; i < currentPermutations; i++) {
+                permutations.push(permutations[i].flipLR().copy());
+            }
+        }
+        // remove duplicates 
+        return permutations;
+    }
+
     getAllPossibleMovesForShapes(shapes: Shape[], color: Cell): Move[] {
 
-        console.log(this.getHangingCorners(color))
-        // let possibleMoves = []
+        let possibleMoves: Move[] = []
+        for (let [position, hangingCorner] of this.getHangingCorners(color))
+            for (let i = 0; i < shapes.length; i++) {
+                for (let permutation of this.getShapePermutations(shapes[i])) {
+                    for (let [[x, y], cellCorner] of permutation.getHangingCorners())
+                        if (cellCorner == hangingCorner) {
+                            let positionX = Math.floor(position / Board.width);
+                            let positionY = position % Board.width;
+                            var [ids_to_replace, cells, errors] = this.combineShapeInternal(positionX - x, positionY - y, permutation)
 
-        // for (let shape in shapes) {
+                            if (this.isValidPlacement(errors)) {
+                                possibleMoves.push(new Move(
+                                    position,
+                                    i,
+                                    permutation,
+                                    cellCorner,
+                                    x,
+                                    y,
+                                    ids_to_replace
+                                ))
+                            }
+                        }
+                }
+            }
 
-
-        // }
-
-        return []
+        return possibleMoves
     }
     checkBoundingBoxError(x: number, y: number) {
         if (x < 0) return true;
@@ -245,20 +283,27 @@ export class Board {
         }
         return [x, y]
     }
+
     combineShape(shapePlacement: number, shape: Shape) {
 
+
+        let x: number;
+        let y: number;
+
+        [x, y] = this.correctForCursorPLacement(shapePlacement, shape)
+
+        return this.combineShapeInternal(x, y, shape)
+    }
+    combineShapeInternal(x: number, y: number, shape: Shape) {
         var ids_to_replace: number[] = []
         var cells: Cell[] = []
         var errors: PlacementState[] = []
-
-        let [x, y] = this.correctForCursorPLacement(shapePlacement, shape)
-
         for (let sx = 0; sx < shape.size; sx++) {
             for (let sy = 0; sy < shape.size; sy++) {
                 if (shape.get(sx, sy) != shape.none) {
                     let cellPlacementX = (x + sx);
                     let cellPlacementY = (y + sy);
-                    let cellPlacement = (x + sx) * Board.width + (sy + y);
+                    let cellPlacement = cellPlacementX * Board.width + cellPlacementY;
 
                     if (this.checkBoundingBoxError(cellPlacementX, cellPlacementY))
                         errors.push(PlacementState.OutOfBunds);
@@ -271,8 +316,7 @@ export class Board {
                     else
                         errors.push(PlacementState.None)
 
-
-                    ids_to_replace.push((x + sx) * Board.width + (sy + y))
+                    ids_to_replace.push(cellPlacementX * Board.width + cellPlacementY)
                     cells.push(shape.get(sx, sy))
                 }
             }
