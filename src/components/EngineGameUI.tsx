@@ -15,10 +15,6 @@ export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move
     ["Aggressive", Aggressive]
 ])
 
-// const delay = async (ms: number) => {
-//     return new Promise((resolve) =>
-//         setTimeout(resolve, ms));
-// };
 
 export interface EngineGameUIProps {
     title: JSX.Element,

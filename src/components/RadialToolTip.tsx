@@ -34,7 +34,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                 }}>Rotate R</Button>
     }
     function getFlipButton() {
-        if (props.highlightShape && props.highlightShape.canBeFlipped)
+        if (props.highlightShape)
             return <Button
                 onClick={
                     () => {

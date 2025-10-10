@@ -6,8 +6,6 @@ import type { JSX } from "react";
 import type { Board } from "../engine/Board.tsx";
 import type { Shape } from "../engine/Shape.tsx";
 
-
-
 export interface PlayerGameUIProps {
     title: JSX.Element,
     onGameAbandonButton: () => void
@@ -17,8 +15,6 @@ export interface PlayerGameUIProps {
     highlightedShape?: Shape
     shapeWidgets: JSX.Element
 }
-
-
 
 export const PlayerGameUI: React.FC<PlayerGameUIProps> = (props: PlayerGameUIProps) => {
     function getButtons() {
