@@ -103,7 +103,7 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
 
     let engines = new Array<string>("Randy")
 
-    const [isPlayer, setIsPlayer] = useState(true);
+    const [isPlayer, setIsPlayer] = useState(false);
     const [username, setUsername] = useState<string>(usernames[Math.floor(Math.random() * usernames.length)]);
     const [engine, setEngine] = useState<string>(engines[0]);
 

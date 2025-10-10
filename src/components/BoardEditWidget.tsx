@@ -79,6 +79,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
         for (let i = 1; i <= props.playerNames.length; i++) {
             let nextid = (gameIteration + i) % noPlayers;
+
             if (aPlayerWon && nextid == 0) return null;
 
             let endedPlay = props.playerNames[nextid].endedPLay;
@@ -100,8 +101,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
         if (id != undefined)
             shapes[currentPLayerID()].splice(id, 1);
-
-        setSelected(-1);
+        // Maximum update depth exceeded
+        if (selected != -1) setSelected(-1);
 
         let nextPLayer = nextPLayerID()
 
@@ -144,7 +145,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             shapes={shapes[currentPLayerID()]}
             onMoveMade={(v?: number) => (onMoveMade(v))}
             engineName={getPlayerNames()[currentPLayerID()]}
-            iteration={currentPLayerID()}
+            iteration={gameIteration}
         />
     }
 

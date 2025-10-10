@@ -1,4 +1,4 @@
-import React, { useState, type JSX, useEffect } from "react";
+import React, { useState, type JSX, useEffect, useRef } from "react";
 
 import { BoardWidget } from "./BoardWidget.tsx";
 import type { Board, Move } from "../engine/Board.tsx";
@@ -29,23 +29,30 @@ export interface EngineGameUIProps {
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
 
     const [engineStatus, setEngineStatus] = useState<JSX.Element>(<p>Idle</p>);
-    
+    function engineFunction() {
 
-    // I hate useEffect 
-    useEffect(() => {
 
-        console.log('AAAAAAAAA', props.iteration);
-        setEngineStatus(<p>Calculating moves</p>);
-        setTimeout(() => { }, 2000);
         let move = engineMap.get(props.engineName)!(props.board, props.shapes)
 
         if (move == null) {
-            setEngineStatus(<p>No valid moves found, Abandoning game</p>);
+            // setEngineStatus(<p>No valid moves found, Abandoning game</p>);
+            console.log("no moves left")
             props.onAbandonGame();
         } else {
-            setEngineStatus(<p>Move Found!</p>);
+            // setEngineStatus(<p>Move Found!</p>);
             props.board.makeMove(move)
             props.onMoveMade(move.shapeId)
+        }
+
+    }
+
+    const isInitialMount = useRef(true);
+    // I hate useEffect 
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            engineFunction();
         }
 
     }, [props.iteration]);
