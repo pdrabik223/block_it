@@ -11,10 +11,10 @@ const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null
     ["Randy", Randy],
 ])
 
-const delay = async (ms: number) => {
-    return new Promise((resolve) =>
-        setTimeout(resolve, ms));
-};
+// const delay = async (ms: number) => {
+//     return new Promise((resolve) =>
+//         setTimeout(resolve, ms));
+// };
 
 export interface EngineGameUIProps {
     title: JSX.Element,
@@ -28,7 +28,7 @@ export interface EngineGameUIProps {
 
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
 
-    const [engineStatus, setEngineStatus] = useState<JSX.Element>(<p>Idle</p>);
+    const [engineStatus] = useState<JSX.Element>(<p>Idle</p>);
     function engineFunction() {
 
 
