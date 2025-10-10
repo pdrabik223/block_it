@@ -4,6 +4,7 @@ import { CellWidget } from './components/CellWidget.tsx';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from './components/Button.tsx';
 import { Cell } from './engine/enum_definitions.tsx';
+import { engineMap } from './components/EngineGameUI.tsx';
 
 export const enum GameModes {
     Game2player,
@@ -101,7 +102,7 @@ interface PlayerInfoBlockProps { ref: React.RefObject<PlayerInfoRef | null>; cel
 
 export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInfoBlockProps) => {
 
-    let engines = new Array<string>("Randy")
+    let engines = Array.from(engineMap.keys());
 
     const [isPlayer, setIsPlayer] = useState(false);
     const [username, setUsername] = useState<string>(usernames[Math.floor(Math.random() * usernames.length)]);
@@ -113,15 +114,19 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
 
     let EngineOptions = [];
 
-    for (let value of engines)
-        EngineOptions.push(<option key={uuidv4()} onChange={(e) => setEngine(e.currentTarget.value)}>{value}</option>)
+    for (let value of engines) {
+        EngineOptions.push(<option style={{ margin: "4px", minWidth: "100%" }} key={uuidv4()} value={value}>{value}</option>)
+
+    }
 
 
     return <div key={uuidv4()} className='row' style={{ margin: "4px" }}>
         <Button style={{ margin: "4px", width: "42%" }} onClick={() => setIsPlayer(!isPlayer)}>{isPlayer ? "Player" : "Engine"}</Button>
-        {isPlayer ? <input onChange={(v) => setUsername(v.currentTarget.value)} minLength={1} style={{ margin: "4px" }} value={username}></input> : <select style={{ margin: "4px", width: "100%" }}>
-            {EngineOptions}
-        </select>}
+        {isPlayer ? <input onChange={(v) => setUsername(v.currentTarget.value)} minLength={1} style={{ margin: "4px" }} value={username}></input> :
+
+            <select style={{ margin: "4px", width: "200px" }} value={engine} onChange={(e) => setEngine(e.currentTarget.value)}>
+                {EngineOptions}
+            </select>}
 
         <div className='column'>
             <CellWidget value={props.cell} size={40} />

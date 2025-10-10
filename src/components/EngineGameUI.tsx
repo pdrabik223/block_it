@@ -5,10 +5,12 @@ import type { Board, Move } from "../engine/Board.tsx";
 import { ShapeList } from "./ShapeList.tsx";
 import type { Shape } from "../engine/Shape.tsx";
 import Randy from "../engine/randy.tsx";
+import Pointer from "../engine/pointer.tsx";
 
 
-const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
+export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
     ["Randy", Randy],
+    ["Pointer", Pointer]
 ])
 
 // const delay = async (ms: number) => {
@@ -53,7 +55,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
     }
 
     const isInitialMount = useRef(true);
-    // I hate useEffect 
+
     useEffect(() => {
         if (isInitialMount.current) {
             isInitialMount.current = false;

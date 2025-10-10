@@ -9,5 +9,4 @@ export default function Randy(board: Board, shapes: Shape[]): Move | null {
     
     return moves[Math.floor(Math.random() * moves.length)]
 
-    return null;
 }

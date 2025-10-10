@@ -38,20 +38,17 @@ export const enum NoRotations {
 export class Shape {
     public data: Cell[][] = [[]];
     public shapeName: Shapes;
-    public size: number;
     public none: Cell = Cell.None;
+    public size: number;
     public canBeFlipped: boolean = false;
     public numberOfRotations: NoRotations = NoRotations.Four;
+    public cellValue: number = 1;
     public cellColor: Cell;
 
     points(): number {
-        let sum = 0;
-        for (let x of this.data)
-            for (let y of x)
-                if (y != this.none)
-                    sum++;
-        return sum;
+        return this.cellValue;
     }
+
     isequal(other: Shape): boolean {
         if (this.shapeName !== other.shapeName) return false;
 
@@ -69,22 +66,26 @@ export class Shape {
             case Shapes.Dot:
                 this.data = [[cell]];
                 this.size = 1;
+                this.cellValue = 1;
                 this.numberOfRotations = NoRotations.Zero
                 return;
             case Shapes.Tuple:
                 this.data = [[cell, cell], [this.none, this.none]];
                 this.size = 2;
                 this.numberOfRotations = NoRotations.Four
+                this.cellValue = 2;
                 return;
             case Shapes.Triple:
                 this.data = [[cell, cell], [cell, this.none]];
                 this.size = 2;
                 this.numberOfRotations = NoRotations.Four
+                this.cellValue = 3;
                 return;
             case Shapes.Square:
                 this.data = [[cell, cell], [cell, cell]];
                 this.size = 2;
                 this.numberOfRotations = NoRotations.Zero
+                this.cellValue = 4;
                 return;
 
             case Shapes.Cross:
@@ -92,6 +93,7 @@ export class Shape {
                     [this.none, cell, this.none],
                     [cell, cell, cell],
                     [this.none, cell, this.none],];
+                this.cellValue = 5;
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Zero
                 return;
@@ -101,6 +103,8 @@ export class Shape {
                     [this.none, this.none, this.none],
                     [cell, cell, cell],
                     [this.none, this.none, this.none],];
+
+                this.cellValue = 3;
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Two
                 return;
@@ -110,6 +114,8 @@ export class Shape {
                     [this.none, this.none, this.none],
                     [cell, cell, cell],
                     [this.none, cell, this.none],];
+                this.cellValue = 4;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
@@ -119,6 +125,7 @@ export class Shape {
                     [cell, cell, cell],
                     [this.none, cell, this.none],
                     [this.none, cell, this.none],];
+                this.cellValue = 5;
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
@@ -128,6 +135,8 @@ export class Shape {
                     [cell, cell, this.none],
                     [cell, this.none, this.none],
                     [cell, cell, this.none],];
+                this.cellValue = 5;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
@@ -137,6 +146,8 @@ export class Shape {
                     [this.none, this.none, this.none],
                     [cell, cell, this.none],
                     [this.none, cell, cell,],];
+                this.cellValue = 4;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
@@ -147,6 +158,8 @@ export class Shape {
                     [cell, this.none, this.none],
                     [cell, this.none, this.none],
                     [cell, cell, this.none]];
+                this.cellValue = 4;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
@@ -158,6 +171,8 @@ export class Shape {
                     [cell, this.none, this.none],
                     [cell, cell, cell]];
                 this.size = 3;
+                this.cellValue = 5;
+
                 this.numberOfRotations = NoRotations.Four
                 return;
 
@@ -166,6 +181,8 @@ export class Shape {
                     [cell, cell, this.none],
                     [cell, cell, this.none],
                     [cell, this.none, this.none]];
+                this.cellValue = 5;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
@@ -176,6 +193,8 @@ export class Shape {
                     [this.none, this.none, cell],
                     [cell, cell, cell],
                     [this.none, cell, this.none]];
+                this.cellValue = 5;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
@@ -186,6 +205,8 @@ export class Shape {
                     [this.none, cell, cell],
                     [this.none, cell, this.none],
                     [cell, cell, this.none]];
+                this.cellValue = 5;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
@@ -196,6 +217,8 @@ export class Shape {
                     [this.none, cell, cell],
                     [cell, cell, this.none],
                     [cell, this.none, this.none]];
+                this.cellValue = 5;
+
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
@@ -207,6 +230,8 @@ export class Shape {
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none]];
+                this.cellValue = 4;
+
                 this.numberOfRotations = NoRotations.Two
                 this.size = 4;
                 return;
@@ -217,6 +242,8 @@ export class Shape {
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, cell, this.none]];
+                this.cellValue = 5;
+
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 this.size = 4;
@@ -228,6 +255,8 @@ export class Shape {
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, cell, this.none],
                     [this.none, cell, this.none, this.none]];
+                this.cellValue = 5;
+
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 this.size = 4;
@@ -240,6 +269,8 @@ export class Shape {
                     [this.none, cell, this.none, this.none],
                     [this.none, cell, this.none, this.none]];
                 this.numberOfRotations = NoRotations.Four
+                this.cellValue = 5;
+
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
@@ -251,6 +282,7 @@ export class Shape {
                     [this.none, this.none, cell, this.none, this.none],
                     [this.none, this.none, cell, this.none, this.none],
                     [this.none, this.none, cell, this.none, this.none]];
+                this.cellValue = 5;
                 this.numberOfRotations = NoRotations.Two
                 this.size = 5;
                 return;
