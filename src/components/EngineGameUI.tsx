@@ -6,11 +6,13 @@ import { ShapeList } from "./ShapeList.tsx";
 import type { Shape } from "../engine/Shape.tsx";
 import Randy from "../engine/randy.tsx";
 import Pointer from "../engine/pointer.tsx";
+import Aggressive from "../engine/aggressive.tsx";
 
 
 export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
     ["Randy", Randy],
-    ["Pointer", Pointer]
+    ["Pointer", Pointer],
+    ["Aggressive", Aggressive]
 ])
 
 // const delay = async (ms: number) => {

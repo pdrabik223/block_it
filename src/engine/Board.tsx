@@ -5,8 +5,9 @@ import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_defi
 
 export class Move {
 
-    // cell corner in described from perfective of the position
+    // placement position on board
     position: number
+    // cell corner of placement cell
     orientation: CellCorner
     shapeId: number
     shape: Shape
