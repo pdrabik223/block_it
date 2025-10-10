@@ -34,3 +34,44 @@ npm run build
 ``` bash
 serve -s dist
 ```
+
+
+# Deploy to GH pages
+1. Checkout to gh-page branch
+2. Merge all changes from main
+3. Flip isInitialMount value in file Engine Game UI
+``` tsx
+
+ // on prod this needs to be flipped
+    const isInitialMount = useRef(false);
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = true;
+        } else {
+            engineFunction();
+        }
+
+    }, [props.iteration]);
+
+```
+
+2. Build app locally 
+``` bash
+npm run build
+```
+
+3. Change path to js and css files in dist/index.html
+   from:
+   ``` html
+   <script type="module" crossorigin src="/assets/index-HvKn5xYP.js"></script>
+   <link rel="stylesheet" crossorigin href="/assets/index-CtzYGyey.css">
+   ```  
+   to: 
+   ``` html
+   <script type="module" crossorigin src="https://pdrabik223.github.io/block_it/assets/index-HvKn5xYP.js"></script>
+   <link rel="stylesheet" crossorigin href="https://pdrabik223.github.io/block_it/assets/index-CtzYGyey.css">
+   ```
+   This probably can be configured somewhere, but right now I don't want to bother with it   
+  
+4. Push changes to remote 
