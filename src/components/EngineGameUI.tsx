@@ -34,7 +34,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     const [engineStatus, setEngineStatus] = useState<JSX.Element>(<p>Idle</p>);
     function engineFunction() {
-
+        console.log("engine func")
 
         let move = engineMap.get(props.engineName)!(props.board, props.shapes)
 
@@ -55,7 +55,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         }
 
     }
-
+    // on prod this needs to be flipped
     const isInitialMount = useRef(true);
 
     useEffect(() => {
@@ -66,7 +66,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         }
 
     }, [props.iteration]);
-
+    console.log("aaaaa")
     return <>
         {props.title}
         {engineStatus}
