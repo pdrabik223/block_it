@@ -139,6 +139,7 @@ export class Shape {
                     [this.none, cell, cell,],];
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
+                this.canBeFlipped = true
                 return;
 
             case Shapes.TripleL:

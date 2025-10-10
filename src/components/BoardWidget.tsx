@@ -72,7 +72,7 @@ function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
     return temp;
 }
 
-interface CellGridProps {
+export interface CellGridProps {
     board: Board,
     ids_to_replace: number[] | null;
     cells: Cell[];

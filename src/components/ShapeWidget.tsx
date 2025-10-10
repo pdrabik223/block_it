@@ -22,7 +22,7 @@ export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps)
         data.push(<div key={uuidv4()} className='row'>{temp}</div>);
     }
 
-    return <div><div className='column'> {data} </div></div>
+    return <div key={uuidv4()} className='column'> {data} </div>
 
 }
 

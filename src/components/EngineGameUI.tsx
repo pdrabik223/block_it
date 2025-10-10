@@ -28,20 +28,26 @@ export interface EngineGameUIProps {
 
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
 
-    const [engineStatus] = useState<JSX.Element>(<p>Idle</p>);
+    const [engineStatus, setEngineStatus] = useState<JSX.Element>(<p>Idle</p>);
     function engineFunction() {
 
 
         let move = engineMap.get(props.engineName)!(props.board, props.shapes)
 
         if (move == null) {
-            // setEngineStatus(<p>No valid moves found, Abandoning game</p>);
-            console.log("no moves left")
-            props.onAbandonGame();
+            new Promise(() =>
+                setTimeout(() => {
+                    props.onAbandonGame();
+                }, 250));
+
         } else {
-            // setEngineStatus(<p>Move Found!</p>);
             props.board.makeMove(move)
-            props.onMoveMade(move.shapeId)
+            setEngineStatus(<p> Made move!</p>)
+            new Promise(() =>
+                setTimeout(() => {
+                    props.onMoveMade(move.shapeId)
+                }, 250));
+
         }
 
     }
