@@ -1,4 +1,4 @@
-import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_definitions.tsx"
+import { Cell, CellCorner } from "./enum_definitions.tsx"
 
 
 export const enum Shapes {
@@ -61,6 +61,7 @@ export class Shape {
 
         return true;
     }
+    getColor() { return this.cellColor }
     constructor(shape: Shapes, cell: Cell) {
         this.shapeName = shape;
         this.cellColor = cell;
@@ -375,7 +376,7 @@ export class Shape {
 export function shapeList() {
     return [
         Shapes.Dot,
-        // Shapes.Tuple,
+        Shapes.Tuple,
         // Shapes.Triple,
         // Shapes.Square,
         // Shapes.TripleLine,

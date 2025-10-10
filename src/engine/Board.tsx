@@ -3,7 +3,7 @@
 import { NoRotations, Shape } from "./Shape.tsx";
 import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_definitions.tsx"
 
-class Move {
+export class Move {
 
     // cell corner in described from perfective of the position
     position: number
@@ -47,6 +47,22 @@ export class Board {
         } else {
             this.data = new Array(Board.height * Board.width).fill(Cell.Empty);
         }
+    }
+
+    makeMove(move: Move) {
+        let x = Math.floor(move.position / Board.width);
+        let y = move.position % Board.width;
+
+        x -= move.shapePositionX;
+        y -= move.shapePositionY;
+
+        for (let sx = 0; sx < move.shape.size; sx++) {
+            for (let sy = 0; sy < move.shape.size; sy++) {
+                if (move.shape.get(sx, sy) != move.shape.none)
+                    this.set(x + sx, y + sy, move.shape.get(sx, sy))
+            }
+        }
+
     }
 
     addShape(shapePlacement: number, shape: Shape) {
@@ -187,7 +203,9 @@ export class Board {
                         if (cellCorner == hangingCorner) {
                             let positionX = Math.floor(position / Board.width);
                             let positionY = position % Board.width;
-                            var [ids_to_replace, cells, errors] = this.combineShapeInternal(positionX - x, positionY - y, permutation)
+                            let result = this.combineShapeInternal(positionX - x, positionY - y, permutation)
+                            let ids_to_replace = result[0]
+                            let errors = result[2]
 
                             if (this.isValidPlacement(errors)) {
                                 possibleMoves.push(new Move(

@@ -14,22 +14,12 @@ import { Cell, PlacementState } from '../engine/enum_definitions.tsx';
 import { Board } from '../engine/Board.tsx';
 
 
-interface BoardWidgetProps {
+export interface BoardWidgetProps {
     board: Board,
     highlight?: number,
     highlightShape?: Shape,
     onMoveMade: () => void
 
-}
-
-function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
-
-    let temp = [<CellWidget value={left_cell} />];
-    for (let x = 0; x < Board.height; x++) {
-        temp.push(<CellWidget value={Cell.Border} />);
-    }
-    temp.push(<CellWidget value={right_cell} />)
-    return temp;
 }
 
 export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps) => {
@@ -51,13 +41,13 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
             applyFunction = () => {
                 props.board.addShape(shapePlacement, props.highlightShape!)
                 setReDrawWidget(!reDrawWidget);
-                // props.refreshShapes();
+                // checkIfPLayerWon(shapes) TODO maybe refresh shapes 
                 setTooltipPos(null);
                 props.onMoveMade();
             }
 
     return <div>
-        <InnerBoardWidget
+        <CellGrid
             board={props.board}
             ids_to_replace={ids_to_replace}
             cells={cells}
@@ -66,13 +56,23 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
             onHoverEvent={(v, b) => { if (b) { if (shapePlacement != v) setShapePlacement(v) } else { if (shapePlacement == v) setShapePlacement(-1) } }}
             onPress={(_, e) => { setTooltipPos({ x: e.clientX, y: e.clientY }); }}
         />
-        <FullScreenOverlay show={tooltipPos != null} >
+        <FullScreenOverlay show={tooltipPos != null && props.highlightShape != undefined} >
             <RadialToolTip apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
         </FullScreenOverlay>
     </div>
 }
 
-interface InnerBoardWidgetProps {
+function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
+
+    let temp = [<CellWidget value={left_cell} />];
+    for (let x = 0; x < Board.height; x++) {
+        temp.push(<CellWidget value={Cell.Border} />);
+    }
+    temp.push(<CellWidget value={right_cell} />)
+    return temp;
+}
+
+interface CellGridProps {
     board: Board,
     ids_to_replace: number[] | null;
     cells: Cell[];
@@ -82,7 +82,7 @@ interface InnerBoardWidgetProps {
     onPress: (v: number, e: MouseEvent) => void
 }
 
-export const InnerBoardWidget: React.FC<InnerBoardWidgetProps> = (props: InnerBoardWidgetProps) => {
+export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
 
     let data: JSX.Element[] = []
 
