@@ -20,7 +20,7 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
                 break;
             case PlacementState.OutOfBunds:
                 // this should not be painted at all
-                optionalStyling["backgroundColor"] = 'rgba(128, 0, 128, 0.9)';
+                optionalStyling["backgroundColor"] = 'gray';
 
                 break;
             case PlacementState.TouchingSameColorCorner:
