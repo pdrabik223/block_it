@@ -16,9 +16,7 @@ export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-
     let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
-
 
     return <button
         className={className}
@@ -27,6 +25,47 @@ export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         onMouseLeave={handleMouseLeave}
         style={props.style}>{props.children}</button>
 }
+
+export class ButtonState {
+    public label: React.ReactNode
+    public value: any
+    constructor(label: React.ReactNode, value: any) {
+        this.label = label
+        this.value = value
+
+    }
+}
+
+
+interface StateButtonProps {
+    style?: React.CSSProperties,
+    // children?: React.ReactNode,
+    onClick: (value: any) => void
+    buttonStates: ButtonState[]
+}
+
+export const StateButton: React.FC<StateButtonProps> = (props: StateButtonProps) => {
+    let textColors = ['fancy_button_red', 'fancy_button_blue', 'fancy_button_green', 'fancy_button_orange']
+
+    const [stateIndex, setStateIndex] = useState(0)
+
+    const [hover, setHover] = useState(false);
+    const handleMouseEnter = () => setHover(true);
+    const handleMouseLeave = () => setHover(false);
+
+    let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
+
+    return <button
+        className={className}
+        onClick={() => {
+            setStateIndex((stateIndex + 1) % props.buttonStates.length);
+            props.onClick(props.buttonStates[stateIndex].value)
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={props.style}>{props.buttonStates[stateIndex].label}</button>
+}
+
 
 
 

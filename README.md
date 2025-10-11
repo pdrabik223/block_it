@@ -21,8 +21,8 @@
    16. add piece color selector
    17. add variable delay after move for engines 
    18. add "show additional information in settings" that will show Board coverage percentage 
-   19. hide github svg at the bottom of settings drawer
-   20. add Info about version at the bottom of settings 
+   19. ~~hide github svg at the bottom of settings drawer~~
+   20. ~~add Info about version at the bottom of settings~~
 
 2. Make a engine that calculates the best move in position:
     algos planned:
