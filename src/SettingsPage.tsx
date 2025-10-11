@@ -1,5 +1,4 @@
-import type { Cookie, CookieSetOptions } from 'universal-cookie';
-import { IconButton, Button, ButtonState, StateButton } from './components/Button.tsx';
+import { IconButton, ButtonState, StateButton } from './components/Button.tsx';
 import { TopBanner } from './TopBanner.tsx';
 import { DebugLevel, type GlobalState } from './App.tsx';
 
@@ -44,7 +43,8 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
             }} buttonStates={[
                 new ButtonState('Engine move delay: 0.25s', 250),
                 new ButtonState('Engine move delay: 0.5s', 500),
-                new ButtonState('Engine move delay: 2s', 2000)
+                new ButtonState('Engine move delay: 2s', 2000),
+                new ButtonState('Engine move delay: 4s', 4000)
             ]} style={{ width: "300px", margin: "10px auto", }} />
 
             <StateButton onClick={(v) => {

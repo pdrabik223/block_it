@@ -8,6 +8,7 @@ import Pointer from "../engine/pointer.tsx";
 import Aggressive from "../engine/aggressive.tsx";
 import { ShapeList } from "../components/ShapeList.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
+import { globalSettingsState } from "../App.tsx";
 
 
 export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
@@ -31,7 +32,6 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     const [engineStatus, setEngineStatus] = useState<JSX.Element>(<p>Idle</p>);
     function engineFunction() {
-        console.log("engine func")
 
         let move = engineMap.get(props.engineName)!(props.board, props.shapes)
 
@@ -39,7 +39,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
             new Promise(() =>
                 setTimeout(() => {
                     props.onAbandonGame();
-                }, 250));
+                }, globalSettingsState.moveDelayMS));
 
         } else {
             props.board.makeMove(move)
@@ -47,7 +47,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
             new Promise(() =>
                 setTimeout(() => {
                     props.onMoveMade(move.shapeId)
-                }, 250));
+                }, globalSettingsState.moveDelayMS));
 
         }
 
@@ -63,7 +63,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         }
 
     }, [props.iteration]);
-  
+
     return <>
         {props.title}
         {engineStatus}

@@ -70,8 +70,8 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
             <div className="column">
                 {column}
             </div>
-            <Button onClick={props.returnToMainMenu}>Main menu</Button>
-            <Button onClick={props.tryAgain}>Try Again</Button>
+            <Button style={{ margin: "4px" }} onClick={props.returnToMainMenu}>Main menu</Button>
+            <Button style={{ margin: "4px" }} onClick={props.tryAgain}>Try Again</Button>
         </div>
     </div>;
 };

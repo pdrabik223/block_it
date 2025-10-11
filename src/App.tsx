@@ -24,10 +24,15 @@ export class GlobalState {
   public moveDelayMS: number = 200
 }
 
+export var globalSettingsState = new GlobalState();
+
+function setGlobalState(newGlobalState: GlobalState) {
+  globalSettingsState = newGlobalState;
+}
+
 function App() {
   const [showSettings, setShowSettings] = useState(false)
-  const [globalState, setGlobalState] = useState(new GlobalState())
-  console.log(globalState)
+  console.log(globalSettingsState)
   return <>
     <TopBanner title="Title"
       leading={<TitleButton text={'Block it'} onClick={() => window.location.reload()}
@@ -40,7 +45,7 @@ function App() {
         style={{ height: '34px', marginLeft: 'auto', paddingRight: "12px" }}></IconButton>} />
 
     <SettingsOverlay style={{ zIndex: 21, backgroundColor: '#242424' }} show={showSettings}>
-      <SettingsPage cookies={globalState} setGlobalState={setGlobalState} onSettingsClosed={() => setShowSettings(false)} />
+      <SettingsPage cookies={globalSettingsState} setGlobalState={setGlobalState} onSettingsClosed={() => setShowSettings(false)} />
     </SettingsOverlay >
     <MainMenu />
   </>

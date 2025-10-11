@@ -100,7 +100,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
         if (id != undefined)
             shapes[currentPLayerID()].splice(id, 1);
-        // Maximum update depth exceeded
+
         if (selected != -1) setSelected(-1);
 
         let nextPLayer = nextPLayerID()
@@ -131,7 +131,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     if (gameEnded) {
         return <>
             <BoardWidget onMoveMade={() => { }} board={board} highlightShape={undefined} />
-            <FullScreenOverlay show={true}>
+            <FullScreenOverlay show={true} opacity={0.8}>
                 <ScoreBoard tryAgain={() => { }} returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={getPlayerNames()}></ScoreBoard>
             </FullScreenOverlay>
         </>
