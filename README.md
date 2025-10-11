@@ -3,8 +3,8 @@
 ## Task Board
 
 1. Create ui for playing the game yourself
-   1. Add exit game all together button
-   2. Make config overlay less darkening
+   1. ~~Add exit game all together button~~
+   2. ~~Make config overlay less darkening~~
    3. Add Play Again button with the same player config
    4. 2 player mode
    5. Better engine move visualizer -> simply change the delay length after engine move
@@ -13,7 +13,7 @@
    8. Screen jumps up and down if players have different number of pieces
    9. Favicon
    10. Better dropdown and input box styling
-   11. hide overflow cell
+   11. ~~hide overflow cell~~
    12. rotate shape to face mouse cursor when it's held down
    13. on mobile, cell selection does not work
    14. add theme change button

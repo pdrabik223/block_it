@@ -1,12 +1,13 @@
 import React, { useState, type JSX, useEffect, useRef } from "react";
 
-import { BoardWidget } from "./BoardWidget.tsx";
 import type { Board, Move } from "../engine/Board.tsx";
-import { ShapeList } from "./ShapeList.tsx";
+
 import type { Shape } from "../engine/Shape.tsx";
 import Randy from "../engine/randy.tsx";
 import Pointer from "../engine/pointer.tsx";
 import Aggressive from "../engine/aggressive.tsx";
+import { ShapeList } from "../components/ShapeList.tsx";
+import { BoardWidget } from "../components/BoardWidget.tsx";
 
 
 export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
@@ -62,7 +63,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         }
 
     }, [props.iteration]);
-    console.log("aaaaa")
+  
     return <>
         {props.title}
         {engineStatus}

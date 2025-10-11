@@ -2,16 +2,15 @@ import React, { useState, type JSX } from "react";
 
 import { Board } from "../engine/Board.tsx";
 import { Shape, shapeList } from "../engine/Shape.tsx";
-import { BoardWidget } from "./BoardWidget.tsx";
 
-import './BoardEditWidget.css'
-import { FullScreenOverlay } from "./FullScreenOverlay.tsx";
-
-import './CellWidget.css'
-import { ScoreBoard } from "./ScoreBoard.tsx";
+import '../components/BoardWidget.css'
+import '../components/CellWidget.css'
 import { Cell } from "../engine/enum_definitions.tsx";
-import { ShapeList } from "./ShapeList.tsx";
+import { BoardWidget } from "../components/BoardWidget.tsx";
+import { ScoreBoard } from "../components/ScoreBoard.tsx";
+import { FullScreenOverlay } from "../components/FullScreenOverlay.tsx";
 import { EngineGameUI } from "./EngineGameUI.tsx";
+import { ShapeList } from "../components/ShapeList.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
 
 
@@ -58,9 +57,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         (initShapeList(Cell.Orange))]
     });
     let [moveCounter, setMoveCounter] = useState(0);
-
-
     const [gameEnded, setGameEnded] = useState<boolean>(false)
+
 
     let noPlayers = 4;
 
@@ -134,7 +132,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         return <>
             <BoardWidget onMoveMade={() => { }} board={board} highlightShape={undefined} />
             <FullScreenOverlay show={true}>
-                <ScoreBoard returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={getPlayerNames()}></ScoreBoard>
+                <ScoreBoard tryAgain={() => { }} returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={getPlayerNames()}></ScoreBoard>
             </FullScreenOverlay>
         </>
     }

@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
-import { Button } from './components/Button.tsx';
-import { Cell } from './engine/enum_definitions.tsx';
-import { GameLoop, PlayerInfo } from './pages/BoardEditWidget.tsx';
-import { PlayerInfoBlock, type PlayerInfoRef } from './components/PlayerInfoBlock.tsx';
+import { Button } from '../components/Button.tsx';
+import { Cell } from '../engine/enum_definitions.tsx';
+import { GameLoop, PlayerInfo } from './BoardEditWidget.tsx';
+import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlock.tsx';
 
+import "./MainMenu.css"
 
 export const enum GameModes {
     Game2player,

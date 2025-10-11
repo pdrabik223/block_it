@@ -6,6 +6,7 @@ export interface ScoreBoardProps {
     shapes: Shape[][];
     playerNames: string[];
     returnToMainMenu: () => void
+    tryAgain: () => void
 }
 
 export class PlayerResultInfo {
@@ -70,6 +71,7 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
                 {column}
             </div>
             <Button onClick={props.returnToMainMenu}>Main menu</Button>
+            <Button onClick={props.tryAgain}>Try Again</Button>
         </div>
     </div>;
 };

@@ -5,3 +5,14 @@
   padding: 2rem;
   text-align: center;
 }
+
+
+.main_menu {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  flex-direction: column;
+
+  min-width: 320px;
+  min-height: 100vh;
+}

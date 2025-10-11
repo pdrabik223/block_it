@@ -1,10 +1,10 @@
 import type React from "react";
 
-import { BoardWidget } from "./BoardWidget.tsx";
-import { Button } from "./Button.tsx";
 import type { JSX } from "react";
 import type { Board } from "../engine/Board.tsx";
 import type { Shape } from "../engine/Shape.tsx";
+import { Button } from "../components/Button.tsx";
+import { BoardWidget } from "../components/BoardWidget.tsx";
 
 export interface PlayerGameUIProps {
     title: JSX.Element,
@@ -32,3 +32,6 @@ export const PlayerGameUI: React.FC<PlayerGameUIProps> = (props: PlayerGameUIPro
         {props.shapeWidgets}
     </>;
 };
+
+
+
