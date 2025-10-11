@@ -42,12 +42,21 @@ interface StateButtonProps {
     // children?: React.ReactNode,
     onClick: (value: any) => void
     buttonStates: ButtonState[]
+    initialValue: any
+}
+
+function findIndex(value: any, buttonStates: ButtonState[]) {
+
+    for (let i = 0; i < buttonStates.length; i++) {
+        if (buttonStates[i].value == value) return i;
+    }
+    return 0;
 }
 
 export const StateButton: React.FC<StateButtonProps> = (props: StateButtonProps) => {
     let textColors = ['fancy_button_red', 'fancy_button_blue', 'fancy_button_green', 'fancy_button_orange']
 
-    const [stateIndex, setStateIndex] = useState(0)
+    const [stateIndex, setStateIndex] = useState(findIndex(props.initialValue, props.buttonStates))
 
     const [hover, setHover] = useState(false);
     const handleMouseEnter = () => setHover(true);
@@ -55,11 +64,13 @@ export const StateButton: React.FC<StateButtonProps> = (props: StateButtonProps)
 
     let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
 
+
     return <button
         className={className}
         onClick={() => {
-            setStateIndex((stateIndex + 1) % props.buttonStates.length);
-            props.onClick(props.buttonStates[stateIndex].value)
+            let id = (stateIndex + 1) % props.buttonStates.length
+            setStateIndex(id);
+            props.onClick(props.buttonStates[id].value)
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

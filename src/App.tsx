@@ -32,9 +32,9 @@ function setGlobalState(newGlobalState: GlobalState) {
 
 function App() {
   const [showSettings, setShowSettings] = useState(false)
-  console.log(globalSettingsState)
+
   return <>
-    <TopBanner title="Title"
+    <TopBanner 
       leading={<TitleButton text={'Block it'} onClick={() => window.location.reload()}
         style={{ zIndex: 20, paddingLeft: "12px", width: "8%" }} />}
       following={<IconButton

@@ -23,21 +23,27 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                 style={{ marginLeft: 'auto', paddingRight: "12px" }} />} />
 
         <div className="column" style={{ height: "100%" }}>
-            <StateButton onClick={(v) => {
+            <StateButton 
+            initialValue={props.cookies.showPositionEvaluation}
+            onClick={(v) => {
                 props.cookies.showPositionEvaluation = v;
                 props.setGlobalState(props.cookies)
             }} buttonStates={[
                 new ButtonState('Position evaluation: On', true),
                 new ButtonState('Position evaluation: Off', false)
             ]} style={{ width: "300px", margin: "10px auto", }} />
-            <StateButton onClick={(v) => {
+            <StateButton 
+                initialValue={props.cookies.showMovesCount}
+            onClick={(v) => {
                 props.cookies.showMovesCount = v;
                 props.setGlobalState(props.cookies)
             }} buttonStates={[
                 new ButtonState('Moves count: On', true),
                 new ButtonState('Moves count: Off', false)
             ]} style={{ width: "300px", margin: "10px auto", }} />
-            <StateButton onClick={(v) => {
+            <StateButton 
+            initialValue={props.cookies.moveDelayMS}
+            onClick={(v) => {
                 props.cookies.moveDelayMS = v;
                 props.setGlobalState(props.cookies)
             }} buttonStates={[
@@ -47,8 +53,10 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                 new ButtonState('Engine move delay: 4s', 4000)
             ]} style={{ width: "300px", margin: "10px auto", }} />
 
-            <StateButton onClick={(v) => {
-                props.cookies.moveDelayMS = v;
+            <StateButton 
+            initialValue={props.cookies.debugLevel}
+            onClick={(v) => {
+                props.cookies.debugLevel = v;
                 props.setGlobalState(props.cookies)
             }} buttonStates={[
                 new ButtonState('Debug level: Off', DebugLevel.Off),
