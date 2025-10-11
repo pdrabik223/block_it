@@ -39,21 +39,22 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
     const [username, setUsername] = useState<string>(usernames[Math.floor(Math.random() * usernames.length)]);
     const [engine, setEngine] = useState<string>(engines[0]);
 
+    let state: string = ""
+
     useImperativeHandle(props.ref, () => ({
-        getState: () => [!isPlayer, isPlayer ? username : engine],
+        getState: () => [!isPlayer, isPlayer ? state : engine],
     }));
 
     let EngineOptions = [];
 
     for (let value of engines) {
         EngineOptions.push(<option style={{ margin: "4px", minWidth: "100%" }} key={uuidv4()} value={value}>{value}</option>)
-
     }
 
-
     return <div key={uuidv4()} className='row' style={{ margin: "4px" }}>
-        <Button style={{ margin: "4px", width: "42%" }} onClick={() => setIsPlayer(!isPlayer)}>{isPlayer ? "Player" : "Engine"}</Button>
-        {isPlayer ? <input onChange={(v) => setUsername(v.currentTarget.value)} minLength={1} style={{ margin: "4px" }} value={username}></input> :
+        <Button style={{ margin: "4px", width: "42%" }} onClick={() => { setUsername(state); setIsPlayer(!isPlayer) }}>{isPlayer ? "Player" : "Engine"}</Button>
+
+        {isPlayer ? <input onChange={(v) =>{ setUsername(v.currentTarget.value), v.preventDefault();}} minLength={1} style={{ margin: "4px" }} defaultValue={username}></input> :
 
             <select style={{ margin: "4px", width: "200px" }} value={engine} onChange={(e) => setEngine(e.currentTarget.value)}>
                 {EngineOptions}

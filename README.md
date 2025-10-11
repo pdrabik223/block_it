@@ -20,7 +20,9 @@
    15. add better background
    16. add piece color selector
    17. add variable delay after move for engines 
-
+   18. add "show additional information in settings" that will show Board coverage percentage 
+   19. hide github svg at the bottom of settings drawer
+   20. add Info about version at the bottom of settings 
 
 2. Make a engine that calculates the best move in position:
     algos planned:
@@ -28,7 +30,7 @@
     2. Pointer -> places pieces in random places from biggest to smallest DONE
     3. Aggressive -> places pieces as far from the starting point as possible IN PROGRESS
     4. Aggressive Pointer
-    5. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells
+    5. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells + Pointer + Aggresive
 
 3. Optymisation:
    1. move generator generates duplicates
