@@ -13,11 +13,12 @@ import { EngineGameUI } from "./EngineGameUI.tsx";
 import { ShapeList } from "../components/ShapeList.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
 
-function initShapeList(cell: Cell) {
+function initShapeList(cell: Cell, noDuplicates: number = 1) {
     let list = []
     for (let shape of shapeList())
-        list.push(new Shape(shape, cell))
-   
+        for (let x = 0; x < noDuplicates; x++)
+            list.push(new Shape(shape, cell))
+
     return list
 }
 
@@ -59,11 +60,8 @@ function initBoard(playerNames: PlayerInfo[]) {
 function initShapes(playerNames: PlayerInfo[]) {
     if (playerNames.length == 2) {
 
-        let red = initShapeList(Cell.Red).concat(initShapeList(Cell.Red));
-        let blue = initShapeList(Cell.Blue).concat(initShapeList(Cell.Blue))
-        // BubbleSortShapes(red)
-        // BubbleSortShapes(blue)
-        return [red, blue]
+        return [initShapeList(Cell.Red, 2), initShapeList(Cell.Blue, 2)]
+
 
     }
 
@@ -207,17 +205,4 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
 }
 
-
-
-function BubbleSortShapes(data: Shape[]) {
-    for (let i = 0; i < data.length; i++) {
-        for (let j = i; j < data.length; j++) {
-            if (data[j].points < data[i].points) {
-                let temp = data[j]
-                data[j] = data[i]
-                data[i] = temp
-            }
-        }
-    }
-}
 
