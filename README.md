@@ -11,7 +11,7 @@
    6. Light version of the app  
    7. ~~Flip vertically in piece settings~~
    8. Screen jumps up and down if players have different number of pieces
-   9. Favicon
+   9. ~~Favicon~~
    10. Better dropdown and input box styling
    11. ~~hide overflow cell~~
    12. rotate shape to face mouse cursor when it's held down
@@ -23,6 +23,11 @@
    18. add "show additional information in settings" that will show Board coverage percentage 
    19. ~~hide github svg at the bottom of settings drawer~~
    20. ~~add Info about version at the bottom of settings~~
+   21. Add explanation page with description of how the algorithms operate
+   22. Campaign mode, where player fights with algorithmic oponent 
+   23. Home button reloads page instead of resetting state of the page
+   24. Make favicon change colors on reload just like buttons do 
+
 
 2. Make a engine that calculates the best move in position:
     algos planned:

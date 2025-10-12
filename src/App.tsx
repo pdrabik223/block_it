@@ -35,12 +35,11 @@ function App() {
 
   return <>
     <TopBanner
-      leading={<TitleButton text={'Block it'} onClick={() => window.location.reload()}
-        style={{ zIndex: 20, paddingLeft: "12px", width: "8%" }} />}
+      leading={<TitleButton text={'Block it'} onClick={() => window.location.reload()} />}
       following={<IconButton
-        onClick={() => { setShowSettings(true) }}
-        style={{ marginLeft: 'auto', paddingRight: "24px" }}>
-        <IoMdSettings size={'50px'} /></IconButton>} />
+        onClick={() => { setShowSettings(true) }}>
+        <IoMdSettings size={'50px'} />
+      </IconButton>} />
 
     <SettingsOverlay style={{ zIndex: 21, backgroundColor: '#242424' }} show={showSettings}>
       <SettingsPage cookies={globalSettingsState} setGlobalState={setGlobalState} onSettingsClosed={() => setShowSettings(false)} />
