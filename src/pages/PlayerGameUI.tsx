@@ -11,6 +11,7 @@ export interface PlayerGameUIProps {
     onGameAbandonButton: () => void
     onSkipTurnButton: () => void
     onMoveMade: () => void
+    onShapeCancel?: () => void
     board: Board
     highlightedShape?: Shape
     shapeWidgets: JSX.Element
@@ -28,10 +29,9 @@ export const PlayerGameUI: React.FC<PlayerGameUIProps> = (props: PlayerGameUIPro
     return <>
         {props.title}
         {getButtons()}
-        <BoardWidget onMoveMade={props.onMoveMade} board={props.board} highlightShape={props.highlightedShape} />
+        <BoardWidget  onShapeCancel = {props.onShapeCancel} onMoveMade={props.onMoveMade} board={props.board} highlightShape={props.highlightedShape} />
         {props.shapeWidgets}
     </>;
 };
-
 
 

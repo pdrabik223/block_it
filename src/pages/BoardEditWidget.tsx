@@ -105,10 +105,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             let hasShapesLeft = shapes[nextid].length != 0
             if (!hasShapesLeft) continue;
 
-
             let hasMoves = board.getAllPossibleMovesForShapes(shapes[nextid]).length != 0
             if (!hasMoves) continue;
-
 
             return nextid;
         }
@@ -179,6 +177,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         title={getTitle()!}
         onGameAbandonButton={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}
         onSkipTurnButton={() => onMoveMade()}
+        onShapeCancel={() => setSelected(-1)}
         onMoveMade={() => onMoveMade(selected)}
         highlightedShape={getHighlightedShape()}
         board={board}

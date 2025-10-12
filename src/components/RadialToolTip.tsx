@@ -13,6 +13,7 @@ export interface RadialToolTipProps {
     cancelShape?: () => void
     onOutsideTap: () => void
     refreshBoard: () => void
+    onShapeCancel?: () => void
 }
 
 
@@ -110,12 +111,15 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
             {getRotateLButton()}
             {getApplyButton()}
             {getVerticalFlipButton()}
-            <Button style={{
-                position: `absolute`,
-                left: "60%",
-                top: "60%",
 
-            }}>Cancel Shape</Button>
+            <Button
+                onClick={() => { if (props.onShapeCancel != undefined) props.onShapeCancel(); props.onOutsideTap() }}
+                style={{
+                    position: `absolute`,
+                    left: "60%",
+                    top: "60%",
+
+                }}>Cancel Shape</Button>
 
 
         </div>

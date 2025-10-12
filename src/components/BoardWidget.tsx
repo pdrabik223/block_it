@@ -14,6 +14,7 @@ export interface BoardWidgetProps {
     highlight?: number,
     highlightShape?: Shape,
     onMoveMade: () => void
+    onShapeCancel?: () => void
 
 }
 
@@ -52,7 +53,7 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
             onPress={(_, e) => { setTooltipPos({ x: e.clientX, y: e.clientY }); }}
         />
         <FullScreenOverlay show={tooltipPos != null && props.highlightShape != undefined} >
-            <RadialToolTip apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
+            <RadialToolTip onShapeCancel={props.onShapeCancel} apply={applyFunction} refreshBoard={() => { setReDrawWidget(!reDrawWidget); }} highlightShape={props.highlightShape} onOutsideTap={() => setTooltipPos(null)} position={tooltipPos!} />
         </FullScreenOverlay>
     </div>
 }
