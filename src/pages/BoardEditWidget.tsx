@@ -69,12 +69,25 @@ function initShapes(playerNames: PlayerInfo[]) {
 }
 
 export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
+
     const [selected, setSelected] = useState(-1)
     const [gameIteration, setGameIteration] = useState(0);
-    const [board] = useState(initBoard(props.playerNames));
-    const [shapes] = useState(initShapes(props.playerNames));
+    const [board, setBoard] = useState(initBoard(props.playerNames));
+    const [shapes, setShapes] = useState(initShapes(props.playerNames));
     const [moveCounter, setMoveCounter] = useState(0);
     const [gameEnded, setGameEnded] = useState<boolean>(false)
+
+    function resetState() {
+        setSelected(-1)
+        setGameIteration(0)
+        setBoard(initBoard(props.playerNames))
+        setShapes(initShapes(props.playerNames))
+        setMoveCounter(0)
+        setGameEnded(false)
+        for (let i = 0; i < props.playerNames.length; i++) {
+            props.playerNames[i].endedPLay = false;
+        }
+    }
 
     function noPlayers() {
         return props.playerNames.length;
@@ -151,7 +164,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         return <>
             <BoardWidget onMoveMade={() => { }} board={board} highlightShape={undefined} />
             <FullScreenOverlay show={true} opacity={0.8}>
-                <ScoreBoard tryAgain={() => { }} returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={getPlayerNames()}></ScoreBoard>
+                <ScoreBoard tryAgain={resetState} returnToMainMenu={props.returnToMainMenu} shapes={shapes} playerNames={getPlayerNames()}></ScoreBoard>
             </FullScreenOverlay>
         </>
     }
@@ -182,6 +195,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         onShapeCancel={() => setSelected(-1)}
         onMoveMade={() => onMoveMade(selected)}
         highlightedShape={getHighlightedShape()}
+
         board={board}
         shapeWidgets={<ShapeList shapes={shapes[currentPLayerID()]} onPress={setSelected} lockSelection={false} selected={selected} />}
     />
