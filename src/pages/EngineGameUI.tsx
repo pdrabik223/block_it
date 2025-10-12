@@ -1,4 +1,4 @@
-import React, { useState, type JSX, useEffect, useRef } from "react";
+import React, {  type JSX, useEffect, useRef } from "react";
 
 import type { Board, Move } from "../engine/Board.tsx";
 

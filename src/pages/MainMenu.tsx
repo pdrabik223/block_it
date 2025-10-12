@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import { Button } from '../components/Button.tsx';
 import { Cell } from '../engine/enum_definitions.tsx';
-import { GameLoop, PlayerInfo } from './BoardEditWidget.tsx';
+import { GameLoop, PlayerInfo } from './GameLoop.tsx';
 import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlock.tsx';
 
 import "./MainMenu.css"
-import { useNavigate, type NavigateFunction } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export const enum GameModes {
@@ -13,11 +13,7 @@ export const enum GameModes {
     Game4player
 }
 
-interface MainManuProps {
-    // navigate: NavigateFunction
-}
-
-export const MainMenu: React.FC<MainManuProps> = (props: MainManuProps) => {
+export const MainMenu: React.FC<{}> = () => {
 
     const [gameMode, setGameMode] = useState<GameModes | null>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -32,7 +28,7 @@ export const MainMenu: React.FC<MainManuProps> = (props: MainManuProps) => {
     ]
 
     let navigate = useNavigate();
-    
+
     const handleClick = (noPlayers: number) => {
         playerInfo.splice(0, playerInfo.length)
         for (let i = 0; i < noPlayers; i++) {
