@@ -1,5 +1,5 @@
 
-import React, { useState, type JSX } from "react"
+import React, { useState } from "react"
 import "./Button.css"
 
 interface ButtonProps {
@@ -108,11 +108,9 @@ export const TitleButton: React.FC<TitleButtonProps> = (props: TitleButtonProps)
 // import { ReactSVG } from 'react-svg';
 
 interface IconButtonProps {
-    svg: JSX.Element,
-    onClick: () => void,
-    style?: React.CSSProperties,
-    height: number,
-    width: number
+    children?: React.ReactNode,
+    onClick: () => void, style?: React.CSSProperties,
+
 }
 
 export const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
@@ -127,19 +125,13 @@ export const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) =>
 
     let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
 
-    return <svg
+    return <div
         className={className}
         onClick={props.onClick}
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 50 50"
-        width={props.width + 'px'}
-        height={props.height + 'px'}
-        fill="white"
-        style={props.style} >
-        {props.svg}
-    </svg>
+        onMouseLeave={handleMouseLeave}>
+        {props.children}
+    </div>
 
 
 }

@@ -40,20 +40,20 @@
 
 .icon_button_red:hover {
     cursor: pointer;
-    fill: rgb(255, 86, 86);
+    color: rgb(255, 86, 86);
 }
 
 .icon_button_blue:hover {
     cursor: pointer;
-    fill: rgb(59, 59, 253);
+    color: rgb(59, 59, 253);
 }
 
 .icon_button_green:hover {
     cursor: pointer;
-    fill: rgb(43, 129, 43);
+    color: rgb(43, 129, 43);
 }
 
 .icon_button_orange:hover {
     cursor: pointer;
-    fill: rgb(249, 195, 96);
+    color: rgb(249, 195, 96);
 }

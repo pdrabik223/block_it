@@ -6,10 +6,10 @@
    1. ~~Add exit game all together button~~
    2. ~~Make config overlay less darkening~~
    3. Add Play Again button with the same player config
-   4. 2 player mode
-   5. Better engine move visualizer -> simply change the delay length after engine move
+   4. ~~2 player mode~~
+   5. ~~Better engine move visualizer -> simply change the delay length after engine move~~
    6. Light version of the app  
-   7. Flip vertically in piece settings
+   7. ~~Flip vertically in piece settings~~
    8. Screen jumps up and down if players have different number of pieces
    9. Favicon
    10. Better dropdown and input box styling
@@ -19,7 +19,7 @@
    14. add theme change button
    15. add better background
    16. add piece color selector
-   17. add variable delay after move for engines 
+   17. ~~add variable delay after move for engines~~
    18. add "show additional information in settings" that will show Board coverage percentage 
    19. ~~hide github svg at the bottom of settings drawer~~
    20. ~~add Info about version at the bottom of settings~~
@@ -39,6 +39,8 @@
 # Framework
 We can go full react mode, no backend all frontend app -> react + typescript 
 
+## Icons source
+[React Icons](https://react-icons.github.io/react-icons/)
 
 # Run prod version
 1. Install serve
