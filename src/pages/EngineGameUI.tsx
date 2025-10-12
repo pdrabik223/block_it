@@ -9,6 +9,7 @@ import Aggressive from "../engine/aggressive.tsx";
 import { ShapeList } from "../components/ShapeList.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
 import { globalSettingsState } from "../App.tsx";
+import { Button } from "../components/Button.tsx";
 
 
 export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
@@ -23,14 +24,15 @@ export interface EngineGameUIProps {
     board: Board,
     onMoveMade: (removedShapeId?: number) => void,
     onAbandonGame: () => void,
+    onEndGame: () => void
     shapes: Shape[],
     engineName: string,
     iteration: number
+
 }
 
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
 
-    const [engineStatus, setEngineStatus] = useState<JSX.Element>(<p>Idle</p>);
     function engineFunction() {
 
         let move = engineMap.get(props.engineName)!(props.board, props.shapes)
@@ -43,7 +45,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
         } else {
             props.board.makeMove(move)
-            setEngineStatus(<p> Made move!</p>)
+
             new Promise(() =>
                 setTimeout(() => {
                     props.onMoveMade(move.shapeId)
@@ -53,11 +55,11 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     }
     // on prod this needs to be flipped
-    const isInitialMount = useRef(false);
+    const isInitialMount = useRef(true);
 
     useEffect(() => {
         if (isInitialMount.current) {
-            isInitialMount.current = true;
+            isInitialMount.current = false;
         } else {
             engineFunction();
         }
@@ -66,7 +68,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     return <>
         {props.title}
-        {engineStatus}
+        <Button onClick={props.onEndGame} style={{ margin: "1%" }}> End Game </Button>
         <BoardWidget onMoveMade={() => { }} board={props.board} />
         <ShapeList shapes={props.shapes} onPress={() => { }} lockSelection={true} selected={-1} />
     </>;

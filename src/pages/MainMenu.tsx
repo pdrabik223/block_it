@@ -5,14 +5,19 @@ import { GameLoop, PlayerInfo } from './BoardEditWidget.tsx';
 import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlock.tsx';
 
 import "./MainMenu.css"
+import { useNavigate, type NavigateFunction } from 'react-router-dom';
+
 
 export const enum GameModes {
     Game2player,
     Game4player
 }
 
+interface MainManuProps {
+    // navigate: NavigateFunction
+}
 
-export const MainMenu: React.FC<{}> = () => {
+export const MainMenu: React.FC<MainManuProps> = (props: MainManuProps) => {
 
     const [gameMode, setGameMode] = useState<GameModes | null>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -26,10 +31,8 @@ export const MainMenu: React.FC<{}> = () => {
         useRef<PlayerInfoRef>(null),
     ]
 
-    if (isPlaying) {
-        return <GameLoop returnToMainMenu={() => { setGameMode(null); setIsPlaying(false); }} playerNames={playerInfo} />;
-    }
-
+    let navigate = useNavigate();
+    
     const handleClick = (noPlayers: number) => {
         playerInfo.splice(0, playerInfo.length)
         for (let i = 0; i < noPlayers; i++) {
@@ -38,10 +41,14 @@ export const MainMenu: React.FC<{}> = () => {
         }
     };
 
+    if (isPlaying) {
+        return <GameLoop returnToMainMenu={() => { setGameMode(null); setIsPlaying(false); }} playerNames={playerInfo} />;
+    }
+
     if (gameMode == null) return <>
         <div className='column'>
             <h1>Block it</h1>
-            <Button style={{ margin: "4px" }}>Tutorial</Button>
+            <Button style={{ margin: "4px" }} onClick={() => navigate("/tutorial")}>Tutorial</Button>
 
             <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game2player)}>2 Player Game</Button>
             <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game4player)}>4 Player Game</Button>

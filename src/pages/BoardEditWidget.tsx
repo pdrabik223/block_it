@@ -161,6 +161,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         return <EngineGameUI
             title={getTitle()!}
             board={board}
+            onEndGame={props.returnToMainMenu}
             onAbandonGame={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}
             shapes={shapes[currentPLayerID()]}
             onMoveMade={(v?: number) => (onMoveMade(v))}
@@ -175,6 +176,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
     return <PlayerGameUI
         title={getTitle()!}
+        onEndGame={props.returnToMainMenu}
         onGameAbandonButton={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}
         onSkipTurnButton={() => onMoveMade()}
         onShapeCancel={() => setSelected(-1)}

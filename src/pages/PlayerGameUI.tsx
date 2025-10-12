@@ -12,6 +12,7 @@ export interface PlayerGameUIProps {
     onSkipTurnButton: () => void
     onMoveMade: () => void
     onShapeCancel?: () => void
+    onEndGame: () => void
     board: Board
     highlightedShape?: Shape
     shapeWidgets: JSX.Element
@@ -21,15 +22,16 @@ export const PlayerGameUI: React.FC<PlayerGameUIProps> = (props: PlayerGameUIPro
     function getButtons() {
 
         return <div className="abandon_game_button">
-            <Button style={{ margin: "1%" }} onClick={props.onGameAbandonButton}> Abandon Game </Button>
             <Button onClick={props.onSkipTurnButton} style={{ margin: "1%" }}> Skip turn </Button>
+            <Button style={{ margin: "1%" }} onClick={props.onGameAbandonButton}> Abandon Game </Button>
+            <Button onClick={props.onEndGame} style={{ margin: "1%" }}> End Game </Button>
         </div>;
     }
 
     return <>
         {props.title}
         {getButtons()}
-        <BoardWidget  onShapeCancel = {props.onShapeCancel} onMoveMade={props.onMoveMade} board={props.board} highlightShape={props.highlightedShape} />
+        <BoardWidget onShapeCancel={props.onShapeCancel} onMoveMade={props.onMoveMade} board={props.board} highlightShape={props.highlightedShape} />
         {props.shapeWidgets}
     </>;
 };
