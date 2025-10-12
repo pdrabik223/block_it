@@ -10,7 +10,7 @@
    5. ~~Better engine move visualizer -> simply change the delay length after engine move~~
    6. Light version of the app  
    7. ~~Flip vertically in piece settings~~
-   8. Screen jumps up and down if players have different number of pieces
+   8. ~~Screen jumps up and down if players have different number of pieces~~
    9. ~~Favicon~~
    10. ~~Better dropdown and input box styling~~
    11. ~~hide overflow cell~~
@@ -27,7 +27,9 @@
    22. Campaign mode, where player fights with algorithmic oponent 
    23. Home button reloads page instead of resetting state of the page
    24. Make favicon change colors on reload just like buttons do 
-
+   25. test possibility of replacing cell with svg icon -> this can be a huge change
+   26. squish duplicate shapes and add a number of duplicates
+   27. ~~remove invisible cells around shapes~~
 
 2. Make a engine that calculates the best move in position:
     algos planned:

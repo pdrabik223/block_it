@@ -17,6 +17,7 @@ function initShapeList(cell: Cell) {
     let list = []
     for (let shape of shapeList())
         list.push(new Shape(shape, cell))
+   
     return list
 }
 
@@ -58,8 +59,12 @@ function initBoard(playerNames: PlayerInfo[]) {
 function initShapes(playerNames: PlayerInfo[]) {
     if (playerNames.length == 2) {
 
-        return [initShapeList(Cell.Red).concat(initShapeList(Cell.Red)),
-        (initShapeList(Cell.Blue).concat(initShapeList(Cell.Blue)))]
+        let red = initShapeList(Cell.Red).concat(initShapeList(Cell.Red));
+        let blue = initShapeList(Cell.Blue).concat(initShapeList(Cell.Blue))
+        // BubbleSortShapes(red)
+        // BubbleSortShapes(blue)
+        return [red, blue]
+
     }
 
     return [(initShapeList(Cell.Red)),
@@ -202,4 +207,17 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
 }
 
+
+
+function BubbleSortShapes(data: Shape[]) {
+    for (let i = 0; i < data.length; i++) {
+        for (let j = i; j < data.length; j++) {
+            if (data[j].points < data[i].points) {
+                let temp = data[j]
+                data[j] = data[i]
+                data[i] = temp
+            }
+        }
+    }
+}
 

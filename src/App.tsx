@@ -15,6 +15,8 @@ export class GlobalState {
   public debugLevel = DebugLevel.Off
   public showPositionEvaluation = false
   public showMovesCount = false
+  public condenseShapes = true
+
   public moveDelayMS: number = 250
 }
 

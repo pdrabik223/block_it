@@ -19,3 +19,4 @@ export const ShapeList: React.FC<ShapeListProps> = (props: ShapeListProps) => {
         </SelectableShape>)}
     </div>;
 };
+

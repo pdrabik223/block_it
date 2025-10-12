@@ -251,10 +251,10 @@ export class Shape {
 
             case Shapes.QuadrupleOffsetL:
                 this.data = [
+                    [this.none, this.none, this.none, this.none],
                     [this.none, cell, this.none, this.none],
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, cell, this.none],
-                    [this.none, cell, this.none, this.none]];
+                    [cell, cell, cell, cell],
+                    [this.none, this.none, this.none, this.none]];
                 this.cellValue = 5;
 
                 this.numberOfRotations = NoRotations.Four
@@ -264,10 +264,11 @@ export class Shape {
 
             case Shapes.QuadrupleBolt:
                 this.data = [
-                    [this.none, this.none, cell, this.none],
-                    [this.none, cell, cell, this.none],
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, this.none, this.none]];
+                    [this.none, this.none, this.none, this.none],
+                    [cell, cell, cell, this.none],
+                    [this.none, this.none, cell, cell],
+                    [this.none, this.none, this.none, this.none]];
+
                 this.numberOfRotations = NoRotations.Four
                 this.cellValue = 5;
 
@@ -277,11 +278,11 @@ export class Shape {
 
             case Shapes.PentaLine:
                 this.data = [
-                    [this.none, this.none, cell, this.none, this.none],
-                    [this.none, this.none, cell, this.none, this.none],
-                    [this.none, this.none, cell, this.none, this.none],
-                    [this.none, this.none, cell, this.none, this.none],
-                    [this.none, this.none, cell, this.none, this.none]];
+                    [this.none, this.none, this.none, this.none, this.none],
+                    [this.none, this.none, this.none, this.none, this.none],
+                    [cell, cell, cell, cell, cell],
+                    [this.none, this.none, this.none, this.none, this.none],
+                    [this.none, this.none, this.none, this.none, this.none]];
                 this.cellValue = 5;
                 this.numberOfRotations = NoRotations.Two
                 this.size = 5;
@@ -411,13 +412,13 @@ export function shapeList() {
         Shapes.Dot,
         Shapes.Tuple,
         Shapes.Triple,
-        Shapes.Square,
         Shapes.TripleLine,
-        Shapes.Cross,
+        Shapes.Square,
         Shapes.TripleT,
+        Shapes.Bolt,
+        Shapes.Cross,
         Shapes.BigTripleT,
         Shapes.TripleC,
-        Shapes.Bolt,
         Shapes.TripleL,
         Shapes.BigTripleL,
         Shapes.TripleP,

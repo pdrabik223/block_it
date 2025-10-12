@@ -28,6 +28,16 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                     new ButtonState('Position evaluation: On', true),
                     new ButtonState('Position evaluation: Off', false)
                 ]} style={{ width: "300px", margin: "10px auto", }} />
+
+            <StateButton
+                initialValue={props.cookies.condenseShapes}
+                onClick={(v) => {
+                    props.cookies.condenseShapes = v;
+                    props.setGlobalState(props.cookies)
+                }} buttonStates={[
+                    new ButtonState('Condense Shapes: On', true),
+                    new ButtonState('Condense Shapes: Off', false)
+                ]} style={{ width: "300px", margin: "10px auto", }} />
             <StateButton
                 initialValue={props.cookies.showMovesCount}
                 onClick={(v) => {
