@@ -21,7 +21,7 @@ export class GlobalState {
   public debugLevel = DebugLevel.Off
   public showPositionEvaluation = false
   public showMovesCount = false
-  public moveDelayMS: number = 200
+  public moveDelayMS: number = 250
 }
 
 export var globalSettingsState = new GlobalState();

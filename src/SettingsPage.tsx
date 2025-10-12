@@ -50,7 +50,7 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                 new ButtonState('Engine move delay: 0.25s', 250),
                 new ButtonState('Engine move delay: 0.5s', 500),
                 new ButtonState('Engine move delay: 2s', 2000),
-                new ButtonState('Engine move delay: 4s', 4000)
+                new ButtonState('Engine move delay: 4s', 4000),
             ]} style={{ width: "300px", margin: "10px auto", }} />
 
             <StateButton 

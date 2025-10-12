@@ -5,7 +5,7 @@ export default function Randy(board: Board, shapes: Shape[]): Move | null {
     if (shapes.length == 0)
         return null
 
-    let moves = board.getAllPossibleMovesForShapes(shapes, shapes[0].getColor())
+    let moves = board.getAllPossibleMovesForShapes(shapes)
     if (moves.length == 0) return null;
     return moves[Math.floor(Math.random() * moves.length)]
 

@@ -31,7 +31,7 @@ export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
 
     let data: JSX.Element[] = []
 
-    let temp = horizontalBorder(Cell.Red, Cell.Blue);
+    let temp = horizontalBorder(props.board.cornerCells[0], props.board.cornerCells[1]);
     data.push(<div key={uuidv4()} className='row'>{temp}</div>);
 
     for (let x = 0; x < Board.height; x++) {
@@ -62,7 +62,7 @@ export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
         data.push(<div key={uuidv4()} className='row'>{temp}</div>);
     }
     // add bottom border
-    temp = horizontalBorder(Cell.Orange, Cell.Green);
+    temp = horizontalBorder(props.board.cornerCells[3], props.board.cornerCells[2]);
     data.push(<div key={uuidv4()} className='row'>{temp}</div>);
 
     return <div className='column'> {data}</div>

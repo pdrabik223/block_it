@@ -13,8 +13,6 @@ import { EngineGameUI } from "./EngineGameUI.tsx";
 import { ShapeList } from "../components/ShapeList.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
 
-
-
 function initShapeList(cell: Cell) {
     let list = []
     for (let shape of shapeList())
@@ -46,24 +44,44 @@ interface GameLoopProps {
     returnToMainMenu: () => void
 }
 
+function initBoard(playerNames: PlayerInfo[]) {
+    if (playerNames.length == 2) {
+
+        let board = new Board()
+        board.cornerCells = [Cell.Red, Cell.Red, Cell.Blue, Cell.Blue]
+        return board
+    }
+
+    return new Board();
+}
+
+function initShapes(playerNames: PlayerInfo[]) {
+    if (playerNames.length == 2) {
+
+        return [initShapeList(Cell.Red).concat(initShapeList(Cell.Red)),
+        (initShapeList(Cell.Blue).concat(initShapeList(Cell.Blue)))]
+    }
+
+    return [(initShapeList(Cell.Red)),
+    (initShapeList(Cell.Blue)),
+    (initShapeList(Cell.Green)),
+    (initShapeList(Cell.Orange))]
+}
+
 export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     const [selected, setSelected] = useState(-1)
     const [gameIteration, setGameIteration] = useState(0);
-    const [board] = useState(new Board());
-    const [shapes] = useState(() => {
-        return [(initShapeList(Cell.Red)),
-        (initShapeList(Cell.Blue)),
-        (initShapeList(Cell.Green)),
-        (initShapeList(Cell.Orange))]
-    });
-    let [moveCounter, setMoveCounter] = useState(0);
+    const [board] = useState(initBoard(props.playerNames));
+    const [shapes] = useState(initShapes(props.playerNames));
+    const [moveCounter, setMoveCounter] = useState(0);
     const [gameEnded, setGameEnded] = useState<boolean>(false)
 
-
-    let noPlayers = 4;
+    function noPlayers() {
+        return props.playerNames.length;
+    }
 
     function currentPLayerID(): number {
-        return gameIteration % noPlayers;
+        return gameIteration % noPlayers();
     }
 
     function isCurrentPlayerEngine() {
@@ -77,7 +95,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         let aPlayerWon = winner != null
 
         for (let i = 1; i <= props.playerNames.length; i++) {
-            let nextid = (gameIteration + i) % noPlayers;
+            let nextid = (gameIteration + i) % noPlayers();
 
             if (aPlayerWon && nextid == 0) break;
 
@@ -87,8 +105,10 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             let hasShapesLeft = shapes[nextid].length != 0
             if (!hasShapesLeft) continue;
 
-            let hasMoves = board.getAllPossibleMovesForShapes(shapes[nextid], shapes[nextid][0].getColor()).length != 0
+
+            let hasMoves = board.getAllPossibleMovesForShapes(shapes[nextid]).length != 0
             if (!hasMoves) continue;
+
 
             return nextid;
         }
@@ -106,6 +126,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         let nextPLayer = nextPLayerID()
 
         if (nextPLayer != null) {
+
             setMoveCounter(moveCounter + 1);
             setGameIteration(nextPLayer);
         }

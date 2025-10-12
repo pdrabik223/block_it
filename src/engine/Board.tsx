@@ -35,6 +35,7 @@ export class Move {
 export class Board {
 
     public data: Cell[] = [];
+    public cornerCells: Cell[] = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
 
     public static height = 20; // no columns
     public static width = 20;
@@ -42,12 +43,16 @@ export class Board {
     constructor();
     constructor(other: Board);
 
+
+
     constructor(other?: Board) {
         if (other != null) {
             this.data = other.data.slice();
+            this.cornerCells = other.cornerCells
         } else {
             this.data = new Array(Board.height * Board.width).fill(Cell.Empty);
         }
+
     }
 
     makeMove(move: Move) {
@@ -115,26 +120,29 @@ export class Board {
         let hangingCorners: [number, CellCorner][] = []
 
         // corner cases but check if they are covered by something
-        switch (color) {
-            case Cell.Red:
-                if (this.data[0] == Cell.Empty)
-                    hangingCorners.push([0, CellCorner.TopLeft])
-                break;
-            case Cell.Blue:
-                if (this.data[Board.width - 1] == Cell.Empty)
-                    hangingCorners.push([Board.width - 1, CellCorner.TopRight])
-                break
-            case Cell.Green:
-                if (this.data[(Board.height - 1) * Board.width + Board.width - 1] == Cell.Empty)
-                    hangingCorners.push([(Board.height - 1) * Board.width + Board.width - 1, CellCorner.BottomRight])
-                break
-            case Cell.Orange:
-                if (this.data[(Board.height - 1) * Board.width] == Cell.Empty)
-                    hangingCorners.push([(Board.height - 1) * Board.width, CellCorner.BottomLeft])
-                break;
+        for (let i = 0; i < this.cornerCells.length; i++) {
+
+            if (color == this.cornerCells[i]) {
+                switch (i) {
+                    case 0:
+                        if (this.data[0] == Cell.Empty)
+                            hangingCorners.push([0, CellCorner.TopLeft])
+                        break;
+                    case 1:
+                        if (this.data[Board.width - 1] == Cell.Empty)
+                            hangingCorners.push([Board.width - 1, CellCorner.TopRight])
+                        break;
+                    case 2:
+                        if (this.data[(Board.height - 1) * Board.width + Board.width - 1] == Cell.Empty)
+                            hangingCorners.push([(Board.height - 1) * Board.width + Board.width - 1, CellCorner.BottomRight])
+                        break;
+                    case 3:
+                        if (this.data[(Board.height - 1) * Board.width] == Cell.Empty)
+                            hangingCorners.push([(Board.height - 1) * Board.width, CellCorner.BottomLeft])
+                        break;
+                }
+            }
         }
-
-
 
         // user placed cells
         let listOfSameColorCells: number[] = []
@@ -194,9 +202,15 @@ export class Board {
         return permutations;
     }
 
-    getAllPossibleMovesForShapes(shapes: Shape[], color: Cell): Move[] {
+    getAllPossibleMovesForShapes(shapes: Shape[]): Move[] {
+
+
+        if (shapes.length == 0) return []
+
+        let color = shapes[0].cellColor
 
         let possibleMoves: Move[] = []
+
         for (let [position, hangingCorner] of this.getHangingCorners(color))
             for (let i = 0; i < shapes.length; i++) {
                 for (let permutation of this.getShapePermutations(shapes[i])) {
@@ -207,8 +221,8 @@ export class Board {
                             let result = this.combineShapeInternal(positionX - x, positionY - y, permutation)
                             let ids_to_replace = result[0]
                             let errors = result[2]
-
                             if (this.isValidPlacement(errors)) {
+
                                 possibleMoves.push(new Move(
                                     position,
                                     i,
@@ -219,6 +233,7 @@ export class Board {
                                     ids_to_replace
                                 ))
                             }
+
                         }
                 }
             }
@@ -265,19 +280,27 @@ export class Board {
             if (!this.checkBoundingBoxError(x, y)) {
                 if (this.data[x * Board.width + y] == cell) return PlacementState.TouchingSameColorCorner;
             } else {
-                switch (cell) {
-                    case Cell.Red:
-                        if (x == -1 && y == -1) return PlacementState.TouchingSameColorCorner;
-                        break;
-                    case Cell.Blue:
-                        if (x == -1 && y == Board.width) return PlacementState.TouchingSameColorCorner;
-                        break;
-                    case Cell.Orange:
-                        if (x == Board.height && y == -1) return PlacementState.TouchingSameColorCorner;
-                        break;
-                    case Cell.Green:
-                        if (x == Board.height && y == Board.width) return PlacementState.TouchingSameColorCorner;
-                        break;
+                for (let i = 0; i < this.cornerCells.length; i++) {
+                    if (cell == this.cornerCells[i]) {
+                        switch (i) {
+                            case 0:
+                                if (x == -1 && y == -1)
+                                    return PlacementState.TouchingSameColorCorner;
+                                break;
+                            case 1:
+                                if (x == -1 && y == Board.width)
+                                    return PlacementState.TouchingSameColorCorner;
+                                break;
+                            case 2:
+                                if (x == Board.height && y == Board.width)
+                                    return PlacementState.TouchingSameColorCorner;
+                                break;
+                            case 3:
+                                if (x == Board.height && y == -1)
+                                    return PlacementState.TouchingSameColorCorner;
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -317,6 +340,7 @@ export class Board {
         var ids_to_replace: number[] = []
         var cells: Cell[] = []
         var errors: PlacementState[] = []
+
         for (let sx = 0; sx < shape.size; sx++) {
             for (let sy = 0; sy < shape.size; sy++) {
                 if (shape.get(sx, sy) != shape.none) {
