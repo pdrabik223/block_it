@@ -1,4 +1,4 @@
-import { useImperativeHandle, useState } from "react";
+import { useImperativeHandle, useRef, useState } from "react";
 import { engineMap } from "../pages/EngineGameUI.tsx";
 import type { Cell } from "../engine/enum_definitions.tsx";
 import { Button } from "./Button.tsx";
@@ -36,14 +36,13 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
     let engines = Array.from(engineMap.keys());
 
     const [isPlayer, setIsPlayer] = useState(false);
-    const [username, setUsername] = useState<string>(usernames[Math.floor(Math.random() * usernames.length)]);
     const [engine, setEngine] = useState<string>(engines[0]);
 
-    let state: string = ""
-
     useImperativeHandle(props.ref, () => ({
-        getState: () => [!isPlayer, isPlayer ? state : engine],
+        getState: () => [!isPlayer, isPlayer ? usernameValueRef.current!.getState() : engine],
     }));
+
+    const usernameValueRef = useRef<InputValueRef>(null);
 
     let EngineOptions = [];
 
@@ -52,9 +51,9 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
     }
 
     return <div key={uuidv4()} className='row' style={{ margin: "4px" }}>
-        <Button style={{ margin: "4px", width: "42%" }} onClick={() => { setUsername(state); setIsPlayer(!isPlayer) }}>{isPlayer ? "Player" : "Engine"}</Button>
+        <Button style={{ margin: "4px", width: "42%" }} onClick={() => { setIsPlayer(!isPlayer) }}>{isPlayer ? "Player" : "Engine"}</Button>
 
-        {isPlayer ? <input onChange={(v) =>{ setUsername(v.currentTarget.value), v.preventDefault();}} minLength={1} style={{ margin: "4px" }} defaultValue={username}></input> :
+        {isPlayer ? <ControlledInput ref={usernameValueRef} /> :
 
             <select style={{ margin: "4px", width: "200px" }} value={engine} onChange={(e) => setEngine(e.currentTarget.value)}>
                 {EngineOptions}
@@ -64,4 +63,21 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
             <CellWidget value={props.cell} size={40} />
         </div>
     </div>;
+}
+
+export interface InputValueRef {
+    getState: () => string;
+}
+
+interface ControlledInputProps { ref: React.RefObject<InputValueRef | null> }
+
+export const ControlledInput: React.FC<ControlledInputProps> = (props: ControlledInputProps) => {
+
+    const [value, setValue] = useState<string>(usernames[Math.floor(Math.random() * usernames.length)]);
+
+    useImperativeHandle(props.ref, () => ({
+        getState: () => value,
+    }));
+
+    return <input onChange={(v) => { setValue(v.target.value) }} minLength={1} style={{ margin: "4px" }} value={value}></input>
 }
