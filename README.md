@@ -102,7 +102,8 @@ npm run build
 npm run deploy
 ```
 
-3. Change path to js and css files in dist/index.html
+3. Change path to js and css files in dist/index.html path should start with ```https://pdrabik223.github.io/block_it/```
+for example: 
    from:
    ``` html
    <script type="module" crossorigin src="/assets/index-HvKn5xYP.js"></script>
