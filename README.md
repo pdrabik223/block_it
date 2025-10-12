@@ -25,7 +25,7 @@
    20. ~~add Info about version at the bottom of settings~~
    21. Add explanation page with description of how the algorithms operate
    22. Campaign mode, where player fights with algorithmic oponent 
-   23. Home button reloads page instead of resetting state of the page
+   23. ~~Home button reloads page instead of resetting state of the page~~
    24. Make favicon change colors on reload just like buttons do 
    25. test possibility of replacing cell with svg icon -> this can be a huge change
    26. squish duplicate shapes and add a number of duplicates
@@ -35,9 +35,8 @@
     algos planned:
     1. Randy -> randomly picks one move from list of possible DONE
     2. Pointer -> places pieces in random places from biggest to smallest DONE
-    3. Aggressive -> places pieces as far from the starting point as possible IN PROGRESS
-    4. Aggressive Pointer
-    5. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells + Pointer + Aggresive
+    3. Aggressive Pointer -> places pieces as far from the starting point as possible (DONE but it sucks)
+    4. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells + Pointer + Aggresive
 
 3. Optymisation:
    1. move generator generates duplicates

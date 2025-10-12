@@ -16,8 +16,8 @@ export class GlobalState {
   public showPositionEvaluation = false
   public showMovesCount = false
   public condenseShapes = true
+  public moveDelayMS: number = 100
 
-  public moveDelayMS: number = 250
 }
 
 export var globalSettingsState = new GlobalState();

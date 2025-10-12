@@ -53,6 +53,7 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                     props.cookies.moveDelayMS = v;
                     props.setGlobalState(props.cookies)
                 }} buttonStates={[
+                    new ButtonState('Engine move delay: 0.1s', 100),
                     new ButtonState('Engine move delay: 0.25s', 250),
                     new ButtonState('Engine move delay: 0.5s', 500),
                     new ButtonState('Engine move delay: 2s', 2000),

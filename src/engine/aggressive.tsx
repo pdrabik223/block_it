@@ -16,6 +16,7 @@ function distanceBetweenPoints(pos: number, pos2: number): number {
     let distance = Math.pow(posX - pos2X, 2) + Math.pow(posY - pos2Y, 2)
     return distance;
 }
+
 export default function Aggressive(board: Board, shapes: Shape[]): Move | null {
     if (shapes.length == 0)
         return null
@@ -26,37 +27,22 @@ export default function Aggressive(board: Board, shapes: Shape[]): Move | null {
         return null
 
 
-    let color = moves[0].shape.getColor()
+    let centerPosition = Math.floor(Board.width / 2) * Board.width + Math.floor(Board.width / 2)
 
-    let originPosition = 0;
-    switch (color) {
-        case Cell.Red:
-            originPosition = 0;
-            break;
-        case Cell.Orange:
-            originPosition = (Board.height - 1) * Board.width;
-            break;
-        case Cell.Green:
-            originPosition = (Board.height - 1) * Board.width + (Board.width - 1);
-            break;
-        case Cell.Blue:
-            originPosition = Board.width - 1;
-            break;
 
-    }
+    let maxDistance = 9999999;
 
-    let maxDistance = 0;
-    
     for (let move of moves) {
-        
-        let distance = distanceBetweenPoints(originPosition, move.position)
-        if (distance >= maxDistance) maxDistance = distance;
+
+        let distance = distanceBetweenPoints(centerPosition, move.position)
+        if ((distance - move.shape.points()) <= maxDistance) maxDistance = distance - move.shape.points();
     }
-    
+
     let maxDistanceMoves: Move[] = []
+
     for (let move of moves) {
-        let distance = distanceBetweenPoints(originPosition, move.position)
-        if (distance == maxDistance) maxDistanceMoves.push(move)
+        let distance = distanceBetweenPoints(centerPosition, move.position)
+        if ((distance - move.shape.points()) == maxDistance) maxDistanceMoves.push(move)
     }
 
     return maxDistanceMoves[Math.floor(Math.random() * maxDistanceMoves.length)]
