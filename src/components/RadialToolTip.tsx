@@ -47,7 +47,24 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                     left: "42%",
                     top: "10%",
                 }}>Flip</Button>
+    }
 
+    function getVerticalFlipButton() {
+        if (props.highlightShape)
+            return <Button
+                onClick={
+                    () => {
+                        props.highlightShape!.flipLR();
+                        props.highlightShape!.rotate(true);
+                        props.highlightShape!.rotate(true);
+                        props.refreshBoard();
+                    }
+                }
+                style={{
+                    position: 'absolute',
+                    left: "12%",
+                    top: "45%",
+                }}>Flip</Button>
     }
 
     function getRotateLButton() {
@@ -92,6 +109,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
             {getFlipButton()}
             {getRotateLButton()}
             {getApplyButton()}
+            {getVerticalFlipButton()}
             <Button style={{
                 position: `absolute`,
                 left: "60%",
