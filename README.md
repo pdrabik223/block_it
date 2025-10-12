@@ -5,7 +5,7 @@
 1. Create ui for playing the game yourself
    1. ~~Add exit game all together button~~
    2. ~~Make config overlay less darkening~~
-   3. Add Play Again button with the same player config
+   3. ~~Add Play Again button with the same player config~~
    4. ~~2 player mode~~
    5. ~~Better engine move visualizer -> simply change the delay length after engine move~~
    6. Light version of the app  
