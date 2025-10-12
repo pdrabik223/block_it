@@ -70,8 +70,18 @@ button:focus-visible {
 
 input {
 
-  background-color:  #1a1a1a;
+  background-color: #1a1a1a;
   border: #535bf2;
-  
+
+
+}
+
+
+
+select {
+
+  background-color: #1a1a1a;
+  border: #535bf2;
+
 
 }

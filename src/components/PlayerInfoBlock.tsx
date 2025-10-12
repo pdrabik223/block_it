@@ -47,15 +47,15 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
     let EngineOptions = [];
 
     for (let value of engines) {
-        EngineOptions.push(<option style={{ margin: "4px", minWidth: "100%" }} key={uuidv4()} value={value}>{value}</option>)
+        EngineOptions.push(<option style={{ margin: "4px", fontSize: 'large' }} key={uuidv4()} value={value}>{value}</option>)
     }
 
-    return <div key={uuidv4()} className='row' style={{ margin: "4px" }}>
-        <Button style={{ margin: "4px", width: "42%" }} onClick={() => { setIsPlayer(!isPlayer) }}>{isPlayer ? "Player" : "Engine"}</Button>
+    return <div key={uuidv4()} className='row' style={{ margin: "4px", }}>
+        <Button style={{ margin: "4px", width: "100px" }} onClick={() => { setIsPlayer(!isPlayer) }}>{isPlayer ? "Player" : "Engine"}</Button>
 
         {isPlayer ? <ControlledInput ref={usernameValueRef} /> :
 
-            <select style={{ margin: "4px", width: "200px" }} value={engine} onChange={(e) => setEngine(e.currentTarget.value)}>
+            <select style={{ margin: "4px", width: "220px", fontSize: 'large' }} value={engine} onChange={(e) => setEngine(e.currentTarget.value)}>
                 {EngineOptions}
             </select>}
 
@@ -79,5 +79,5 @@ export const ControlledInput: React.FC<ControlledInputProps> = (props: Controlle
         getState: () => value,
     }));
 
-    return <input onChange={(v) => { setValue(v.target.value) }} minLength={1} style={{ margin: "4px" }} value={value}></input>
+    return <input onChange={(v) => { setValue(v.target.value) }} minLength={1} style={{ margin: "4px", fontSize: 'large', width: "220px" }} value={value}></input>
 }

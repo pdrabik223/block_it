@@ -35,7 +35,7 @@ function App() {
 
   return <>
     <TopBanner
-      leading={<TitleButton text={'Block it'} onClick={() => window.location.reload()} />}
+      leading={<TitleButton style={{fontSize: 'xx-large'}} text={'Block it'} onClick={() => window.location.reload()} />}
       following={<IconButton
         onClick={() => { setShowSettings(true) }}>
         <IoMdSettings size={'50px'} />

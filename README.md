@@ -12,7 +12,7 @@
    7. ~~Flip vertically in piece settings~~
    8. Screen jumps up and down if players have different number of pieces
    9. ~~Favicon~~
-   10. Better dropdown and input box styling
+   10. ~~Better dropdown and input box styling~~
    11. ~~hide overflow cell~~
    12. rotate shape to face mouse cursor when it's held down
    13. on mobile, cell selection does not work
