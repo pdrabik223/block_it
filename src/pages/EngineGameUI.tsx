@@ -1,4 +1,4 @@
-import React, {  type JSX, useEffect, useRef } from "react";
+import React, { type JSX, useEffect, useRef } from "react";
 
 import type { Board, Move } from "../engine/Board.tsx";
 
@@ -10,12 +10,14 @@ import { ShapeList } from "../components/ShapeList.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
 import { globalSettingsState } from "../App.tsx";
 import { Button } from "../components/Button.tsx";
+import Coroner from "../engine/hanging_corners_maximizer.tsx";
 
 
 export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
     ["Randy", Randy],
     ["Pointer", Pointer],
-    ["Aggressive", Aggressive]
+    ["Aggressive", Aggressive],
+    ["Coroner", Coroner]
 ])
 
 
@@ -55,11 +57,11 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     }
     // on prod this needs to be flipped
-    const isInitialMount = useRef(true);
+    const isInitialMount = useRef(false);
 
     useEffect(() => {
         if (isInitialMount.current) {
-            isInitialMount.current = false;
+            isInitialMount.current = true;
         } else {
             engineFunction();
         }

@@ -1,5 +1,4 @@
 import { Board, type Move } from "./Board.tsx";
-import { Cell } from "./enum_definitions.tsx";
 import type { Shape } from "./Shape.tsx";
 
 function coord2d(val: number): [x: number, y: number] {
