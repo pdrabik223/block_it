@@ -1,5 +1,7 @@
 # Block it game engine
 
+Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
+
 ## Task Board
 
 1. Create ui for playing the game yourself
@@ -30,13 +32,15 @@
    25. test possibility of replacing cell with svg icon -> this can be a huge change
    26. squish duplicate shapes and add a number of duplicates
    27. ~~remove invisible cells around shapes~~
+   28. gh pages break
 
 2. Make a engine that calculates the best move in position:
     algos planned:
     1. Randy -> randomly picks one move from list of possible DONE
     2. Pointer -> places pieces in random places from biggest to smallest DONE
     3. Aggressive Pointer -> places pieces as far from the starting point as possible (DONE but it sucks)
-    4. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells + Pointer + Aggresive
+    4. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells + Pointer +Aggresive
+    5. Hanging Corners maximizer -> Done but has issues
 
 3. Optymisation:
    1. move generator generates duplicates
