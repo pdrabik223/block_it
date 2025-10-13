@@ -35,7 +35,7 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<MainMenu />} />
+        <Route path="*" element={<MainMenu />} />
         <Route path="/tutorial" element={<Tutorial />} />
       </Routes>
     </Router></>
