@@ -26,7 +26,7 @@ export function setGlobalState(newGlobalState: GlobalState) {
   globalSettingsState = newGlobalState;
 }
 
-import { Tutorial } from './pages/Tutorial.tsx';
+import { Painter, Tutorial } from './pages/Tutorial.tsx';
 import { NavBar } from './components/NavBar.tsx';
 
 function App() {
@@ -37,6 +37,7 @@ function App() {
       <Routes>
         <Route path="*" element={<MainMenu />} />
         <Route path="/tutorial" element={<Tutorial />} />
+        <Route path="/painter" element={<Painter />} />
       </Routes>
     </Router></>
 

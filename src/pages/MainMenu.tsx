@@ -46,8 +46,10 @@ export const MainMenu: React.FC<{}> = () => {
             <h1>Block it</h1>
             <Button style={{ margin: "4px" }} onClick={() => navigate("/tutorial")}>Tutorial</Button>
 
-            <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game2player)}>2 Player Game</Button>
-            <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game4player)}>4 Player Game</Button>
+            <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game2player)}>2 Player Mode</Button>
+            <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game4player)}>4 Player Mode</Button>
+
+            <Button style={{ margin: "4px" }} onClick={() => navigate("/painter")}>Painter</Button>
         </div>
     </>;
 

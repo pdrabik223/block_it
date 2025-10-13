@@ -13,8 +13,9 @@ export interface BoardWidgetProps {
     board: Board,
     highlight?: number,
     highlightShape?: Shape,
-    onMoveMade: () => void
-    onShapeCancel?: () => void
+    onMoveMade: () => void,
+    onShapeCancel?: () => void,
+    validateBeforePlacement?: boolean
 
 }
 
@@ -31,9 +32,14 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
         [ids_to_replace, cells, errors] = props.board.combineShape(shapePlacement, props.highlightShape)
     }
 
+    let requireValidation = true
+    if (props.validateBeforePlacement != undefined)
+        requireValidation = props.validateBeforePlacement
+
     let applyFunction = undefined;
-    if (props.highlightShape && shapePlacement != -1)
-        if (props.board.isValidPlacement(errors))
+
+    if (props.highlightShape && shapePlacement != -1) {
+        if (!requireValidation || props.board.isValidPlacement(errors)) {
             applyFunction = () => {
                 props.board.addShape(shapePlacement, props.highlightShape!)
                 setReDrawWidget(!reDrawWidget);
@@ -41,6 +47,9 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
                 setTooltipPos(null);
                 props.onMoveMade();
             }
+        }
+
+    }
 
     return <div>
         <CellGrid

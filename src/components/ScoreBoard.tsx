@@ -63,13 +63,17 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
         );
 
     }
+    function getBoardFillPercentage() {
+        return (20 * 20) / 20
 
+    }
     return <div className="column" style={{ height: "100%" }}>
         <div>
             <h1>Game Over!</h1>
             <div className="column">
                 {column}
             </div>
+            <h2> Total board fill: {getBoardFillPercentage()}</h2>
             <Button style={{ margin: "4px" }} onClick={props.returnToMainMenu}>Main menu</Button>
             <Button style={{ margin: "4px" }} onClick={props.tryAgain}>Try Again</Button>
         </div>

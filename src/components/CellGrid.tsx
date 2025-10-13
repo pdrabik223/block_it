@@ -65,7 +65,7 @@ export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
     temp = horizontalBorder(props.board.cornerCells[3], props.board.cornerCells[2]);
     data.push(<div key={uuidv4()} className='row'>{temp}</div>);
 
-    return <div className='column'> {data}</div>
+    return <div id="cellGrid" className='column'> {data}</div>
 
 }
 

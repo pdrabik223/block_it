@@ -12,13 +12,15 @@ import { FullScreenOverlay } from "../components/FullScreenOverlay.tsx";
 import { EngineGameUI } from "./EngineGameUI.tsx";
 import { ShapeList } from "../components/ShapeList.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
+import { logInfo } from "../engine/logger.tsx";
+
+
 
 function initShapeList(cell: Cell, noDuplicates: number = 1) {
     let list = []
     for (let shape of shapeList())
         for (let x = 0; x < noDuplicates; x++)
             list.push(new Shape(shape, cell))
-
     return list
 }
 
@@ -59,10 +61,7 @@ function initBoard(playerNames: PlayerInfo[]) {
 
 function initShapes(playerNames: PlayerInfo[]) {
     if (playerNames.length == 2) {
-
         return [initShapeList(Cell.Red, 2), initShapeList(Cell.Blue, 2)]
-
-
     }
 
     return [(initShapeList(Cell.Red)),
@@ -139,6 +138,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
         let nextPLayer = nextPLayerID()
 
+        logInfo("PLayer:", nextPLayer)
+        
         if (nextPLayer != null) {
 
             setMoveCounter(moveCounter + 1);
