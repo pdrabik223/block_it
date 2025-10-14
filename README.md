@@ -16,7 +16,7 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    9. ~~Favicon~~
    10. ~~Better dropdown and input box styling~~
    11. ~~hide overflow cell~~
-   12. rotate shape to face mouse cursor when it's held down
+   12. rotate shape to face mouse cursor when it's held down  
    13. on mobile, cell selection does not work
    14. add theme change button
    15. add better background
@@ -32,7 +32,7 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    25. test possibility of replacing cell with svg icon -> this can be a huge change
    26. squish duplicate shapes and add a number of duplicates
    27. ~~remove invisible cells around shapes~~
-   28. gh pages break
+   28. ~~gh pages break~~
 
 2. Make a engine that calculates the best move in position:
     algos planned:

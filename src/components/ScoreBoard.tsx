@@ -1,6 +1,7 @@
 import React, { type JSX } from "react";
 import type { Shape } from "../engine/Shape.tsx";
 import { Button } from "./Button.tsx";
+import { Board } from "../engine/Board.tsx";
 
 export interface ScoreBoardProps {
     shapes: Shape[][];
@@ -40,6 +41,8 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
     let scoreBoard = new Array<PlayerResultInfo>();
     let textColors = ['cell_red', 'cell_blue', 'cell_green', 'cell_orange'];
 
+    let points_placed = 0
+
     for (let playerID = 0; playerID < props.playerNames.length; playerID++) {
 
         var total = 0;
@@ -47,6 +50,7 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
         for (let i = 0; i < props.shapes[playerID].length; i++) {
             total += props.shapes[playerID][i].points();
         }
+        points_placed += total
         scoreBoard.push(new PlayerResultInfo(props.playerNames[playerID], total, textColors[playerID]));
     }
     sortPlayerResultInfo(scoreBoard);
@@ -63,17 +67,18 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
         );
 
     }
-    function getBoardFillPercentage() {
-        return (20 * 20) / 20
 
+    function getBoardFillPercentage() {
+        return Math.floor((((89 * 4) - points_placed) / 400) * 100)
     }
+
     return <div className="column" style={{ height: "100%" }}>
         <div>
             <h1>Game Over!</h1>
             <div className="column">
                 {column}
             </div>
-            <h2> Total board fill: {getBoardFillPercentage()}</h2>
+            <h2> Total board fill: {getBoardFillPercentage()} %</h2>
             <Button style={{ margin: "4px" }} onClick={props.returnToMainMenu}>Main menu</Button>
             <Button style={{ margin: "4px" }} onClick={props.tryAgain}>Try Again</Button>
         </div>
