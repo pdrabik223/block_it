@@ -6,6 +6,7 @@ import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlo
 
 import "./MainMenu.css"
 import { useNavigate } from 'react-router-dom';
+import { Column } from '../components/Column.tsx';
 
 
 export const enum GameModes {
@@ -42,7 +43,7 @@ export const MainMenu: React.FC<{}> = () => {
     }
 
     if (gameMode == null) return <>
-        <div className='column'>
+        <Column >
             <h1>Block it</h1>
             <Button style={{ margin: "4px" }} onClick={() => navigate("/tutorial")}>Tutorial</Button>
 
@@ -50,11 +51,11 @@ export const MainMenu: React.FC<{}> = () => {
             <Button style={{ margin: "4px" }} onClick={() => setGameMode(GameModes.Game4player)}>4 Player Mode</Button>
 
             <Button style={{ margin: "4px" }} onClick={() => navigate("/painter")}>Painter</Button>
-        </div>
+        </Column>
     </>;
 
     if (gameMode == GameModes.Game4player) return <>
-        <div className='column'>
+        <Column>
             <h1>Settings </h1>
             <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} />
             <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
@@ -63,17 +64,17 @@ export const MainMenu: React.FC<{}> = () => {
 
             <Button style={{ margin: "4px" }} onClick={() => { handleClick(4); setIsPlaying(true) }}>Start</Button>
             <Button style={{ margin: "4px" }} onClick={() => { setGameMode(null); setIsPlaying(false); }}>Back</Button>
-        </div>
+        </Column>
     </>;
 
     if (gameMode == GameModes.Game2player) return <>
-        <div className='column'>
+        <Column>
             <h1>Settings </h1>
             <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} />
             <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
 
             <Button style={{ margin: "4px" }} onClick={() => { handleClick(2); setIsPlaying(true) }}>Start</Button>
             <Button style={{ margin: "4px" }} onClick={() => { setGameMode(null); setIsPlaying(false); }}>Back</Button>
-        </div>
+        </Column>
     </>;
 };

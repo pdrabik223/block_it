@@ -5,6 +5,8 @@ import type { Shape } from "../engine/Shape.tsx";
 import { CellWidget } from "./CellWidget.tsx";
 import { SelectableCell } from "./SelectableCell.tsx";
 import { v4 as uuidv4 } from 'uuid';
+import { Column } from "./Column.tsx";
+import { Row } from "./Row.tsx";
 
 
 function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
@@ -32,7 +34,7 @@ export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
     let data: JSX.Element[] = []
 
     let temp = horizontalBorder(props.board.cornerCells[0], props.board.cornerCells[1]);
-    data.push(<div key={uuidv4()} className='row'>{temp}</div>);
+    data.push(<Row key={uuidv4()} >{temp}</Row>);
 
     for (let x = 0; x < Board.height; x++) {
 
@@ -59,13 +61,13 @@ export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
             );
         }
         temp.push(<CellWidget value={Cell.Border} />);
-        data.push(<div key={uuidv4()} className='row'>{temp}</div>);
+        data.push(<Row key={uuidv4()} >{temp}</Row>);
     }
     // add bottom border
     temp = horizontalBorder(props.board.cornerCells[3], props.board.cornerCells[2]);
-    data.push(<div key={uuidv4()} className='row'>{temp}</div>);
+    data.push(<Row key={uuidv4()} >{temp}</Row>);
 
-    return <div id="cellGrid" className='column'> {data}</div>
+    return <Column id="cellGrid"> {data}</Column>
 
 }
 

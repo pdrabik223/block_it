@@ -4,6 +4,8 @@ import type { JSX } from 'react';
 import './ShapeWidget.css'
 import { v4 as uuidv4 } from 'uuid';
 import { globalSettingsState } from '../App.tsx';
+import { Row } from './Row.tsx';
+import { Column } from './Column.tsx';
 
 
 interface ShapeWidgetProps { shape: Shape }
@@ -27,8 +29,10 @@ export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps)
         rows = rows.filter((item,
             index) => rows.indexOf(item) === index);
         BubbleSort(rows)
+
         columns = columns.filter((item,
             index) => columns.indexOf(item) === index);
+
         BubbleSort(columns)
     } else {
         for (let x = 0; x < props.shape.size; x++) { rows.push(x) }
@@ -44,10 +48,10 @@ export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps)
                 <CellWidget value={props.shape.get(x, y)} />
             );
         }
-        data.push(<div key={uuidv4()} className='row'>{temp}</div>);
+        data.push(<Row key={uuidv4()} >{temp}</Row>);
     }
 
-    return <div key={uuidv4()} className='column'> {data} </div>
+    return <Column key={uuidv4()} > {data} </Column>
 
 }
 

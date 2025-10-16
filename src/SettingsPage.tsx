@@ -1,6 +1,8 @@
 import { IconButton, ButtonState, StateButton } from './components/Button.tsx';
 import { TopBanner } from './TopBanner.tsx';
 import { DebugLevel, type GlobalState } from './App.tsx';
+import { IoCloseCircleSharp } from "react-icons/io5";
+import { Column } from './components/Column.tsx';
 
 export interface SettingsPageRef {
     onSettingsClosed: () => void;
@@ -8,7 +10,6 @@ export interface SettingsPageRef {
     setGlobalState: (newState: GlobalState) => void
 }
 
-import { IoCloseCircleSharp } from "react-icons/io5";
 
 export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) => {
 
@@ -18,7 +19,7 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                 onClick={props.onSettingsClosed}
                 style={{ marginLeft: 'auto', paddingRight: "12px" }}><IoCloseCircleSharp size="50px" /></IconButton>} />
 
-        <div className="column" style={{ height: "100%" }}>
+        <Column expanded={true}>
             <StateButton
                 initialValue={props.cookies.showPositionEvaluation}
                 onClick={(v) => {
@@ -72,9 +73,9 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                     new ButtonState('Debug level: Error only', DebugLevel.Error)
                 ]} style={{ width: "300px", margin: "10px auto", }} />
 
-            <p>Version 3.14</p>
+            <p>Version 0.1.2</p>
             <a onClick={() => window.open("https://github.com/pdrabik223", "_blank")}>Github</a>
-        </div>
+        </Column>
     </>;
 
 };

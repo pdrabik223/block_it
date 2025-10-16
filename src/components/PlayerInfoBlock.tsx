@@ -4,6 +4,8 @@ import type { Cell } from "../engine/enum_definitions.tsx";
 import { Button } from "./Button.tsx";
 import { CellWidget } from "./CellWidget.tsx";
 import { v4 as uuidv4 } from 'uuid';
+import { Column } from "./Column.tsx";
+import { Row } from "./Row.tsx";
 export const usernames = [
     "Tony Stark",
     "Bruce Wayne",
@@ -50,7 +52,7 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
         EngineOptions.push(<option style={{ margin: "4px", fontSize: 'large' }} key={uuidv4()} value={value}>{value}</option>)
     }
 
-    return <div key={uuidv4()} className='row' style={{ margin: "4px", }}>
+    return <Row key={uuidv4()} style={{ margin: "4px", }}>
         <Button style={{ margin: "4px", width: "100px" }} onClick={() => { setIsPlayer(!isPlayer) }}>{isPlayer ? "Player" : "Engine"}</Button>
 
         {isPlayer ? <ControlledInput ref={usernameValueRef} /> :
@@ -59,10 +61,10 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
                 {EngineOptions}
             </select>}
 
-        <div className='column'>
+        <Column>
             <CellWidget value={props.cell} size={40} />
-        </div>
-    </div>;
+        </Column>
+    </Row>;
 }
 
 export interface InputValueRef {

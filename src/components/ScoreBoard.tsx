@@ -1,6 +1,8 @@
 import React, { type JSX } from "react";
 import type { Shape } from "../engine/Shape.tsx";
 import { Button } from "./Button.tsx";
+import { Column } from "./Column.tsx";
+import { Row } from "./Row.tsx";
 
 export interface ScoreBoardProps {
     shapes: Shape[][];
@@ -56,10 +58,10 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
     for (let player of scoreBoard) {
 
         column.push(
-            <div className='row'>
+            <Row>
                 <h2 className={player.color} style={{ backgroundColor: "transparent" }}>{player.name}</h2>
                 <h2 style={{ width: "4rem", backgroundColor: "transparent" }} className={player.color}>{player.points}</h2>
-            </div>
+            </Row>
         );
 
     }
@@ -67,15 +69,16 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
         return (20 * 20) / 20
 
     }
-    return <div className="column" style={{ height: "100%" }}>
+    return <Column expanded={true} >
         <div>
             <h1>Game Over!</h1>
-            <div className="column">
+            <Column>
                 {column}
-            </div>
+            </Column>
             <h2> Total board fill: {getBoardFillPercentage()}</h2>
             <Button style={{ margin: "4px" }} onClick={props.returnToMainMenu}>Main menu</Button>
             <Button style={{ margin: "4px" }} onClick={props.tryAgain}>Try Again</Button>
         </div>
-    </div>;
+    </Column>
+
 };

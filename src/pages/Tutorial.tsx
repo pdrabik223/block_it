@@ -34,7 +34,7 @@ export function Painter() {
 
     return <>
         <h1>Settings </h1>
-        <div className='column'>
+        <Column>
             <StateButton
                 initialValue={removeShapeAfterPlacement}
                 onClick={(v) => {
@@ -62,7 +62,7 @@ export function Painter() {
 
             <Button style={{ margin: "4px" }} onClick={() => { setInPainterMode(true) }}>Start</Button>
             <Button style={{ margin: "4px" }} onClick={() => { navigate("/") }}>Back</Button>
-        </div>
+        </Column>
     </>
 }
 
@@ -92,8 +92,8 @@ function initShapes() {
 }
 
 import * as htmlToImage from 'html-to-image';
-// import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 import { saveAs } from "file-saver";
+import { Column } from '../components/Column.tsx';
 
 export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
 
