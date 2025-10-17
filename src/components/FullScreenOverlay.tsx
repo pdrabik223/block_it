@@ -1,32 +1,39 @@
 import type React from 'react';
 
+
+
 export interface FullScreenOverlayProps {
-    opacity?: number;
     children: React.ReactNode,
     show: boolean,
+    opacity?: number;
+    key?: React.Key | null,
+    style?: React.CSSProperties
+    id?: string
 }
 
 export const FullScreenOverlay: React.FC<FullScreenOverlayProps> = (props: FullScreenOverlayProps) => {
-    let opacity = props.opacity == undefined ? 0.4 : props.opacity
+
+    let backgroundColor = `rgba(0, 0, 0, ${props.opacity != undefined ? props.opacity : 0.4})`
+
     if (props.show)
-        return <div className='full_screen_overlay' style={{ backgroundColor: `rgba(0, 0, 0, ${opacity})` }}>
-            {props.children}
-        </div>;
-    return <></>;
-};
+        return <div
+            id={props.id}
+            key={props.key}
+            style={
+                (() => {
+                    const baseStyle: React.CSSProperties = {
+                        height: "100%",
+                        width: "100%",
+                        position: "fixed",
+                        zIndex: 9,
+                        left: 0,
+                        top: 0,
+                        backgroundColor: backgroundColor,
+                        overflowX: "hidden"
+                    };
 
-
-export interface SettingsOverlayProps {
-    children: React.ReactNode,
-    show: boolean,
-    style?: React.CSSProperties,
-
-}
-
-export const SettingsOverlay: React.FC<SettingsOverlayProps> = (props: SettingsOverlayProps) => {
-    if (props.show)
-        return <div style={props.style
-        } className='full_screen_overlay' >
+                    return { ...baseStyle, ...(props.style || {}) } as React.CSSProperties;
+                })()}>
             {props.children}
         </div >;
     return <></>;

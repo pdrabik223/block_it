@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { IconButton, TitleButton } from "./Button.tsx";
 import { TopBanner } from "../TopBanner.tsx";
-import { SettingsOverlay } from "./FullScreenOverlay.tsx";
+import { FullScreenOverlay } from "./FullScreenOverlay.tsx";
 import { globalSettingsState, setGlobalState } from "../App.tsx";
 import { SettingsPage } from "../SettingsPage.tsx";
 
@@ -23,9 +23,9 @@ export const NavBar: React.FC<{}> = () => {
                 <IoMdSettings size={'50px'} />
             </IconButton>} />
 
-        <SettingsOverlay style={{ zIndex: 21, backgroundColor: '#242424' }} show={showSettings}>
+        <FullScreenOverlay style={{ zIndex: 21, backgroundColor: '#242424' }} show={showSettings}>
             <SettingsPage cookies={globalSettingsState} setGlobalState={setGlobalState} onSettingsClosed={() => setShowSettings(false)} />
-        </SettingsOverlay>
+        </FullScreenOverlay>
     </>
 
 }
