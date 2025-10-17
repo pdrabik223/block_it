@@ -1,4 +1,4 @@
-import { MainMenu } from './pages/MainMenu.tsx';
+import { Game2Player, Game4Player, MainMenu } from './pages/MainMenu.tsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css'
@@ -24,9 +24,10 @@ export var globalSettingsState = new GlobalState();
 export function setGlobalState(newGlobalState: GlobalState) {
   globalSettingsState = newGlobalState;
 }
-
-import { Painter, Tutorial } from './pages/Tutorial.tsx';
+import { Tutorial } from './pages/Tutorial.tsx';
 import { NavBar } from './components/NavBar.tsx';
+import { Painter } from './pages/Painter.tsx';
+
 
 function App() {
 
@@ -35,6 +36,8 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="*" element={<MainMenu />} />
+        <Route path="/game_2_player" element={<Game2Player />} />
+        <Route path="/game_4_player" element={<Game4Player />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/painter" element={<Painter />} />
       </Routes>

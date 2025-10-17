@@ -100,11 +100,14 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
         width: '400px',
         zIndex: 10
     }}>
-        <div className='circle' style={{
+        <div style={{
             left: "-50%",
             top: "-50%",
             height: "100%",
-            width: "100%"
+            width: "100%",
+            borderRadius: '50%',
+            border: '2px solid rgb(127, 127, 127)',
+            position: "absolute",
         }} >
             {getRotateRButton()}
             {getFlipButton()}
@@ -129,7 +132,7 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
                 left: "-10%", top: "-10%",
                 height: "20%",
                 width: "20%",
-                display: 'flex',    
+                display: 'flex',
                 flex: 'auto',
                 flexDirection: 'column',
                 flexWrap: 'nowrap',

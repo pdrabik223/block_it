@@ -17,7 +17,7 @@ export const NavBar: React.FC<{}> = () => {
 
     return <>
         <TopBanner
-            leading={<TitleButton style={{ fontSize: 'xx-large' }} text={'Block it'} onClick={() => { navigate("/"); }} />}
+            leading={<TitleButton style={{ fontSize: 'xx-large' }} text={'Block it'} onClick={() => navigate("/")} />}
             following={<IconButton
                 onClick={() => { setShowSettings(true) }}>
                 <IoMdSettings size={'50px'} />
