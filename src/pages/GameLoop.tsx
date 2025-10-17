@@ -3,8 +3,7 @@ import React, { useState, type JSX } from "react";
 import { Board } from "../engine/Board.tsx";
 import { Shape, shapeList } from "../engine/Shape.tsx";
 
-import '../components/CellWidget.css'
-import { Cell } from "../engine/enum_definitions.tsx";
+import { Cell, cellBlue, cellGreen, cellOrange, cellRed } from "../engine/enum_definitions.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
 import { ScoreBoard } from "../components/ScoreBoard.tsx";
 import { FullScreenOverlay } from "../components/FullScreenOverlay.tsx";
@@ -138,7 +137,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         let nextPLayer = nextPLayerID()
 
         logInfo("PLayer:", nextPLayer)
-        
+
         if (nextPLayer != null) {
 
             setMoveCounter(moveCounter + 1);
@@ -150,9 +149,9 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     }
 
     function getTitle(): JSX.Element {
-        let textColors = ['cell_red', 'cell_blue', 'cell_green', 'cell_orange']
+        let textColors = [cellRed, cellBlue, cellGreen, cellOrange]
 
-        return <h1 className={textColors[currentPLayerID()]} style={{ backgroundColor: "transparent" }}>{getPlayerNames()[currentPLayerID()]}</h1>;
+        return <h1 style={{ backgroundColor: "transparent", color: textColors[currentPLayerID()] }}>{getPlayerNames()[currentPLayerID()]}</h1>;
     }
 
     function getPlayerNames() {

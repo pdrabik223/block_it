@@ -1,17 +1,6 @@
 import React, { useState } from "react"
+import { getRandomActiveCellColor } from "../engine/enum_definitions.tsx";
 
-export const cellRed: string = "rgb(255, 86, 86)"
-export const cellBlue: string = "rgb(59, 59, 253)"
-export const cellGreen: string = "rgb(43, 129, 43)"
-export const cellOrange: string = "rgb(249,195,96)"
-
-export const cellColors = [cellRed,
-    cellBlue,
-    cellGreen,
-    cellOrange]
-function getRandomRGBColor() {
-    return cellColors[Math.floor(Math.random() * cellColors.length)]
-}
 
 interface ButtonProps {
     onClick?: () => void,
@@ -26,7 +15,7 @@ export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let color = hover ? getRandomRGBColor() : "transparent"
+    let color = hover ? getRandomActiveCellColor() : "transparent"
 
     return <button
         onClick={props.onClick}
@@ -73,7 +62,7 @@ export const StateButton: React.FC<StateButtonProps> = (props: StateButtonProps)
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let color = hover ? getRandomRGBColor() : ""
+    let color = hover ? getRandomActiveCellColor() : ""
 
     return <button
 
@@ -106,7 +95,7 @@ export const TitleButton: React.FC<TitleButtonProps> = (props: TitleButtonProps)
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let color = hover ? getRandomRGBColor() : ""
+    let color = hover ? getRandomActiveCellColor() : ""
 
 
     return <h2
@@ -137,7 +126,7 @@ export const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) =>
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let color = hover ? getRandomRGBColor() : ""
+    let color = hover ? getRandomActiveCellColor() : ""
 
     return <div
 

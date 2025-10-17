@@ -3,6 +3,7 @@ import type { Shape } from "../engine/Shape.tsx";
 import { Button } from "./Button.tsx";
 import { Column } from "./Column.tsx";
 import { Row } from "./Row.tsx";
+import { cellBlue, cellGreen, cellOrange, cellRed } from "../engine/enum_definitions.tsx";
 
 export interface ScoreBoardProps {
     shapes: Shape[][];
@@ -40,7 +41,7 @@ export function sortPlayerResultInfo(data: PlayerResultInfo[]) {
 export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) => {
 
     let scoreBoard = new Array<PlayerResultInfo>();
-    let textColors = ['cell_red', 'cell_blue', 'cell_green', 'cell_orange'];
+    let textColors = [cellRed, cellBlue, cellGreen, cellOrange];
 
     let points_placed = 0
 
@@ -62,8 +63,8 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
 
         column.push(
             <Row>
-                <h2 className={player.color} style={{ backgroundColor: "transparent" }}>{player.name}</h2>
-                <h2 style={{ width: "4rem", backgroundColor: "transparent" }} className={player.color}>{player.points}</h2>
+                <h2 style={{ backgroundColor: "transparent", color: player.color }}>{player.name}</h2>
+                <h2 style={{ width: "4rem", backgroundColor: "transparent", color: player.color }} >{player.points}</h2>
             </Row>
         );
 
