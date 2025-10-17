@@ -123,18 +123,21 @@ export const RadialToolTip: React.FC<RadialToolTipProps> = (props: RadialToolTip
 
 
         </div>
-        <div className='circle button_dir'
+        <div className='button_dir'
             onClick={props.onOutsideTap}
             style={{
                 left: "-10%", top: "-10%",
                 height: "20%",
                 width: "20%",
-                display: 'flex',
+                display: 'flex',    
                 flex: 'auto',
                 flexDirection: 'column',
                 flexWrap: 'nowrap',
                 justifyContent: 'center',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                borderRadius: '50%',
+                border: '2px solid rgb(127, 127, 127)',
+                position: "absolute",
 
             }}
         >Close</div>

@@ -2,7 +2,6 @@ import { MainMenu } from './pages/MainMenu.tsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css'
-import "./pages/MainMenu.css"
 
 export enum DebugLevel {
   Off,

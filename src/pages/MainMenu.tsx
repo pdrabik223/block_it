@@ -4,7 +4,6 @@ import { Cell } from '../engine/enum_definitions.tsx';
 import { GameLoop, PlayerInfo } from './GameLoop.tsx';
 import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlock.tsx';
 
-import "./MainMenu.css"
 import { useNavigate } from 'react-router-dom';
 import { Column } from '../components/Column.tsx';
 
