@@ -1,29 +1,44 @@
-
 import React, { useState } from "react"
-import "./Button.css"
+
+export const cellRed: string = "rgb(255, 86, 86)"
+export const cellBlue: string = "rgb(59, 59, 253)"
+export const cellGreen: string = "rgb(43, 129, 43)"
+export const cellOrange: string = "rgb(249,195,96)"
+
+export const cellColors = [cellRed,
+    cellBlue,
+    cellGreen,
+    cellOrange]
+function getRandomRGBColor() {
+    return cellColors[Math.floor(Math.random() * cellColors.length)]
+}
 
 interface ButtonProps {
-    style?: React.CSSProperties,
+    onClick?: () => void,
     children?: React.ReactNode,
-    onClick?: () => void
+    style?: React.CSSProperties
 }
 
 export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
-    let textColors = ['fancy_button_red', 'fancy_button_blue', 'fancy_button_green', 'fancy_button_orange']
 
     const [hover, setHover] = useState(false);
 
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
+    let color = hover ? getRandomRGBColor() : "transparent"
 
     return <button
-        className={className}
         onClick={props.onClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={props.style}>{props.children}</button>
+        style={(() => {
+            const baseStyle: React.CSSProperties = {
+                borderColor: color
+            };
+
+            return { ...baseStyle, ...(props.style || {}) } as React.CSSProperties;
+        })()}>{props.children}</button>
 }
 
 export class ButtonState {
@@ -32,14 +47,11 @@ export class ButtonState {
     constructor(label: React.ReactNode, value: any) {
         this.label = label
         this.value = value
-
     }
 }
 
-
 interface StateButtonProps {
     style?: React.CSSProperties,
-    // children?: React.ReactNode,
     onClick: (value: any) => void
     buttonStates: ButtonState[]
     initialValue: any
@@ -54,7 +66,6 @@ function findIndex(value: any, buttonStates: ButtonState[]) {
 }
 
 export const StateButton: React.FC<StateButtonProps> = (props: StateButtonProps) => {
-    let textColors = ['fancy_button_red', 'fancy_button_blue', 'fancy_button_green', 'fancy_button_orange']
 
     const [stateIndex, setStateIndex] = useState(findIndex(props.initialValue, props.buttonStates))
 
@@ -62,11 +73,10 @@ export const StateButton: React.FC<StateButtonProps> = (props: StateButtonProps)
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
-
+    let color = hover ? getRandomRGBColor() : ""
 
     return <button
-        className={className}
+
         onClick={() => {
             let id = (stateIndex + 1) % props.buttonStates.length
             setStateIndex(id);
@@ -74,11 +84,14 @@ export const StateButton: React.FC<StateButtonProps> = (props: StateButtonProps)
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={props.style}>{props.buttonStates[stateIndex].label}</button>
+        style={(() => {
+            const baseStyle: React.CSSProperties = {
+                borderColor: color
+            };
+
+            return { ...baseStyle, ...(props.style || {}) } as React.CSSProperties;
+        })()}>{props.buttonStates[stateIndex].label}</button>
 }
-
-
-
 
 interface TitleButtonProps {
     text: string, onClick: () => void, style?: React.CSSProperties,
@@ -87,25 +100,29 @@ interface TitleButtonProps {
 export const TitleButton: React.FC<TitleButtonProps> = (props: TitleButtonProps) => {
 
 
-    let textColors = ['text_button_red', 'text_button_blue', 'text_button_green', 'text_button_orange']
 
     const [hover, setHover] = useState(false);
 
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
+    let color = hover ? getRandomRGBColor() : ""
 
 
     return <h2
-        className={className}
         onClick={props.onClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={props.style}>{props.text}</h2>
+        style={(() => {
+            const baseStyle: React.CSSProperties = {
+                color: color,
+                cursor: "pointer",
+            };
+
+            return { ...baseStyle, ...(props.style || {}) } as React.CSSProperties;
+        })()}>{props.text}</h2>
 
 }
-// import { ReactSVG } from 'react-svg';
 
 interface IconButtonProps {
     children?: React.ReactNode,
@@ -115,22 +132,30 @@ interface IconButtonProps {
 
 export const IconButton: React.FC<IconButtonProps> = (props: IconButtonProps) => {
 
-
-    let textColors = ['icon_button_red', 'icon_button_blue', 'icon_button_green', 'icon_button_orange']
-
     const [hover, setHover] = useState(false);
 
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
 
-    let className = hover ? textColors[Math.floor(Math.random() * textColors.length)] : ""
+    let color = hover ? getRandomRGBColor() : ""
 
     return <div
-        className={className}
+
         onClick={props.onClick}
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}>
+        onMouseLeave={handleMouseLeave}
+        style={(() => {
+            const baseStyle: React.CSSProperties = {
+                cursor: "pointer",
+                color: color
+            };
+
+            return { ...baseStyle, ...(props.style || {}) } as React.CSSProperties;
+        })()}
+        
+        >
         {props.children}
+
     </div>
 
 

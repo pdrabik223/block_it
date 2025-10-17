@@ -3,7 +3,6 @@ import React, { useState, type JSX } from "react";
 import { Board } from "../engine/Board.tsx";
 import { Shape, shapeList } from "../engine/Shape.tsx";
 
-import '../components/BoardWidget.css'
 import '../components/CellWidget.css'
 import { Cell } from "../engine/enum_definitions.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";

@@ -1,5 +1,5 @@
 
-import './BoardWidget.css'
+
 import { Shape } from '../engine/Shape.tsx';
 import React, { useState } from "react";
 import { FullScreenOverlay } from './FullScreenOverlay.tsx';
