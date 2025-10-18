@@ -14,6 +14,7 @@ export enum CellStyle {
   Simple,
   Classic,
   Fake3D,
+  Diamond
 }
 
 export class GlobalState {

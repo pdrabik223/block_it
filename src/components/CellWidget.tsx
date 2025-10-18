@@ -79,6 +79,25 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
                     <polygon points="0,0 100,100 0,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.8)" }} />
                 </svg>
             </div>
+
+        case CellStyle.Diamond:
+            return <div key={uuidv4()} style={style}>
+                <svg width={size} height={size} viewBox={`0 0 100 100`}>
+
+                    <polygon points="0,0 100,100 0,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.7)" }} />
+                    <polygon points="0,0 100,0 100,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.8)" }} />
+                    <polygon points="0,100 100,0 100,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.8)" }} />
+                    <polygon points="100,0 50,50 100,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.7)" }} />
+
+                    <polygon points="50,0 85,15 100,50 85,85 50,100 15,85 0,50 15,15" fill={style["backgroundColor"]} />
+
+                    <line x1="85" y1="15" x2="15" y2="85" style={{ stroke: style["backgroundColor"], strokeWidth: 2 }} />
+                    <line x1="15" y1="15" x2="85" y2="85" style={{ stroke: style["backgroundColor"], strokeWidth: 2 }} />
+                    <line x1="0" y1="50" x2="100" y2="50" style={{ stroke: style["backgroundColor"], strokeWidth: 2 }} />
+                    <line x1="50" y1="0" x2="50" y2="100" style={{ stroke: style["backgroundColor"], strokeWidth: 2 }} />
+
+                </svg>
+            </div>
     }
 }
 

@@ -68,7 +68,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     useEffect(() => {
         if (isInitialMount.current) {
-            isInitialMount.current = true;
+            isInitialMount.current = false;
         } else {
             engineFunction();
         }
