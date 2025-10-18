@@ -34,10 +34,10 @@ export function reverseCellCorner(value: CellCorner): CellCorner {
     }
 }
 
-export const cellRed: string = "rgb(255, 86, 86)"
-export const cellBlue: string = "rgb(59, 59, 253)"
-export const cellGreen: string = "rgb(43, 129, 43)"
-export const cellOrange: string = "rgb(249,195,96)"
+export const cellRed: string = "rgba(209, 94, 94, 1)"
+export const cellBlue: string = "rgba(82, 82, 247, 1)"
+export const cellGreen: string = "rgba(90, 176, 90, 1)"
+export const cellOrange: string = "rgba(238, 197, 122, 1)"
 
 export const cellBorder: string = "rgb(17, 17, 17)"
 export const cellEmpty: string = "gray"

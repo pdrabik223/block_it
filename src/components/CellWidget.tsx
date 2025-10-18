@@ -58,6 +58,12 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
         }
     }
 
-    return <div key={uuidv4()} style={style}> </div>
+    return <div key={uuidv4()} style={style}>
+        
+        <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" x="0" y="0" fill={style["backgroundColor"]} />
+            <polygon points="0,0 100,100 0,100" fill={style["backgroundColor"]} style={{filter: "brightness(0.6)"}}/>
+        </svg>
+    </div>
 }
 

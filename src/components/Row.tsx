@@ -1,7 +1,9 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export interface RowRef {
     children: React.ReactNode,
     expanded?: boolean,
-    key?: React.Key | null,
+    key?: React.Key,
     style?: React.CSSProperties
     id?: string
 }
@@ -10,10 +12,11 @@ export interface RowRef {
 export const Row: React.FC<RowRef> = (props: RowRef) => {
 
     let expanded = props.expanded != undefined ? props.expanded : false
+    let key = props.key != undefined ? props.key : uuidv4()
 
     return <div
         id={props.id}
-        key={props.key}
+        key={key}
         style={
             (() => {
                 const baseStyle: React.CSSProperties = {

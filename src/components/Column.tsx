@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export interface ColumnRef {
     children: React.ReactNode,
     expanded?: boolean
@@ -10,9 +12,10 @@ export interface ColumnRef {
 export const Column: React.FC<ColumnRef> = (props: ColumnRef) => {
 
     let expanded = props.expanded != undefined ? props.expanded : false
+    let key = props.key != undefined ? props.key : uuidv4()
 
     return <div
-        key={props.key}
+        key={key}
         id={props.id}
         style={
             (() => {
