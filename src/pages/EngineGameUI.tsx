@@ -64,11 +64,11 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     }
     // on prod this needs to be flipped
-    const isInitialMount = useRef(true);
+    const isInitialMount = useRef(false);
 
     useEffect(() => {
         if (isInitialMount.current) {
-            isInitialMount.current = false;
+            isInitialMount.current = true;
         } else {
             engineFunction();
         }

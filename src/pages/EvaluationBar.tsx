@@ -33,8 +33,10 @@ export const EvaluationBar: React.FC<EvaluationBarProps> = (props: EvaluationBar
                     break;
             }
         }
+
         for (let i = 0; i < states.length; i++) {
-            states[i] = 100 - ( (states[i] / sum) * 100);
+            if (states[i] != 0)
+                states[i] = ((states[i] / sum) * 100);
         }
 
         return states;
@@ -55,22 +57,24 @@ export const EvaluationBar: React.FC<EvaluationBarProps> = (props: EvaluationBar
             height: "10px",
             backgroundColor: cellRed,
         }} />
+
         <div style={{
             width: `${parsedState[1]}%`,
             height: "10px",
             backgroundColor: cellBlue,
         }} />
+
         <div style={{
             width: `${parsedState[2]}%`,
             height: "10px",
             backgroundColor: cellGreen,
         }} />
+
         <div style={{
             width: `${parsedState[3]}%`,
             height: "10px",
             backgroundColor: cellOrange,
         }} />
-
     </Row>
 
 };
