@@ -3,7 +3,7 @@ import { Button, ButtonState, StateButton } from '../components/Button.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Board } from '../engine/Board.tsx';
-import { Cell } from '../engine/enum_definitions.tsx';
+import { Cell, cellBlue, cellEmpty, cellGreen, cellOrange, cellRed } from '../engine/enum_definitions.tsx';
 import { Shape, shapeList } from '../engine/Shape.tsx';
 import { BoardWidget } from '../components/BoardWidget.tsx';
 import { ShapeList } from '../components/ShapeList.tsx';
@@ -103,8 +103,11 @@ export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
                 saveAs(dataUrl, "BlockIt.png");
             });
     }
+    let textColors = [cellRed, cellBlue, cellGreen, cellOrange, cellEmpty]
 
     return <>
+        <h1 style={{ backgroundColor: "transparent", color: textColors[selectedColor % 5] }}>Painter</h1>
+
         <Button onClick={() => setSelectedColor(selectedColor + 3)} style={{ margin: "1%" }}> Previous Color </Button>
         <Button onClick={() => props.navigateHome()} style={{ margin: "1%" }}> Exit </Button>
         <Button onClick={() => setSelectedColor(4)} style={{ margin: "1%" }}> Eraser </Button>
