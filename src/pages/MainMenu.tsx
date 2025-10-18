@@ -83,7 +83,7 @@ export const MainMenu: React.FC<{}> = () => {
     let navigate = useNavigate();
 
     return <>
-        <Column >
+        <Column>
             <h1>Block it</h1>
             <Button style={{ margin: "4px" }} onClick={() => navigate("/tutorial")}>Tutorial</Button>
 
