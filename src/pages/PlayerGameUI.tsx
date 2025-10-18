@@ -5,6 +5,9 @@ import type { Board } from "../engine/Board.tsx";
 import type { Shape } from "../engine/Shape.tsx";
 import { Button } from "../components/Button.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
+import { type Cell } from "../engine/enum_definitions.tsx";
+import { globalSettingsState } from "../App.tsx";
+import { TitleGroup } from "./TitleGroup.tsx";
 
 export interface PlayerGameUIProps {
     title: JSX.Element,
@@ -16,6 +19,8 @@ export interface PlayerGameUIProps {
     board: Board
     highlightedShape?: Shape
     shapeWidgets: JSX.Element
+    gameStatistics?: [color: Cell, noShapes: number, noPoints: number][]
+    gameEvaluation?: [color: Cell, estimation: number]
 }
 
 export const PlayerGameUI: React.FC<PlayerGameUIProps> = (props: PlayerGameUIProps) => {
@@ -29,11 +34,30 @@ export const PlayerGameUI: React.FC<PlayerGameUIProps> = (props: PlayerGameUIPro
     }
 
     return <>
-        {props.title}
-        {getButtons()}
+        <TitleGroup gameStatistics={props.gameStatistics} title={props.title} buttons={getButtons()}></TitleGroup>
+        <EvaluationBar></EvaluationBar>
         <BoardWidget onShapeCancel={props.onShapeCancel} onMoveMade={props.onMoveMade} board={props.board} highlightShape={props.highlightedShape} />
         {props.shapeWidgets}
     </>;
 };
 
 
+export interface EvaluationBarProps {
+    gameStatistics?: [color: Cell, estimation: number][]
+}
+
+export const EvaluationBar: React.FC<EvaluationBarProps> = (props: EvaluationBarProps) => {
+    if (!globalSettingsState.showPositionEvaluation || props.gameStatistics == undefined)
+        return <></>
+
+
+    return <div style={{
+        marginTop: "2%",
+        marginBottom: "2%",
+        marginLeft: "5%",
+        width: "90%",
+        height: "8px",
+        backgroundColor: "red",
+        borderRadius: "4px"
+    }}></div>
+}

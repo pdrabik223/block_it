@@ -52,3 +52,23 @@ export const cellColors = [cellRed,
 export function getRandomActiveCellColor() {
     return cellColors[Math.floor(Math.random() * cellColors.length)]
 }
+
+export function getColor(cell: Cell): string {
+    switch (cell) {
+        case Cell.Blue:
+            return cellBlue;
+        case Cell.Green:
+            return cellGreen;
+        case Cell.Orange:
+            return cellOrange;
+        case Cell.Red:
+            return cellRed;
+        case Cell.Empty:
+            return cellEmpty;
+        case Cell.Border:
+            return cellBorder;
+        case Cell.None:
+            return cellNone;
+    }
+
+}

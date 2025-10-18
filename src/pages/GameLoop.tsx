@@ -150,7 +150,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
     function getTitle(): JSX.Element {
         let textColors = [cellRed, cellBlue, cellGreen, cellOrange]
-
         return <h1 style={{ backgroundColor: "transparent", color: textColors[currentPLayerID()] }}>{getPlayerNames()[currentPLayerID()]}</h1>;
     }
 
@@ -182,6 +181,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             onMoveMade={(v?: number) => (onMoveMade(v))}
             engineName={getPlayerNames()[currentPLayerID()]}
             iteration={moveCounter}
+            gameStatistics={getGameState()}
         />
     }
 
@@ -189,6 +189,30 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         return (selected != -1) ? shapes[currentPLayerID()][selected] : undefined
     }
 
+    function getGameState(): [Cell, number, number][] {
+        let points: number[] = [0, 0, 0, 0]
+
+        for (let color = 0; color < noPlayers(); color++) {
+            for (let shape of shapes[color])
+                points[color] += shape.points()
+
+        }
+
+        if (noPlayers() == 2) return [
+            [Cell.Red, shapes[0].length, points[0]],
+            [Cell.Blue, shapes[1].length, points[1]]
+        ]
+
+        return [
+            [Cell.Red, shapes[0].length, points[0]],
+            [Cell.Blue, shapes[1].length, points[1]],
+            [Cell.Green, shapes[2].length, points[2]],
+            [Cell.Orange, shapes[3].length, points[3]]
+
+        ]
+
+
+    }
     return <PlayerGameUI
         title={getTitle()!}
         onEndGame={props.returnToMainMenu}
@@ -197,9 +221,9 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         onShapeCancel={() => setSelected(-1)}
         onMoveMade={() => onMoveMade(selected)}
         highlightedShape={getHighlightedShape()}
-
         board={board}
         shapeWidgets={<ShapeList shapes={shapes[currentPLayerID()]} onPress={setSelected} lockSelection={false} selected={selected} />}
+        gameStatistics={getGameState()}
     />
 
 }

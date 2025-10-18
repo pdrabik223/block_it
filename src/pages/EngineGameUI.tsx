@@ -12,6 +12,8 @@ import { globalSettingsState } from "../App.tsx";
 import { Button } from "../components/Button.tsx";
 import Coroner from "../engine/hanging_corners_maximizer.tsx";
 import AntiKiller from "../engine/dead_cells_minimizer.tsx";
+import { TitleGroup } from "./TitleGroup.tsx";
+import type { Cell } from "../engine/enum_definitions.tsx";
 
 
 export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
@@ -31,7 +33,9 @@ export interface EngineGameUIProps {
     onEndGame: () => void
     shapes: Shape[],
     engineName: string,
-    iteration: number
+    iteration: number,
+    gameStatistics?: [color: Cell, noShapes: number, noPoints: number][]
+
 
 }
 
@@ -71,8 +75,12 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
     }, [props.iteration]);
 
     return <>
-        {props.title}
-        <Button onClick={props.onEndGame} style={{ margin: "1%" }}> End Game </Button>
+        <TitleGroup gameStatistics={props.gameStatistics}
+            title={props.title}
+            buttons={<Button onClick={props.onEndGame}
+                style={{ margin: "1%" }}> End Game </Button>}>
+        </TitleGroup>
+
         <BoardWidget onMoveMade={() => { }} board={props.board} />
         <ShapeList shapes={props.shapes} onPress={() => { }} lockSelection={true} selected={-1} />
     </>;

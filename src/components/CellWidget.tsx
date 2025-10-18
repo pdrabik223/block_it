@@ -61,12 +61,13 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
     switch (globalSettingsState.cellStyle) {
         case CellStyle.Simple:
             return <div key={uuidv4()} style={style}></div>
-        case CellStyle.Classic:
+        
+            case CellStyle.Classic:
             return <div key={uuidv4()} style={style}>
 
-                <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+                <svg width={size} height={size} >
                     <rect width="100" height="100" x="0" y="0" fill={style["backgroundColor"]} />
-                    <polygon points="0,0 100,100 0,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.6)" }} />
+                    <polygon points="0,0 100,100 0,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.8)" }} />
                 </svg>
             </div>
     }
