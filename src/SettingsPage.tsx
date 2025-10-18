@@ -1,6 +1,6 @@
 import { IconButton, ButtonState, StateButton } from './components/Button.tsx';
 import { TopBanner } from './TopBanner.tsx';
-import { DebugLevel, type GlobalState } from './App.tsx';
+import { CellStyle, DebugLevel, type GlobalState } from './App.tsx';
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { Column } from './components/Column.tsx';
 
@@ -29,7 +29,6 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                     new ButtonState('Position evaluation: On', true),
                     new ButtonState('Position evaluation: Off', false)
                 ]} style={{ width: "300px", margin: "10px auto", }} />
-
             <StateButton
                 initialValue={props.cookies.condenseShapes}
                 onClick={(v) => {
@@ -38,6 +37,15 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                 }} buttonStates={[
                     new ButtonState('Condense Shapes: On', true),
                     new ButtonState('Condense Shapes: Off', false)
+                ]} style={{ width: "300px", margin: "10px auto", }} />
+            <StateButton
+                initialValue={props.cookies.cellStyle}
+                onClick={(v) => {
+                    props.cookies.cellStyle = v;
+                    props.setGlobalState(props.cookies)
+                }} buttonStates={[
+                    new ButtonState('Cell Style: Classic', CellStyle.Classic),
+                    new ButtonState('Cell Style: Simple', CellStyle.Simple)
                 ]} style={{ width: "300px", margin: "10px auto", }} />
             <StateButton
                 initialValue={props.cookies.showMovesCount}

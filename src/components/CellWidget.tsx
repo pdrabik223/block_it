@@ -2,6 +2,7 @@
 import type CSS from "csstype";
 import { v4 as uuidv4 } from 'uuid';
 import { Cell, cellBlue, cellBorder, cellEmpty, cellGreen, cellNone, cellOrange, cellRed, PlacementState } from '../engine/enum_definitions.tsx';
+import { CellStyle, globalSettingsState } from "../App.tsx";
 
 interface CellWidgetProps {
     value: Cell,
@@ -57,13 +58,17 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
                 style["backgroundColor"] = 'rgba(249, 18, 18, 1)';
         }
     }
+    switch (globalSettingsState.cellStyle) {
+        case CellStyle.Simple:
+            return <div key={uuidv4()} style={style}></div>
+        case CellStyle.Classic:
+            return <div key={uuidv4()} style={style}>
 
-    return <div key={uuidv4()} style={style}>
-        
-        <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg">
-            <rect width="100" height="100" x="0" y="0" fill={style["backgroundColor"]} />
-            <polygon points="0,0 100,100 0,100" fill={style["backgroundColor"]} style={{filter: "brightness(0.6)"}}/>
-        </svg>
-    </div>
+                <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" x="0" y="0" fill={style["backgroundColor"]} />
+                    <polygon points="0,0 100,100 0,100" fill={style["backgroundColor"]} style={{ filter: "brightness(0.6)" }} />
+                </svg>
+            </div>
+    }
 }
 

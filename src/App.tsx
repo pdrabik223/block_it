@@ -10,10 +10,16 @@ export enum DebugLevel {
   Error
 }
 
+export enum CellStyle {
+  Simple,
+  Classic,
+}
+
 export class GlobalState {
   public debugLevel = DebugLevel.Off
   public showPositionEvaluation = false
   public showMovesCount = false
+  public cellStyle = CellStyle.Classic
   public condenseShapes = true
   public moveDelayMS: number = 100
 
