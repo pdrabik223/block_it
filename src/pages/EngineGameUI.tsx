@@ -14,6 +14,7 @@ import Coroner from "../engine/hanging_corners_maximizer.tsx";
 import AntiKiller from "../engine/dead_cells_minimizer.tsx";
 import { TitleGroup } from "./TitleGroup.tsx";
 import type { Cell } from "../engine/enum_definitions.tsx";
+import { EvaluationBar } from "./EvaluationBar.tsx";
 
 
 export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
@@ -35,7 +36,7 @@ export interface EngineGameUIProps {
     engineName: string,
     iteration: number,
     gameStatistics?: [color: Cell, noShapes: number, noPoints: number][]
-
+    gameEvaluation?: [color: Cell, estimation: number][]
 
 }
 
@@ -80,7 +81,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
             buttons={<Button onClick={props.onEndGame}
                 style={{ margin: "1%" }}> End Game </Button>}>
         </TitleGroup>
-
+        <EvaluationBar gameStatistics={props.gameEvaluation}></EvaluationBar>
         <BoardWidget onMoveMade={() => { }} board={props.board} />
         <ShapeList shapes={props.shapes} onPress={() => { }} lockSelection={true} selected={-1} />
     </>;

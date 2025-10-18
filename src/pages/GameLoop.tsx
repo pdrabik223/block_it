@@ -11,6 +11,7 @@ import { EngineGameUI } from "./EngineGameUI.tsx";
 import { ShapeList } from "../components/ShapeList.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
 import { logInfo } from "../engine/logger.tsx";
+import { globalSettingsState } from "../App.tsx";
 
 
 
@@ -182,6 +183,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             engineName={getPlayerNames()[currentPLayerID()]}
             iteration={moveCounter}
             gameStatistics={getGameState()}
+            gameEvaluation={getEvaluation()}
         />
     }
 
@@ -189,7 +191,9 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         return (selected != -1) ? shapes[currentPLayerID()][selected] : undefined
     }
 
-    function getGameState(): [Cell, number, number][] {
+    function getGameState(): [Cell, number, number][] | undefined {
+        if (!globalSettingsState.showMovesCount) return undefined;
+
         let points: number[] = [0, 0, 0, 0]
 
         for (let color = 0; color < noPlayers(); color++) {
@@ -208,10 +212,31 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             [Cell.Blue, shapes[1].length, points[1]],
             [Cell.Green, shapes[2].length, points[2]],
             [Cell.Orange, shapes[3].length, points[3]]
+        ]
+    }
 
+    function getEvaluation(): [Cell, number][] | undefined {
+        if (!globalSettingsState.showPositionEvaluation) return undefined;
+
+        let points: number[] = [0, 0, 0, 0]
+
+        for (let color = 0; color < noPlayers(); color++) {
+            for (let shape of shapes[color])
+                points[color] += shape.points()
+
+        }
+
+        if (noPlayers() == 2) return [
+            [Cell.Red, points[0]],
+            [Cell.Blue, points[1]]
         ]
 
-
+        return [
+            [Cell.Red, points[0]],
+            [Cell.Blue, points[1]],
+            [Cell.Green, points[2]],
+            [Cell.Orange, points[3]]
+        ]
     }
     return <PlayerGameUI
         title={getTitle()!}
@@ -224,6 +249,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         board={board}
         shapeWidgets={<ShapeList shapes={shapes[currentPLayerID()]} onPress={setSelected} lockSelection={false} selected={selected} />}
         gameStatistics={getGameState()}
+        gameEvaluation={getEvaluation()}
+
     />
 
 }

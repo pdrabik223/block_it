@@ -13,13 +13,14 @@ export enum DebugLevel {
 export enum CellStyle {
   Simple,
   Classic,
+  Fake3D,
 }
 
 export class GlobalState {
   public debugLevel = DebugLevel.Off
   public showPositionEvaluation = false
   public showMovesCount = false
-  public cellStyle = CellStyle.Classic
+  public cellStyle = CellStyle.Fake3D
   public condenseShapes = true
   public moveDelayMS: number = 100
 

@@ -45,7 +45,9 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                     props.setGlobalState(props.cookies)
                 }} buttonStates={[
                     new ButtonState('Cell Style: Classic', CellStyle.Classic),
-                    new ButtonState('Cell Style: Simple', CellStyle.Simple)
+                    new ButtonState('Cell Style: Simple', CellStyle.Simple),
+                    new ButtonState('Cell Style: 3D', CellStyle.Fake3D)
+
                 ]} style={{ width: "300px", margin: "10px auto", }} />
             <StateButton
                 initialValue={props.cookies.showMovesCount}
