@@ -2,7 +2,8 @@
 import type CSS from "csstype";
 import { v4 as uuidv4 } from 'uuid';
 import { Cell, cellBlue, cellBorder, cellEmpty, cellGreen, cellNone, cellOrange, cellRed, PlacementState } from '../engine/enum_definitions.tsx';
-import { CellStyle, globalSettingsState } from "../App.tsx";
+import { globalSettingsState } from "../App.tsx";
+import { CellStyle } from "../GlobalSettings.tsx";
 
 interface CellWidgetProps {
     value: Cell,

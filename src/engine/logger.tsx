@@ -1,4 +1,5 @@
-import { DebugLevel, globalSettingsState } from "../App.tsx"
+import { globalSettingsState } from "../App.tsx"
+import { DebugLevel } from "../GlobalSettings.tsx"
 
 export function logInfo(...data: any[]) {
 

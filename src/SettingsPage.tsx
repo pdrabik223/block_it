@@ -1,8 +1,9 @@
 import { IconButton, ButtonState, StateButton } from './components/Button.tsx';
 import { TopBanner } from './TopBanner.tsx';
-import { CellStyle, DebugLevel, type GlobalState } from './App.tsx';
+
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { Column } from './components/Column.tsx';
+import { CellStyle, DebugLevel, GlobalState } from './GlobalSettings.tsx';
 
 export interface SettingsPageRef {
     onSettingsClosed: () => void;
