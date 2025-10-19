@@ -17,7 +17,6 @@ import Cookies from "js-cookie";
 
 export class GlobalState {
 
-
   public debugLevel = DebugLevel.Off
   public showPositionEvaluation = false
   public showMovesCount = false

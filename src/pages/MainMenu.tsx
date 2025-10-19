@@ -21,6 +21,7 @@ export const Game2Player: React.FC<{}> = () => {
     if (isPlaying) {
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
+
     const handleClick = () => {
         playerInfo.splice(0, playerInfo.length)
         for (let i = 0; i < 2; i++) {
@@ -82,8 +83,8 @@ export const MainMenu: React.FC<{}> = () => {
 
     let navigate = useNavigate();
 
-    return <>
-        <Column>
+    return <div>
+        <Column expanded={true} style={{ width: "200px" }}>
             <h1>Block it</h1>
             <Button style={{ margin: "4px" }} onClick={() => navigate("/tutorial")}>Tutorial</Button>
 
@@ -91,5 +92,7 @@ export const MainMenu: React.FC<{}> = () => {
             <Button style={{ margin: "4px" }} onClick={() => navigate("/game_4_player")}>4 Player Mode</Button>
 
             <Button style={{ margin: "4px" }} onClick={() => navigate("/painter")}>Painter</Button>
-        </Column></>
+        </Column>
+    </div>
+
 };
