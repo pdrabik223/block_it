@@ -1,40 +1,21 @@
 import { Game2Player, Game4Player, MainMenu } from './pages/MainMenu.tsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+
 import './App.css'
 
-export enum DebugLevel {
-  Off,
-  Engine,
-  AllLogs,
-  Error
-}
-
-export enum CellStyle {
-  Simple,
-  Classic,
-  Fake3D,
-  Diamond
-}
-
-export class GlobalState {
-  public debugLevel = DebugLevel.Off
-  public showPositionEvaluation = false
-  public showMovesCount = false
-  public cellStyle = CellStyle.Fake3D
-  public condenseShapes = true
-  public moveDelayMS: number = 100
-
-}
+import { Tutorial } from './pages/Tutorial.tsx';
+import { NavBar } from './components/NavBar.tsx';
+import { Painter } from './pages/Painter.tsx';
+import { GlobalState } from './GlobalSettings.tsx';
 
 export var globalSettingsState = new GlobalState();
 
 export function setGlobalState(newGlobalState: GlobalState) {
   globalSettingsState = newGlobalState;
+  globalSettingsState.updateCookies();
 }
-import { Tutorial } from './pages/Tutorial.tsx';
-import { NavBar } from './components/NavBar.tsx';
-import { Painter } from './pages/Painter.tsx';
+
 
 
 function App() {
@@ -49,8 +30,9 @@ function App() {
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/painter" element={<Painter />} />
       </Routes>
-    </Router></>
+    </Router>
 
+  </>
 }
 
 export default App;
