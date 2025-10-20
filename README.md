@@ -33,6 +33,7 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    26. squish duplicate shapes and add a number of duplicates
    27. ~~remove invisible cells around shapes~~
    28. ~~gh pages break~~
+   29. When cursor moves over screen engines do moves quicker -> this probably is a issue with useEffect
 
 2. Make a engine that calculates the best move in position:
     algos planned:
