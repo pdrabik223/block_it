@@ -9,48 +9,56 @@ import { Column } from "./Column.tsx";
 import { Row } from "./Row.tsx";
 
 
-function horizontalBorder(left_cell: Cell, right_cell: Cell): JSX.Element[] {
+function horizontalBorder(left_cell: Cell, right_cell: Cell, cellSize?: number): JSX.Element[] {
 
-    let temp = [<CellWidget value={left_cell} />];
+    let temp = [<CellWidget size={cellSize} value={left_cell} />];
     for (let x = 0; x < Board.height; x++) {
-        temp.push(<CellWidget value={Cell.Border} />);
+        temp.push(<CellWidget size={cellSize} value={Cell.Border} />);
     }
-    temp.push(<CellWidget value={right_cell} />)
+    temp.push(<CellWidget size={cellSize} value={right_cell} />)
     return temp;
 }
 
 export interface CellGridProps {
-    board: Board,
-    ids_to_replace: number[] | null;
-    cells: Cell[];
-    errors: PlacementState[];
+    board: Board
+    cells: Cell[]
+    errors: PlacementState[]
+    ids_to_replace?: number[]
     highlightShape?: Shape
-    onHoverEvent: (v: number, is_hovering: boolean) => void
-    onPress: (v: number, e: MouseEvent) => void
+    onHoverEvent?: (v: number, is_hovering: boolean) => void
+    onPress?: (v: number, e: MouseEvent) => void
+    cellSize?: number
+    showBorder?: boolean
 }
 
 export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
 
     let data: JSX.Element[] = []
+    let cellRow = []
 
-    let temp = horizontalBorder(props.board.cornerCells[0], props.board.cornerCells[1]);
-    data.push(<Row key={uuidv4()} >{temp}</Row>);
+    let showBorder = props.showBorder != undefined ? props.showBorder : true
+
+    if (showBorder) {
+        cellRow = horizontalBorder(props.board.cornerCells[0], props.board.cornerCells[1], props.cellSize);
+        data.push(<Row key={uuidv4()} >{cellRow}</Row>);
+    }
 
     for (let x = 0; x < Board.height; x++) {
 
-        let temp = [<CellWidget value={Cell.Border} />];
+        let cellRow = showBorder ? [<CellWidget size={props.cellSize} value={Cell.Border} />] : [];
         for (let y = 0; y < Board.width; y++) {
 
-            let cell_widget = <CellWidget value={props.board.get(x, y)} />
+            let cell_widget = <CellWidget size={props.cellSize} value={props.board.get(x, y)} />
 
-            if (props.ids_to_replace != null) {
+            if (props.ids_to_replace != undefined) {
                 let shapeCellId = props.ids_to_replace.indexOf(x * Board.height + y)
-                if (props.highlightShape != null && shapeCellId != -1) {
-                    cell_widget = <CellWidget highlight={props.errors[shapeCellId]} value={props.cells[shapeCellId]} />
+                if (props.highlightShape != undefined && shapeCellId != -1) {
+                    cell_widget = <CellWidget size={props.cellSize} highlight={props.errors[shapeCellId]}
+                        value={props.cells[shapeCellId]} />
                 }
             }
 
-            temp.push(
+            cellRow.push(
                 <SelectableCell
                     key={uuidv4()}
                     cellPosition={x * Board.height + y}
@@ -60,15 +68,18 @@ export const CellGrid: React.FC<CellGridProps> = (props: CellGridProps) => {
                 </SelectableCell>
             );
         }
-        temp.push(<CellWidget value={Cell.Border} />);
-        data.push(<Row key={uuidv4()} >{temp}</Row>);
+
+        if (showBorder)
+            cellRow.push(<CellWidget size={props.cellSize} value={Cell.Border} />);
+        data.push(<Row key={uuidv4()} >{cellRow}</Row>);
     }
     // add bottom border
-    temp = horizontalBorder(props.board.cornerCells[3], props.board.cornerCells[2]);
-    data.push(<Row key={uuidv4()} >{temp}</Row>);
+    if (showBorder) {
+        cellRow = horizontalBorder(props.board.cornerCells[3], props.board.cornerCells[2], props.cellSize);
+        data.push(<Row key={uuidv4()} >{cellRow}</Row>);
+    }
 
     return <Column id="cellGrid"> {data}</Column>
-
 }
 
 

@@ -7,7 +7,11 @@ import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlo
 import { useNavigate } from 'react-router-dom';
 import { Column } from '../components/Column.tsx';
 
-export const Game2Player: React.FC<{}> = () => {
+interface Game2PlayerProps {
+    setShowBackground: (val: boolean) => void
+}
+
+export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps) => {
 
     const [playerInfo] = useState<Array<PlayerInfo>>([]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -19,6 +23,7 @@ export const Game2Player: React.FC<{}> = () => {
     ]
 
     if (isPlaying) {
+        props.setShowBackground(false)
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
@@ -29,9 +34,9 @@ export const Game2Player: React.FC<{}> = () => {
             playerInfo[i] = new PlayerInfo(name, isEngine);
         }
     };
-
+    props.setShowBackground(true)
     return <Column>
-        <h1>Settings </h1>
+        <h1>2 Player Mode</h1>
         <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} />
         <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
 
@@ -40,7 +45,11 @@ export const Game2Player: React.FC<{}> = () => {
     </Column>
 }
 
-export const Game4Player: React.FC<{}> = () => {
+interface Game4PlayerProps {
+    setShowBackground: (val: boolean) => void
+}
+
+export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps) => {
 
     const [playerInfo] = useState<Array<PlayerInfo>>([]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -55,6 +64,7 @@ export const Game4Player: React.FC<{}> = () => {
     ]
 
     if (isPlaying) {
+        props.setShowBackground(false)
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
@@ -65,9 +75,9 @@ export const Game4Player: React.FC<{}> = () => {
             playerInfo[i] = new PlayerInfo(name, isEngine);
         }
     };
-
+    props.setShowBackground(true)
     return <Column>
-        <h1>Settings </h1>
+        <h1>4 Player Mode</h1>
 
         <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} />
         <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
@@ -78,14 +88,16 @@ export const Game4Player: React.FC<{}> = () => {
         <Button style={{ margin: "4px" }} onClick={() => navigate("/")}>Back</Button>
     </Column>
 }
-
-export const MainMenu: React.FC<{}> = () => {
+interface MainMenuProps {
+    setShowBackground: (val: boolean) => void
+}
+export const MainMenu: React.FC<MainMenuProps> = (props:MainMenuProps) => {
 
     let navigate = useNavigate();
-
+    props.setShowBackground(true)
     return <div>
         <Column expanded={true} style={{ width: "200px" }}>
-            <h1>Block it</h1>
+            <h1>{randomTitle()}</h1>
             <Button style={{ margin: "4px" }} onClick={() => navigate("/tutorial")}>Tutorial</Button>
 
             <Button style={{ margin: "4px" }} onClick={() => navigate("/game_2_player")}>2 Player Mode</Button>
@@ -96,3 +108,32 @@ export const MainMenu: React.FC<{}> = () => {
     </div>
 
 };
+
+const blokusTranslations = [
+    "Blokus",
+    "Блокус",
+    "布洛克斯",
+    "ブロックス",
+    "블로커스",
+    "بلوكوس",
+    "ब्लोकस",
+    "ব্লোকাস",
+    "بلوکس",
+    "Μπλόκους",
+    "Blokusz",
+    "בלוקוס",
+    "โบลคัส",
+    "ብሎከስ",
+    "بلوکوس",
+    "ப்ளோகஸ்",
+    "బ్లోకస్",
+    "ಬ್ಲೋಕಸ್",
+    "ബ്ലോകസ്",
+    "බ්ලොකස්",
+    "Blokusas"
+];
+
+function randomTitle() {
+    return blokusTranslations[Math.floor(Math.random() * blokusTranslations.length)]
+
+}

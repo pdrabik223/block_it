@@ -13,7 +13,13 @@ import { saveAs } from "file-saver";
 import { Column } from '../components/Column.tsx';
 
 
-export function Painter() {
+interface PainterProps {
+    setShowBackground: (val: boolean) => void
+}
+
+
+export const Painter: React.FC<PainterProps> = (props: PainterProps) => {
+
     let navigate = useNavigate();
     const [removeShapeAfterPlacement, setRemoveShapeAfterPlacement] = useState(false)
     const [paintSymmetrically] = useState(false)
@@ -21,9 +27,10 @@ export function Painter() {
     const [requireLegalPosition, setRequireLegalPositions] = useState(true)
 
     if (inPainterMode) {
+        props.setShowBackground(false)
         return <PaintLoop navigateHome={() => navigate("/")} removeShapeAfterPlacement={removeShapeAfterPlacement} paintSymmetrically={paintSymmetrically} requireLegalPositions={requireLegalPosition} />
     }
-
+    props.setShowBackground(true)
     return <>
         <h1>Settings </h1>
         <Column>

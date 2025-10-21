@@ -19,7 +19,7 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    12. rotate shape to face mouse cursor when it's held down  
    13. on mobile, cell selection does not work
    14. add theme change button
-   15. add better background
+   15. ~~add better background~~
    16. add piece color selector
    17. ~~add variable delay after move for engines~~
    18. ~~add "show additional information in settings" that will show Board coverage percentage~~ 

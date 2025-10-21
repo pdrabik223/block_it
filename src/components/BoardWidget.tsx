@@ -24,11 +24,11 @@ export const BoardWidget: React.FC<BoardWidgetProps> = (props: BoardWidgetProps)
     const [tooltipPos, setTooltipPos] = useState<{ x: number, y: number } | null>(null);
     const [reDrawWidget, setReDrawWidget] = useState(false)
 
-    var ids_to_replace: number[] | null = null;
+    var ids_to_replace: number[] | undefined = undefined;
     var cells: Cell[] = [];
     var errors: PlacementState[] = [];
 
-    if (props.highlightShape != null && shapePlacement != -1) {
+    if (props.highlightShape != undefined && shapePlacement != -1) {
         [ids_to_replace, cells, errors] = props.board.combineShape(shapePlacement, props.highlightShape)
     }
 

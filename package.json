@@ -2,7 +2,7 @@
   "name": "block_app",
   "private": true,
   "version": "0.1.0",
-  "homepage": "https://pdrabik223.github.io/block_it/",
+  "homepage": "https://pdrabik223.github.io/",
   "type": "module",
   "scripts": {
     "dev": "vite",

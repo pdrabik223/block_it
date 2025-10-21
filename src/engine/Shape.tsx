@@ -49,6 +49,16 @@ export class Shape {
         return this.cellValue;
     }
 
+    rePaint(newColor: Cell) {
+        this.cellColor = newColor
+
+        for (let x = 0; x < this.data.length; x++)
+            for (let y = 0; y < this.data[x].length; y++)
+                if (this.data[x][y] != this.none)
+                    this.data[x][y] = newColor
+
+    }
+
     isequal(other: Shape): boolean {
         if (this.shapeName !== other.shapeName) return false;
 
@@ -432,4 +442,7 @@ export function shapeList() {
         Shapes.PentaLine
 
     ]
+}
+export function getRandomShape() {
+    return shapeList()[Math.floor(Math.random() * shapeList().length)]
 }

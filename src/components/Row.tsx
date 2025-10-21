@@ -6,6 +6,7 @@ export interface RowRef {
     key?: React.Key,
     style?: React.CSSProperties
     id?: string
+    className?: string
 }
 
 
@@ -15,6 +16,7 @@ export const Row: React.FC<RowRef> = (props: RowRef) => {
     let key = props.key != undefined ? props.key : uuidv4()
 
     return <div
+        className={props.className}
         id={props.id}
         key={key}
         style={
