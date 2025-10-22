@@ -33,7 +33,7 @@ export const ShapeList: React.FC<ShapeListProps> = (props: ShapeListProps) => {
     }
 
     return <Row style={{ flexWrap: 'wrap', marginTop: "20px", maxWidth: "900px " }}>
-        {countShapes().map(([noRepeats, object, originalIndex], i) => <SelectableShape
+        {countShapes().map(([noRepeats, object, originalIndex]) => <SelectableShape
             lockSelection={props.lockSelection}
             onPress={props.onPress}
             shapeId={originalIndex}
