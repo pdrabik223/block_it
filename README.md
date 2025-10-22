@@ -48,6 +48,7 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
     3. Aggressive Pointer -> places pieces as far from the starting point as possible (DONE but it sucks)
     4. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells + Pointer + Aggresive
     5. Hanging Corners maximizer -> Done but has issues
+    6. Hanging Corners maximizer but without Pointer -> Done, still with issues
 
 3. Optymisation:
    1. move generator generates duplicates

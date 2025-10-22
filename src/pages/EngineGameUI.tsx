@@ -10,7 +10,7 @@ import { ShapeList } from "../components/ShapeList.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
 import { globalSettingsState } from "../App.tsx";
 import { Button } from "../components/Button.tsx";
-import Coroner from "../engine/hanging_corners_maximizer.tsx";
+import pointer_coroner, { coroner } from "../engine/hanging_corners_maximizer.tsx";
 import AntiKiller from "../engine/dead_cells_minimizer.tsx";
 import { TitleGroup } from "./TitleGroup.tsx";
 import type { Cell } from "../engine/enum_definitions.tsx";
@@ -21,7 +21,8 @@ export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move
     ["Randy", Randy],
     ["Pointer", Pointer],
     ["Aggressive", Aggressive],
-    ["Coroner", Coroner],
+    ["PointerCoroner", pointer_coroner],
+    ["Coroner", coroner],
     ["AntiKiller", AntiKiller]
 ])
 
