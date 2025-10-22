@@ -11,10 +11,10 @@ interface SelectableShapeProps {
 export const SelectableShape: React.FC<SelectableShapeProps> = (props: SelectableShapeProps) => {
 
     let class_name: string = props.isSelected ? "brightness(1)" : "brightness(0.6)"
-
+    let cursor = props.lockSelection ? undefined : 'pointer'
     return <div
-        style={{ filter: class_name , padding:"4px"}}
-        className='selectable_shape'
+        style={{ filter: class_name, padding: "8px", cursor: cursor }}
+        
         key={uuidv4()}
         onClick={
             props.lockSelection ? undefined :

@@ -28,7 +28,7 @@ export const Painter: React.FC<PainterProps> = (props: PainterProps) => {
 
     if (inPainterMode) {
         props.setShowBackground(false)
-        return <PaintLoop navigateHome={() => navigate("/")} removeShapeAfterPlacement={removeShapeAfterPlacement} paintSymmetrically={paintSymmetrically} requireLegalPositions={requireLegalPosition} />
+        return <PaintLoop navigateHome={() => navigate("/block_it/")} removeShapeAfterPlacement={removeShapeAfterPlacement} paintSymmetrically={paintSymmetrically} requireLegalPositions={requireLegalPosition} />
     }
     props.setShowBackground(true)
     return <>
@@ -52,7 +52,7 @@ export const Painter: React.FC<PainterProps> = (props: PainterProps) => {
                 ]} style={{ width: "300px", margin: "10px auto", }} />
 
             <Button style={{ margin: "4px" }} onClick={() => { setInPainterMode(true) }}>Start</Button>
-            <Button style={{ margin: "4px" }} onClick={() => { navigate("/") }}>Back</Button>
+            <Button style={{ margin: "4px" }} onClick={() => { navigate("/block_it/") }}>Back</Button>
         </Column>
     </>
 }

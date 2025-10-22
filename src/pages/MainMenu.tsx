@@ -41,7 +41,7 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
         <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
 
         <Button style={{ margin: "4px" }} onClick={() => { handleClick(); setIsPlaying(true) }}>Start</Button>
-        <Button style={{ margin: "4px" }} onClick={() => navigate("/")}>Back</Button>
+        <Button style={{ margin: "4px" }} onClick={() => navigate("/block_it/")}>Back</Button>
     </Column>
 }
 
@@ -85,7 +85,7 @@ export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps)
         <PlayerInfoBlock ref={inputRefs[3]} cell={Cell.Orange} />
 
         <Button style={{ margin: "4px" }} onClick={() => { handleClick(); setIsPlaying(true) }}>Start</Button>
-        <Button style={{ margin: "4px" }} onClick={() => navigate("/")}>Back</Button>
+        <Button style={{ margin: "4px" }} onClick={() => navigate("/block_it/")}>Back</Button>
     </Column>
 }
 interface MainMenuProps {
@@ -125,7 +125,6 @@ const blokusTranslations = [
     "โบลคัส",
     "ብሎከስ",
     "بلوکوس",
-    "ப்ளோகஸ்",
     "బ్లోకస్",
     "ಬ್ಲೋಕಸ್",
     "ബ്ലോകസ്",

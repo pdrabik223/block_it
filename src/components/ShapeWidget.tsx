@@ -6,9 +6,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { globalSettingsState } from '../App.tsx';
 import { Row } from './Row.tsx';
 import { Column } from './Column.tsx';
+import { cellEmpty } from '../engine/enum_definitions.tsx';
 
 
-interface ShapeWidgetProps { shape: Shape }
+interface ShapeWidgetProps {
+    shape: Shape,
+    noRepeats?: number,
+
+}
 export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps) => {
 
     let data: JSX.Element[] = []
@@ -16,6 +21,7 @@ export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps)
 
     let rows: number[] = []
     let columns: number[] = []
+
     if (globalSettingsState.condenseShapes) {
         for (let x = 0; x < props.shape.size; x++) {
             for (let y = 0; y < props.shape.size; y++) {
@@ -28,6 +34,7 @@ export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps)
         }
         rows = rows.filter((item,
             index) => rows.indexOf(item) === index);
+
         BubbleSort(rows)
 
         columns = columns.filter((item,
@@ -50,9 +57,24 @@ export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps)
         }
         data.push(<Row key={uuidv4()} >{temp}</Row>);
     }
+    let repeats = props.noRepeats != undefined ? props.noRepeats : 1
 
-    return <Column key={uuidv4()} > {data} </Column>
-
+    if (repeats == 1)
+        return <Column key={uuidv4()} > {data} </Column>
+    else
+        return <div >
+            <div style={{ backgroundColor: cellEmpty }}>
+                <span style={{
+                    position: 'fixed', top: '0px', right: "-5px",
+                    userSelect: 'none', fontWeight: "bold",
+                    fontSize: "x-large", backgroundColor: cellEmpty,
+                    borderRadius: '50%', width: '30px',
+                    height: '30px',
+                    lineHeight: '30px'
+                }}>{repeats}</span >
+            </div>
+            <Column key={uuidv4()} > {data} </Column>
+        </div>
 }
 
 function BubbleSort(data: number[]) {
