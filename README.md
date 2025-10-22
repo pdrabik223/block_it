@@ -35,11 +35,15 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    28. ~~gh pages break~~
    29. Propagate settings changes and force elems using them to reload
    30. When cursor moves over screen engines do moves quicker -> this probably is a issue with useEffect
-   31. make playing board scalable
+   31. ~~make playing board scalable~~
    32. we disable background during new state propagation inside page widget, this is a problem
    33. ~~Improve same shape count, try adding black circle around it~~
    34. Add prettier background to board, maybe simple background light
    35. ~~nav bar title is not centered~~
+   36. Improve moves count for every player
+   37. Evaluation uses simple comparison
+   38. ~~Evaluation Bard need's do be reversed, losing guy is has more space on it~~ 
+   39. add infinity amount of shapes indicator in Painter mode
    
 2. Make a engine that calculates the best move in position:
     algos planned:

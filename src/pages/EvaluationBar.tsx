@@ -36,7 +36,7 @@ export const EvaluationBar: React.FC<EvaluationBarProps> = (props: EvaluationBar
 
         for (let i = 0; i < states.length; i++) {
             if (states[i] != 0)
-                states[i] = ((states[i] / sum) * 100);
+                states[i] = 100 - ((states[i] / sum) * 100);
         }
 
         return states;
