@@ -15,7 +15,7 @@ export const CellWidget: React.FC<CellWidgetProps> = (props: CellWidgetProps) =>
 
     let style: CSS.Properties = {};
 
-    const size = props.size != undefined ? props.size : 28
+    const size = props.size != undefined ? props.size : 30
 
     style["width"] = `${size}px`
     style["height"] = `${size}px`
