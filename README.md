@@ -39,7 +39,8 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    32. we disable background during new state propagation inside page widget, this is a problem
    33. ~~Improve same shape count, try adding black circle around it~~
    34. Add prettier background to board, maybe simple background light
-
+   35. ~~nav bar title is not centered~~
+   
 2. Make a engine that calculates the best move in position:
     algos planned:
     1. Randy -> randomly picks one move from list of possible DONE
