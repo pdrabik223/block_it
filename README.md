@@ -44,6 +44,8 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    37. Evaluation uses simple comparison
    38. ~~Evaluation Bard need's do be reversed, losing guy is has more space on it~~ 
    39. add infinity amount of shapes indicator in Painter mode
+   40. Add "Sinematic Mode" to board when it's running only algorithms
+   41. game settings shift slightly wnen changing between engine and player mode
    
 2. Make a engine that calculates the best move in position:
     algos planned:
