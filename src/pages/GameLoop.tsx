@@ -12,6 +12,7 @@ import { ShapeList } from "../components/ShapeList.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
 import { logInfo } from "../engine/logger.tsx";
 import { globalSettingsState } from "../App.tsx";
+import { Estimation } from "../engine/requ.tsx";
 
 
 
@@ -218,25 +219,12 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     function getEvaluation(): [Cell, number][] | undefined {
         if (!globalSettingsState.showPositionEvaluation) return undefined;
 
-        let points: number[] = [0, 0, 0, 0]
-
-        for (let color = 0; color < noPlayers(); color++) {
-            for (let shape of shapes[color])
-                points[color] += shape.points()
-
+        if (noPlayers() == 2) {
+            let result = Estimation(board, shapes[0], shapes[1], [], [])
+            return [result[0], result[1]]
         }
 
-        if (noPlayers() == 2) return [
-            [Cell.Red, points[0]],
-            [Cell.Blue, points[1]]
-        ]
-
-        return [
-            [Cell.Red, points[0]],
-            [Cell.Blue, points[1]],
-            [Cell.Green, points[2]],
-            [Cell.Orange, points[3]]
-        ]
+        return Estimation(board, shapes[0], shapes[1], shapes[2], shapes[3])
     }
     return <PlayerGameUI
         title={getTitle()!}
