@@ -101,32 +101,30 @@ export default function minMax2Player(playerColor: Cell, requDepth: number, boar
         let local_board = new Board(board)
         local_board.makeMove(move)
         removeShapeForPlayer(playerColor, move, redShapes, blueShapes)
-        estimations.push(requ2player(requDepth - 1, playerColor, getNextPlayerColor2Player(playerColor), local_board, redShapes, blueShapes))
+        estimations.push(reQu2player(requDepth - 1, playerColor, getNextPlayerColor2Player(playerColor), local_board, redShapes, blueShapes))
     }
 
     return moves[estimations.indexOf(Math.max.apply(null, estimations))]
 }
 
-function requ2player(requDepth: number, estimationForPLayer: Cell, playerMove: Cell, board: Board, redShapes: Shape[], blueShapes: Shape[]): number {
-    logInfo(`Depth:${requDepth} color: ${playerMove}`)
-
+function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: Cell, board: Board, redShapes: Shape[], blueShapes: Shape[]): number {
 
     let estimation = Estimation2Player(board, redShapes, blueShapes)
 
-    if (requDepth == 0) return getEstimationForPlayer(playerMove, estimation)
+    if (reQuDepth == 0) return getEstimationForPlayer(playerMove, estimation)
 
     let moves = getMovesForPlayer(playerMove, board, redShapes, blueShapes)
     if (moves.length == 0) return getEstimationForPlayer(playerMove, estimation)
 
     let estimations: number[] = []
 
-    logInfo(`noMoves:${moves.length}`)
+    logInfo(`depth: ${reQuDepth}, noMoves:${moves.length}`)
 
     for (let move of moves) {
         let local_board = new Board(board)
         local_board.makeMove(move)
         let shapes = removeShapeForPlayer(playerMove, move, redShapes, blueShapes)
-        estimations.push(requ2player(requDepth - 1, estimationForPLayer, getNextPlayerColor2Player(playerMove), local_board, shapes[0], shapes[1]))
+        estimations.push(reQu2player(reQuDepth - 1, estimationForPLayer, getNextPlayerColor2Player(playerMove), local_board, shapes[0], shapes[1]))
     }
 
     if (estimationForPLayer == playerMove)
