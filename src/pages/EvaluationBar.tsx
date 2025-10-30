@@ -33,8 +33,10 @@ export const EvaluationBar: React.FC<EvaluationBarProps> = (props: EvaluationBar
         for (let val of props.gameStatistics!) {
             if (val[1] < minValue) minValue = val[1]
         }
-
-        minValue = Math.abs(minValue)
+        if (minValue < 0)
+            minValue = Math.abs(minValue) + 1
+        else
+            minValue = 0
         for (let val of props.gameStatistics!) {
             sum += val[1] + minValue
 
@@ -68,7 +70,7 @@ export const EvaluationBar: React.FC<EvaluationBarProps> = (props: EvaluationBar
             marginTop: "2%",
             marginBottom: "2%",
             marginLeft: "5%",
-            width: `${20 * 32}`,
+            width: `90%`,
             borderRadius: "4px"
         }}>
 
