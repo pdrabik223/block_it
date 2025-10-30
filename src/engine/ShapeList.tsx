@@ -1,5 +1,6 @@
 import { Cell } from "./enum_definitions.tsx"
-import { Shape, shapeList } from "./Shape.tsx"
+import { Shape } from "./Shape.tsx"
+import { shapeList } from "./shapeDefinitions.tsx";
 
 export class ShapeList {
     public data: Shape[]

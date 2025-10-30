@@ -1,34 +1,6 @@
 import { Cell, CellCorner } from "./enum_definitions.tsx"
+import { shapeDefinitions, Shapes } from "./shapeDefinitions.tsx";
 
-
-export const enum Shapes {
-    // one width
-    Dot,
-    // two width
-    Tuple,
-    Triple,
-    Square,
-    // three width
-    TripleLine,
-    Cross,
-    TripleT,
-    BigTripleT,
-    TripleC,
-    Bolt,
-    TripleL,
-    BigTripleL,
-    TripleP,
-    OffsetCross,
-    Snake,
-    TripleW,
-    // four width
-    QuadrupleLine,
-    QuadrupleL,
-    QuadrupleOffsetL,
-    QuadrupleBolt,
-    // five width
-    PentaLine
-}
 export const enum NoRotations {
     Zero,
     Two,
@@ -72,232 +44,148 @@ export class Shape {
     constructor(shape: Shapes, cell: Cell) {
         this.shapeName = shape;
         this.cellColor = cell;
+        this.data = shapeDefinitions[shape](cell);
         switch (shape) {
             case Shapes.Dot:
-                this.data = [[cell]];
                 this.size = 1;
                 this.cellValue = 1;
                 this.numberOfRotations = NoRotations.Zero
                 return;
+
             case Shapes.Tuple:
-                this.data = [[cell, cell], [this.none, this.none]];
                 this.size = 2;
                 this.numberOfRotations = NoRotations.Four
                 this.cellValue = 2;
                 return;
+
             case Shapes.Triple:
-                this.data = [[cell, cell], [cell, this.none]];
                 this.size = 2;
                 this.numberOfRotations = NoRotations.Four
                 this.cellValue = 3;
                 return;
+
             case Shapes.Square:
-                this.data = [[cell, cell], [cell, cell]];
                 this.size = 2;
                 this.numberOfRotations = NoRotations.Zero
                 this.cellValue = 4;
                 return;
 
             case Shapes.Cross:
-                this.data = [
-                    [this.none, cell, this.none],
-                    [cell, cell, cell],
-                    [this.none, cell, this.none],];
                 this.cellValue = 5;
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Zero
                 return;
 
             case Shapes.TripleLine:
-                this.data = [
-                    [this.none, this.none, this.none],
-                    [cell, cell, cell],
-                    [this.none, this.none, this.none],];
-
                 this.cellValue = 3;
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Two
                 return;
 
             case Shapes.TripleT:
-                this.data = [
-                    [this.none, this.none, this.none],
-                    [cell, cell, cell],
-                    [this.none, cell, this.none],];
                 this.cellValue = 4;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
 
             case Shapes.BigTripleT:
-                this.data = [
-                    [cell, cell, cell],
-                    [this.none, cell, this.none],
-                    [this.none, cell, this.none],];
                 this.cellValue = 5;
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
 
             case Shapes.TripleC:
-                this.data = [
-                    [cell, cell, this.none],
-                    [cell, this.none, this.none],
-                    [cell, cell, this.none],];
                 this.cellValue = 5;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 return;
 
             case Shapes.Bolt:
-                this.data = [
-                    [this.none, this.none, this.none],
-                    [cell, cell, this.none],
-                    [this.none, cell, cell,],];
                 this.cellValue = 4;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
 
             case Shapes.TripleL:
-                this.data = [
-                    [cell, this.none, this.none],
-                    [cell, this.none, this.none],
-                    [cell, cell, this.none]];
                 this.cellValue = 4;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
 
             case Shapes.BigTripleL:
-                this.data = [
-                    [cell, this.none, this.none],
-                    [cell, this.none, this.none],
-                    [cell, cell, cell]];
                 this.size = 3;
                 this.cellValue = 5;
-
                 this.numberOfRotations = NoRotations.Four
                 return;
 
             case Shapes.TripleP:
-                this.data = [
-                    [cell, cell, this.none],
-                    [cell, cell, this.none],
-                    [cell, this.none, this.none]];
                 this.cellValue = 5;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
 
             case Shapes.OffsetCross:
-                this.data = [
-                    [this.none, this.none, cell],
-                    [cell, cell, cell],
-                    [this.none, cell, this.none]];
                 this.cellValue = 5;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
 
             case Shapes.Snake:
-                this.data = [
-                    [this.none, cell, cell],
-                    [this.none, cell, this.none],
-                    [cell, cell, this.none]];
                 this.cellValue = 5;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
 
             case Shapes.TripleW:
-                this.data = [
-                    [this.none, cell, cell],
-                    [cell, cell, this.none],
-                    [cell, this.none, this.none]];
                 this.cellValue = 5;
-
                 this.size = 3;
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 return;
 
             case Shapes.QuadrupleLine:
-                this.data = [
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, this.none, this.none]];
                 this.cellValue = 4;
-
                 this.numberOfRotations = NoRotations.Two
                 this.size = 4;
                 return;
 
             case Shapes.QuadrupleL:
-                this.data = [
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, this.none, this.none],
-                    [this.none, cell, cell, this.none]];
                 this.cellValue = 5;
-
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
 
             case Shapes.QuadrupleOffsetL:
-                this.data = [
-                    [this.none, this.none, this.none, this.none],
-                    [this.none, cell, this.none, this.none],
-                    [cell, cell, cell, cell],
-                    [this.none, this.none, this.none, this.none]];
                 this.cellValue = 5;
-
                 this.numberOfRotations = NoRotations.Four
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
 
             case Shapes.QuadrupleBolt:
-                this.data = [
-                    [this.none, this.none, this.none, this.none],
-                    [cell, cell, cell, this.none],
-                    [this.none, this.none, cell, cell],
-                    [this.none, this.none, this.none, this.none]];
-
                 this.numberOfRotations = NoRotations.Four
                 this.cellValue = 5;
-
                 this.canBeFlipped = true
                 this.size = 4;
                 return;
 
             case Shapes.PentaLine:
-                this.data = [
-                    [this.none, this.none, this.none, this.none, this.none],
-                    [this.none, this.none, this.none, this.none, this.none],
-                    [cell, cell, cell, cell, cell],
-                    [this.none, this.none, this.none, this.none, this.none],
-                    [this.none, this.none, this.none, this.none, this.none]];
                 this.cellValue = 5;
                 this.numberOfRotations = NoRotations.Two
                 this.size = 5;
                 return;
         }
+    }
+
+    getPermutations(): Shape[] {
+
+        return []
     }
 
     get(x: number, y: number): Cell {
@@ -417,32 +305,3 @@ export class Shape {
     }
 }
 
-export function shapeList() {
-    return [
-        Shapes.Dot,
-        Shapes.Tuple,
-        Shapes.Triple,
-        Shapes.TripleLine,
-        Shapes.Square,
-        Shapes.TripleT,
-        // Shapes.Bolt,
-        // Shapes.Cross,
-        // Shapes.BigTripleT,
-        // Shapes.TripleC,
-        // Shapes.TripleL,
-        // Shapes.BigTripleL,
-        // Shapes.TripleP,
-        // Shapes.OffsetCross,
-        // Shapes.Snake,
-        // Shapes.TripleW,
-        // Shapes.QuadrupleLine,
-        // Shapes.QuadrupleL,
-        // Shapes.QuadrupleOffsetL,
-        // Shapes.QuadrupleBolt,
-        // Shapes.PentaLine
-
-    ]
-}
-export function getRandomShape() {
-    return shapeList()[Math.floor(Math.random() * shapeList().length)]
-}
