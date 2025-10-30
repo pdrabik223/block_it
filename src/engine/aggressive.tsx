@@ -1,5 +1,5 @@
 import { Board, type Move } from "./Board.tsx";
-import type { Shape } from "./Shape.tsx";
+import type { ShapeList } from "./ShapeList.tsx";
 
 function coord2d(val: number): [x: number, y: number] {
 
@@ -17,7 +17,7 @@ function distanceBetweenPoints(pos: number, pos2: number): number {
 }
 
 export default function Aggressive(board: Board, shapes: ShapeList): Move | null {
-    if (shapes.length == 0)
+    if (shapes.isEmpty())
         return null
 
     let moves = board.getAllPossibleMovesForShapes(shapes)

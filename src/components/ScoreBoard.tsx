@@ -1,5 +1,4 @@
 import React, { type JSX } from "react";
-import type { Shape } from "../engine/Shape.tsx";
 import { Button } from "./Button.tsx";
 import { Column } from "./Column.tsx";
 import { Row } from "./Row.tsx";

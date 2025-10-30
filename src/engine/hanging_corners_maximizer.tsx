@@ -1,5 +1,4 @@
 import { Board, type Move } from "./Board.tsx";
-import type { Shape } from "./Shape.tsx";
 import type { ShapeList } from "./ShapeList.tsx";
 
 

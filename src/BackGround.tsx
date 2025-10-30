@@ -4,7 +4,6 @@ import { Row } from './components/Row.tsx';
 import { Board } from './engine/Board.tsx';
 import { Cell } from './engine/enum_definitions.tsx';
 import randy from './engine/randy.tsx';
-import { shapeList, Shape } from './engine/Shape.tsx';
 import { ShapeList } from './engine/ShapeList.tsx';
 
 export interface BackGroundProps {

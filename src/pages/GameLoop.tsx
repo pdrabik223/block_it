@@ -1,8 +1,6 @@
 import React, { useState, type JSX } from "react";
 
 import { Board } from "../engine/Board.tsx";
-import { Shape, shapeList } from "../engine/Shape.tsx";
-
 import { Cell, cellBlue, cellGreen, cellOrange, cellRed } from "../engine/enum_definitions.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
 import { ScoreBoard } from "../components/ScoreBoard.tsx";
@@ -10,18 +8,10 @@ import { FullScreenOverlay } from "../components/FullScreenOverlay.tsx";
 import { EngineGameUI } from "./EngineGameUI.tsx";
 import { ShapeListWidget } from "../components/ShapeListWidget.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
-import { logInfo } from "../engine/logger.tsx";
 import { globalSettingsState } from "../App.tsx";
 import { Estimation2Player, Estimation4Player } from "../engine/requ.tsx";
 import { ShapeList } from "../engine/ShapeList.tsx";
 
-function initShapeList(cell: Cell, noDuplicates: number = 1) {
-    let list = []
-    for (let shape of shapeList())
-        for (let x = 0; x < noDuplicates; x++)
-            list.push(new Shape(shape, cell))
-    return list
-}
 
 function checkIfPLayerWon(shapes: ShapeList[]) {
     for (var color = 0; color < shapes.length; color++) {

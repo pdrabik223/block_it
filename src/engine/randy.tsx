@@ -1,5 +1,4 @@
 import type { Board, Move } from "./Board.tsx";
-import type { Shape } from "./Shape.tsx";
 import type { ShapeList } from "./ShapeList.tsx";
 
 export default function Randy(board: Board, shapes: ShapeList): Move | null {

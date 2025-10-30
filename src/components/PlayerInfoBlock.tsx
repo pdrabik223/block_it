@@ -1,5 +1,4 @@
 import { useImperativeHandle, useRef, useState } from "react";
-import { basicEnginesMap, advancedEnginesMap2Player } from "../pages/EngineGameUI.tsx";
 import type { Cell } from "../engine/enum_definitions.tsx";
 import { Button } from "./Button.tsx";
 import { CellWidget } from "./CellWidget.tsx";

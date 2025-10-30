@@ -24,7 +24,7 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
     ]
 
     if (isPlaying) {
-        // props.setShowBackground(false)
+        props.setShowBackground(false)
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
@@ -38,7 +38,7 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
     let engines = Array.from(basicEnginesMap.keys());
     engines = engines.concat(Array.from(advancedEnginesMap2Player.keys()))
 
-    // props.setShowBackground(true)
+    props.setShowBackground(true)
     return <Column>
         <h1>2 Player Mode</h1>
         <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} values={engines} />

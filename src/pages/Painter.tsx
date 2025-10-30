@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Board } from '../engine/Board.tsx';
 import { Cell, cellBlue, cellEmpty, cellGreen, cellOrange, cellRed } from '../engine/enum_definitions.tsx';
-import { Shape, shapeList } from '../engine/Shape.tsx';
 import { BoardWidget } from '../components/BoardWidget.tsx';
 import { ShapeListWidget } from '../components/ShapeListWidget.tsx';
 
@@ -65,14 +64,6 @@ interface PaintLoopProps {
     navigateHome: () => void
 }
 
-
-function initShapeList(cell: Cell, noDuplicates: number = 1) {
-    let list = []
-    for (let shape of shapeList())
-        for (let x = 0; x < noDuplicates; x++)
-            list.push(new Shape(shape, cell))
-    return list
-}
 
 
 function initShapes() {

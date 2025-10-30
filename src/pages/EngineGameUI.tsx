@@ -2,7 +2,6 @@ import React, { type JSX, useEffect, useRef } from "react";
 
 import { Board, type Move } from "../engine/Board.tsx";
 
-import type { Shape } from "../engine/Shape.tsx";
 import Randy from "../engine/randy.tsx";
 import Pointer from "../engine/pointer.tsx";
 import Aggressive from "../engine/aggressive.tsx";
