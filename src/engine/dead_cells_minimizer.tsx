@@ -3,7 +3,7 @@ import { Cell } from "./enum_definitions.tsx";
 import type { Shape } from "./Shape.tsx";
 
 
-export default function AntiKiller(board: Board, shapes: Shape[]): Move | null {
+export default function AntiKiller(board: Board, shapes: ShapeList): Move | null {
     if (shapes.length == 0)
         return null
 

@@ -4,9 +4,10 @@ import { Button } from "./Button.tsx";
 import { Column } from "./Column.tsx";
 import { Row } from "./Row.tsx";
 import { cellBlue, cellGreen, cellOrange, cellRed } from "../engine/enum_definitions.tsx";
+import type { ShapeList } from "../engine/ShapeList.tsx";
 
 export interface ScoreBoardProps {
-    shapes: Shape[][];
+    shapes: ShapeList[];
     playerNames: string[];
     returnToMainMenu: () => void
     tryAgain: () => void
@@ -49,8 +50,8 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
 
         var total = 0;
 
-        for (let i = 0; i < props.shapes[playerID].length; i++) {
-            total += props.shapes[playerID][i].points();
+        for (let i = 0; i < props.shapes[playerID].length(); i++) {
+            total += props.shapes[playerID].get(i).points();
         }
         points_placed += total
         scoreBoard.push(new PlayerResultInfo(props.playerNames[playerID], total, textColors[playerID]));

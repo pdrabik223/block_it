@@ -6,11 +6,12 @@ import { Board } from '../engine/Board.tsx';
 import { Cell, cellBlue, cellEmpty, cellGreen, cellOrange, cellRed } from '../engine/enum_definitions.tsx';
 import { Shape, shapeList } from '../engine/Shape.tsx';
 import { BoardWidget } from '../components/BoardWidget.tsx';
-import { ShapeList } from '../components/ShapeList.tsx';
+import { ShapeListWidget } from '../components/ShapeListWidget.tsx';
 
 import * as htmlToImage from 'html-to-image';
 import { saveAs } from "file-saver";
 import { Column } from '../components/Column.tsx';
+import { ShapeList } from '../engine/ShapeList.tsx';
 
 
 interface PainterProps {
@@ -75,11 +76,11 @@ function initShapeList(cell: Cell, noDuplicates: number = 1) {
 
 
 function initShapes() {
-    return [(initShapeList(Cell.Red)),
-    (initShapeList(Cell.Blue)),
-    (initShapeList(Cell.Green)),
-    (initShapeList(Cell.Orange)),
-    (initShapeList(Cell.Empty))]
+    return [(ShapeList.GenerateShapes(Cell.Red)),
+    (ShapeList.GenerateShapes(Cell.Blue)),
+    (ShapeList.GenerateShapes(Cell.Green)),
+    (ShapeList.GenerateShapes(Cell.Orange)),
+    (ShapeList.GenerateShapes(Cell.Empty))]
 }
 
 export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
@@ -93,13 +94,13 @@ export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
     function onMoveMade() {
 
         if (props.removeShapeAfterPlacement && selected != -1) {
-            shapes[selectedColor % 5].splice(selected, 1);
+            shapes[selectedColor % 5].remove(selected);
         }
         setMoveCounter(moveCounter + 1)
     }
 
     function getHighlightedShape() {
-        return (selected != -1) ? shapes[selectedColor % 5][selected] : undefined
+        return (selected != -1) ? shapes[selectedColor % 5].get(selected) : undefined
     }
 
     function getImage() {
@@ -122,7 +123,7 @@ export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
         <Button onClick={() => setSelectedColor(selectedColor + 1)} style={{ margin: "1%" }}> Next Color </Button>
 
         <BoardWidget validateBeforePlacement={props.requireLegalPositions} onShapeCancel={() => setSelected(-1)} onMoveMade={() => onMoveMade()} board={board} highlightShape={getHighlightedShape()} />
-        <ShapeList shapes={shapes[selectedColor % 5]} onPress={setSelected} lockSelection={false} selected={selected} />
+        <ShapeListWidget shapes={shapes[selectedColor % 5]} onPress={setSelected} lockSelection={false} selected={selected} />
 
     </>
 }

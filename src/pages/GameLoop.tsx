@@ -8,13 +8,12 @@ import { BoardWidget } from "../components/BoardWidget.tsx";
 import { ScoreBoard } from "../components/ScoreBoard.tsx";
 import { FullScreenOverlay } from "../components/FullScreenOverlay.tsx";
 import { EngineGameUI } from "./EngineGameUI.tsx";
-import { ShapeList } from "../components/ShapeList.tsx";
+import { ShapeListWidget } from "../components/ShapeListWidget.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
 import { logInfo } from "../engine/logger.tsx";
 import { globalSettingsState } from "../App.tsx";
 import { Estimation2Player, Estimation4Player } from "../engine/requ.tsx";
-
-
+import { ShapeList } from "../engine/ShapeList.tsx";
 
 function initShapeList(cell: Cell, noDuplicates: number = 1) {
     let list = []
@@ -24,9 +23,9 @@ function initShapeList(cell: Cell, noDuplicates: number = 1) {
     return list
 }
 
-function checkIfPLayerWon(shapes: Shape[][]) {
+function checkIfPLayerWon(shapes: ShapeList[]) {
     for (var color = 0; color < shapes.length; color++) {
-        if (shapes[color].length == 0) return color;
+        if (shapes[color].length() == 0) return color;
     }
     return null;
 }
@@ -61,13 +60,14 @@ function initBoard(playerNames: PlayerInfo[]) {
 
 function initShapes(playerNames: PlayerInfo[]) {
     if (playerNames.length == 2) {
-        return [initShapeList(Cell.Red, 2), initShapeList(Cell.Blue, 2)]
+        return [ShapeList.GenerateShapes(Cell.Red, 2), ShapeList.GenerateShapes(Cell.Blue, 2)]
     }
-
-    return [(initShapeList(Cell.Red)),
-    (initShapeList(Cell.Blue)),
-    (initShapeList(Cell.Green)),
-    (initShapeList(Cell.Orange))]
+    return [
+        ShapeList.GenerateShapes(Cell.Red),
+        ShapeList.GenerateShapes(Cell.Blue),
+        ShapeList.GenerateShapes(Cell.Green),
+        ShapeList.GenerateShapes(Cell.Orange),
+    ]
 }
 
 export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
@@ -122,7 +122,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             let endedPlay = props.playerNames[nextid].endedPLay;
             if (endedPlay) continue;
 
-            let hasShapesLeft = shapes[nextid].length != 0
+            let hasShapesLeft = shapes[nextid].length() != 0
             if (!hasShapesLeft) continue;
 
             let hasMoves = board.getAllPossibleMovesForShapes(shapes[nextid]).length != 0
@@ -137,7 +137,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     function onMoveMade(id?: number): void {
 
         if (id != undefined)
-            shapes[currentPLayerID()].splice(id, 1);
+            shapes[currentPLayerID()].remove(id);
 
         if (selected != -1) setSelected(-1);
 
@@ -194,7 +194,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     }
 
     function getHighlightedShape() {
-        return (selected != -1) ? shapes[currentPLayerID()][selected] : undefined
+        return (selected != -1) ? shapes[currentPLayerID()].get(selected) : undefined
     }
 
     function getGameState(): [Cell, number, number][] | undefined {
@@ -203,21 +203,21 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         let points: number[] = [0, 0, 0, 0]
 
         for (let color = 0; color < noPlayers(); color++) {
-            for (let shape of shapes[color])
-                points[color] += shape.points()
+            // for (let shape of shapes[color])
+            points[color] = shapes[color].getPoints()
 
         }
 
         if (noPlayers() == 2) return [
-            [Cell.Red, shapes[0].length, points[0]],
-            [Cell.Blue, shapes[1].length, points[1]]
+            [Cell.Red, shapes[0].length(), points[0]],
+            [Cell.Blue, shapes[1].length(), points[1]]
         ]
 
         return [
-            [Cell.Red, shapes[0].length, points[0]],
-            [Cell.Blue, shapes[1].length, points[1]],
-            [Cell.Green, shapes[2].length, points[2]],
-            [Cell.Orange, shapes[3].length, points[3]]
+            [Cell.Red, shapes[0].length(), points[0]],
+            [Cell.Blue, shapes[1].length(), points[1]],
+            [Cell.Green, shapes[2].length(), points[2]],
+            [Cell.Orange, shapes[3].length(), points[3]]
         ]
     }
 
@@ -238,7 +238,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         onMoveMade={() => onMoveMade(selected)}
         highlightedShape={getHighlightedShape()}
         board={board}
-        shapeWidgets={<ShapeList shapes={shapes[currentPLayerID()]} onPress={setSelected} lockSelection={false} selected={selected} />}
+        shapeWidgets={<ShapeListWidget shapes={shapes[currentPLayerID()]} onPress={setSelected} lockSelection={false} selected={selected} />}
         gameStatistics={getGameState()}
         gameEvaluation={getEvaluation()}
 

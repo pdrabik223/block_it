@@ -6,7 +6,7 @@ import type { Shape } from "../engine/Shape.tsx";
 import Randy from "../engine/randy.tsx";
 import Pointer from "../engine/pointer.tsx";
 import Aggressive from "../engine/aggressive.tsx";
-import { ShapeList } from "../components/ShapeList.tsx";
+import { ShapeListWidget } from "../components/ShapeListWidget.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
 import { globalSettingsState } from "../App.tsx";
 import { Button } from "../components/Button.tsx";
@@ -16,9 +16,10 @@ import { TitleGroup } from "./TitleGroup.tsx";
 import { Cell } from "../engine/enum_definitions.tsx";
 import { EvaluationBar } from "./EvaluationBar.tsx";
 import minMax2Player from "../engine/requ.tsx";
+import type { ShapeList } from "../engine/ShapeList.tsx";
 
 
-export const basicEnginesMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
+export const basicEnginesMap = new Map<string, (board: Board, shapes: ShapeList) => Move | null>([
     ["Randy", Randy],
     ["Pointer", Pointer],
     ["Aggressive", Aggressive],
@@ -27,11 +28,11 @@ export const basicEnginesMap = new Map<string, (board: Board, shapes: Shape[]) =
     ["AntiKiller", AntiKiller],
 ])
 
-export const advancedEnginesMap2Player = new Map<string, (playerColor: Cell, requDepth: number, board: Board, redShapes: Shape[], blueShapes: Shape[]) => Move | null>([
+export const advancedEnginesMap2Player = new Map<string, (playerColor: Cell, requDepth: number, board: Board, redShapes: ShapeList, blueShapes: ShapeList) => Move | null>([
     ["MinMax2Player", minMax2Player],
 ])
 
-export const advancedEnginesMap4Player = new Map<string, (playerColor: Cell, requDepth: number, board: Board, redShapes: Shape[], blueShapes: Shape[]) => Move | null>([
+export const advancedEnginesMap4Player = new Map<string, (playerColor: Cell, requDepth: number, board: Board, redShapes: ShapeList, blueShapes: ShapeList) => Move | null>([
 
 ])
 
@@ -42,7 +43,7 @@ export interface EngineGameUIProps {
     onMoveMade: (removedShapeId?: number) => void,
     onAbandonGame: () => void,
     onEndGame: () => void
-    shapes: Shape[][],
+    shapes: ShapeList[],
     playerColor: Cell,
     engineName: string,
     iteration: number,
@@ -52,7 +53,7 @@ export interface EngineGameUIProps {
 
 }
 
-function getShapesForPlayer(player: Cell, shapes: Shape[][]): Shape[] {
+function getShapesForPlayer(player: Cell, shapes: ShapeList[]): ShapeList {
     switch (player) {
         case Cell.Red:
             return shapes[0]
@@ -117,7 +118,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         </TitleGroup>
         <EvaluationBar gameStatistics={props.gameEvaluation}></EvaluationBar>
         <BoardWidget onMoveMade={() => { }} board={props.board} />
-        <ShapeList shapes={getShapesForPlayer(props.playerColor, props.shapes)} onPress={() => { }} lockSelection={true} selected={-1} />
+        <ShapeListWidget shapes={getShapesForPlayer(props.playerColor, props.shapes)} onPress={() => { }} lockSelection={true} selected={-1} />
     </>;
 
 };

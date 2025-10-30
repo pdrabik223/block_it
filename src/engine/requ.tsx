@@ -2,24 +2,21 @@ import { Board, type Move } from "./Board.tsx";
 import { Cell } from "./enum_definitions.tsx";
 import { logInfo } from "./logger.tsx";
 import { shapeList, type Shape } from "./Shape.tsx";
+import { ShapeList } from "./ShapeList.tsx";
 
 
 const MovesCountWeight = 0.4;
 const ShapesCountWeight = -1;
 
 
-function getShapeWeight(shapes: Shape[]) {
-    if (shapes.length == 0) return 10000
+function getShapeWeight(shapes: ShapeList) {
+    if (shapes.length() == 0) return 10000
 
-    let sum = 0;
-    for (let s of shapes) {
-        sum += s.points()
-    }
-    return sum
+    return shapes.getPoints()
 }
 
 
-export function Estimation2Player(board: Board, redShapes: Shape[], blueShapes: Shape[]): [Cell, number][] {
+export function Estimation2Player(board: Board, redShapes: ShapeList, blueShapes: ShapeList): [Cell, number][] {
 
 
 
@@ -41,7 +38,7 @@ export function Estimation2Player(board: Board, redShapes: Shape[], blueShapes: 
 
 
 
-export function Estimation4Player(board: Board, redShapes: Shape[], blueShapes: Shape[], greenShapes: Shape[], orangeShapes: Shape[]): [Cell, number][] {
+export function Estimation4Player(board: Board, redShapes: ShapeList, blueShapes: ShapeList, greenShapes: ShapeList, orangeShapes: ShapeList): [Cell, number][] {
 
 
 
@@ -86,7 +83,7 @@ function getNextPlayerColor2Player(playerColor: Cell): Cell {
 
 }
 
-export default function minMax2Player(playerColor: Cell, requDepth: number, board: Board, redShapes: Shape[], blueShapes: Shape[]): Move | null {
+export default function minMax2Player(playerColor: Cell, requDepth: number, board: Board, redShapes: ShapeList, blueShapes: ShapeList): Move | null {
 
     logInfo(`Depth:${requDepth}`)
 
@@ -107,7 +104,7 @@ export default function minMax2Player(playerColor: Cell, requDepth: number, boar
     return moves[estimations.indexOf(Math.max.apply(null, estimations))]
 }
 
-function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: Cell, board: Board, redShapes: Shape[], blueShapes: Shape[]): number {
+function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: Cell, board: Board, redShapes: ShapeList, blueShapes: ShapeList): number {
 
     let estimation = Estimation2Player(board, redShapes, blueShapes)
 
@@ -133,24 +130,24 @@ function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: C
         return Math.min.apply(null, estimations)
 }
 
-function removeShapeForPlayer(playerMove: Cell, move: Move, redShapes: Shape[], blueShapes: Shape[]): Shape[][] {
-    let playerShapes: Shape[] = []
+function removeShapeForPlayer(playerMove: Cell, move: Move, redShapes: ShapeList, blueShapes: ShapeList): ShapeList[] {
+
 
     switch (playerMove) {
         case Cell.Red:
-            playerShapes = redShapes.slice();
-            playerShapes.splice(move.shapeId, 1);
+            let playerShapes = new ShapeList(redShapes)
+            playerShapes.remove(move.shapeId);
             return [playerShapes, blueShapes]
         case Cell.Blue:
-            playerShapes = blueShapes.slice();
-            playerShapes.splice(move.shapeId, 1);
+            playerShapes = new ShapeList(blueShapes);
+            playerShapes.remove(move.shapeId);
             return [redShapes, playerShapes]
     }
     throw Error("not implemented")
 
 }
 
-function getMovesForPlayer(playerMove: Cell, board: Board, redShapes: Shape[], blueShapes: Shape[]): Move[] {
+function getMovesForPlayer(playerMove: Cell, board: Board, redShapes: ShapeList, blueShapes: ShapeList): Move[] {
     switch (playerMove) {
         case Cell.Red:
             return board.getAllPossibleMovesForShapes(redShapes)

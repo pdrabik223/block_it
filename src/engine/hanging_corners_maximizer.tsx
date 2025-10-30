@@ -1,5 +1,6 @@
 import { Board, type Move } from "./Board.tsx";
 import type { Shape } from "./Shape.tsx";
+import type { ShapeList } from "./ShapeList.tsx";
 
 
 function calculateHangingCorners(board: Board, move: Move): number {
@@ -9,8 +10,8 @@ function calculateHangingCorners(board: Board, move: Move): number {
 
 }
 
-export default function pointer_coroner(board: Board, shapes: Shape[]): Move | null {
-    if (shapes.length == 0)
+export default function pointer_coroner(board: Board, shapes: ShapeList): Move | null {
+    if (shapes.length() == 0)
         return null
 
     let moves = board.getAllPossibleMovesForShapes(shapes)
@@ -57,8 +58,8 @@ function estimatedMovesSort(data: [number, Move][]) {
     }
 }
 
-export function coroner(board: Board, shapes: Shape[]): Move | null {
-    if (shapes.length == 0)
+export function coroner(board: Board, shapes: ShapeList): Move | null {
+    if (shapes.length() == 0)
         return null
 
     let moves = board.getAllPossibleMovesForShapes(shapes)

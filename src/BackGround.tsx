@@ -5,6 +5,7 @@ import { Board } from './engine/Board.tsx';
 import { Cell } from './engine/enum_definitions.tsx';
 import randy from './engine/randy.tsx';
 import { shapeList, Shape } from './engine/Shape.tsx';
+import { ShapeList } from './engine/ShapeList.tsx';
 
 export interface BackGroundProps {
 
@@ -20,19 +21,12 @@ export const BackGround: React.FC<BackGroundProps> = (props: BackGroundProps) =>
 
     if (!show) return <></>;
 
-    function initShapeList(cell: Cell) {
-        let list = [];
-        for (let shape of shapeList())
-            list.push(new Shape(shape, cell));
-        return list;
-    }
-
     let colors = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange];
 
     function generateBoard() {
 
         let randomColor = colors[Math.floor(Math.random() * colors.length)];
-        let shapes: Shape[] = initShapeList(randomColor);
+        let shapes: ShapeList = ShapeList.GenerateShapes(randomColor);
 
         let move = randy(board, shapes);
         while (move != null) {

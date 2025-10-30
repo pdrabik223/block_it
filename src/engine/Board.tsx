@@ -1,6 +1,7 @@
 // import type { Shape } from "./Shape";
 
 import { NoRotations, Shape } from "./Shape.tsx";
+import { ShapeList } from "./ShapeList.tsx";
 import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_definitions.tsx"
 
 export class Move {
@@ -198,22 +199,22 @@ export class Board {
                 permutations.push(permutations[i].flipLR().copy());
             }
         }
-        // remove duplicates 
+        // remove duplicates  
         return permutations;
     }
 
-    getAllPossibleMovesForShapes(shapes: Shape[]): Move[] {
+    getAllPossibleMovesForShapes(shapes: ShapeList): Move[] {
 
 
-        if (shapes.length == 0) return []
+        if (shapes.length() == 0) return []
 
-        let color = shapes[0].cellColor
+        let color = shapes.color
 
         let possibleMoves: Move[] = []
 
         for (let [position, hangingCorner] of this.getHangingCorners(color))
-            for (let i = 0; i < shapes.length; i++) {
-                for (let permutation of this.getShapePermutations(shapes[i])) {
+            for (let i = 0; i < shapes.length(); i++) {
+                for (let permutation of this.getShapePermutations(shapes.get(i))) {
                     for (let [[x, y], cellCorner] of permutation.getHangingCorners())
                         if (cellCorner == hangingCorner) {
                             let positionX = Math.floor(position / Board.width);

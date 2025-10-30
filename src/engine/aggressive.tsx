@@ -16,7 +16,7 @@ function distanceBetweenPoints(pos: number, pos2: number): number {
     return distance;
 }
 
-export default function Aggressive(board: Board, shapes: Shape[]): Move | null {
+export default function Aggressive(board: Board, shapes: ShapeList): Move | null {
     if (shapes.length == 0)
         return null
 
