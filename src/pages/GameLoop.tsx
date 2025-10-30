@@ -215,9 +215,9 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         if (!globalSettingsState.showPositionEvaluation) return undefined;
 
         if (noPlayers() == 2)
-            return Estimation2Player(board, shapes[0], shapes[1])
+            return Estimation2Player(shapes[0], shapes[1])
 
-        return Estimation4Player(board, shapes[0], shapes[1], shapes[2], shapes[3])
+        return Estimation4Player(shapes[0], shapes[1], shapes[2], shapes[3])
     }
     return <PlayerGameUI
         title={getTitle()!}

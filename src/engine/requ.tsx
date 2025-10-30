@@ -1,11 +1,10 @@
 import { Board, type Move } from "./Board.tsx";
 import { Cell } from "./enum_definitions.tsx";
 import { logInfo } from "./logger.tsx";
-import { shapeList, type Shape } from "./Shape.tsx";
 import { ShapeList } from "./ShapeList.tsx";
 
 
-const MovesCountWeight = 0.4;
+// const MovesCountWeight = 0.4;
 const ShapesCountWeight = -1;
 
 
@@ -16,7 +15,7 @@ function getShapeWeight(shapes: ShapeList) {
 }
 
 
-export function Estimation2Player(board: Board, redShapes: ShapeList, blueShapes: ShapeList): [Cell, number][] {
+export function Estimation2Player(redShapes: ShapeList, blueShapes: ShapeList): [Cell, number][] {
 
 
 
@@ -38,7 +37,7 @@ export function Estimation2Player(board: Board, redShapes: ShapeList, blueShapes
 
 
 
-export function Estimation4Player(board: Board, redShapes: ShapeList, blueShapes: ShapeList, greenShapes: ShapeList, orangeShapes: ShapeList): [Cell, number][] {
+export function Estimation4Player(redShapes: ShapeList, blueShapes: ShapeList, greenShapes: ShapeList, orangeShapes: ShapeList): [Cell, number][] {
 
 
 
@@ -106,7 +105,7 @@ export default function minMax2Player(playerColor: Cell, requDepth: number, boar
 
 function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: Cell, board: Board, redShapes: ShapeList, blueShapes: ShapeList): number {
 
-    let estimation = Estimation2Player(board, redShapes, blueShapes)
+    let estimation = Estimation2Player(redShapes, blueShapes)
 
     if (reQuDepth == 0) return getEstimationForPlayer(playerMove, estimation)
 
@@ -131,11 +130,11 @@ function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: C
 }
 
 function removeShapeForPlayer(playerMove: Cell, move: Move, redShapes: ShapeList, blueShapes: ShapeList): ShapeList[] {
-
+    let playerShapes = new ShapeList()
 
     switch (playerMove) {
         case Cell.Red:
-            let playerShapes = new ShapeList(redShapes)
+            playerShapes = new ShapeList(redShapes)
             playerShapes.remove(move.shapeId);
             return [playerShapes, blueShapes]
         case Cell.Blue:
