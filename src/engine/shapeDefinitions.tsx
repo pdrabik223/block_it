@@ -1,5 +1,11 @@
 import { Cell } from "./enum_definitions.tsx"
 
+export const enum NoRotations {
+    Zero,
+    Two,
+    Four,
+}
+
 
 export const enum Shapes {
     // one width
@@ -28,6 +34,37 @@ export const enum Shapes {
     QuadrupleBolt,
     // five width
     PentaLine
+}
+
+export function getShapeSize(shape: Shapes): number {
+    switch (shape) {
+        case Shapes.Dot:
+            return 1
+        case Shapes.Tuple:
+        case Shapes.Triple:
+        case Shapes.Square:
+            return 2
+        case Shapes.Cross:
+        case Shapes.TripleLine:
+        case Shapes.TripleT:
+        case Shapes.BigTripleT:
+        case Shapes.TripleC:
+        case Shapes.Bolt:
+        case Shapes.TripleL:
+        case Shapes.BigTripleL:
+        case Shapes.TripleP:
+        case Shapes.OffsetCross:
+        case Shapes.Snake:
+        case Shapes.TripleW:
+            return 3
+        case Shapes.QuadrupleLine:
+        case Shapes.QuadrupleL:
+        case Shapes.QuadrupleOffsetL:
+        case Shapes.QuadrupleBolt:
+            return 4
+        case Shapes.PentaLine:
+            return 5
+    }
 }
 
 export const shapeDefinitions: ((cell: Cell) => Cell[][])[] = [
@@ -178,6 +215,54 @@ export function shapeList() {
         Shapes.PentaLine
 
     ]
+}
+
+export function getCellValue(shape: Shapes): number {
+    switch (shape) {
+        case Shapes.Dot:
+            return 1
+        case Shapes.Tuple:
+            return 2
+        case Shapes.Triple:
+            return 3
+        case Shapes.Square:
+            return 4
+        case Shapes.Cross:
+        case Shapes.BigTripleT:
+        case Shapes.TripleC:
+        case Shapes.BigTripleL:
+        case Shapes.TripleP:
+        case Shapes.OffsetCross:
+        case Shapes.Snake:
+        case Shapes.TripleW:
+        case Shapes.QuadrupleL:
+        case Shapes.QuadrupleOffsetL:
+        case Shapes.QuadrupleBolt:
+        case Shapes.PentaLine:
+            return 5
+        case Shapes.TripleLine:
+            return 3
+        case Shapes.TripleT:
+        case Shapes.Bolt:
+        case Shapes.TripleL:
+        case Shapes.QuadrupleLine:
+            return 4
+    }
+}
+
+export function getNumberOfRotations(shape: Shapes): NoRotations {
+    switch (shape) {
+        case Shapes.Dot:
+        case Shapes.Square:
+        case Shapes.Cross:
+            return NoRotations.Zero
+        case Shapes.TripleLine:
+        case Shapes.QuadrupleLine:
+        case Shapes.PentaLine:
+            return NoRotations.Two
+        default:
+            return NoRotations.Four
+    }
 }
 
 export function getRandomShape() {
