@@ -1,5 +1,5 @@
 import { useImperativeHandle, useRef, useState } from "react";
-import { engineMap } from "../pages/EngineGameUI.tsx";
+import { basicEnginesMap, advancedEnginesMap2Player } from "../pages/EngineGameUI.tsx";
 import type { Cell } from "../engine/enum_definitions.tsx";
 import { Button } from "./Button.tsx";
 import { CellWidget } from "./CellWidget.tsx";
@@ -29,16 +29,20 @@ export const usernames = [
 
 export interface PlayerInfoRef {
     getState: () => [boolean, string];
+
 }
 
-interface PlayerInfoBlockProps { ref: React.RefObject<PlayerInfoRef | null>; cell: Cell }
+interface PlayerInfoBlockProps {
+    ref: React.RefObject<PlayerInfoRef | null>;
+    cell: Cell,
+    values: string[]
+}
 
 export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInfoBlockProps) => {
 
-    let engines = Array.from(engineMap.keys());
 
     const [isPlayer, setIsPlayer] = useState(false);
-    const [engine, setEngine] = useState<string>(engines[0]);
+    const [engine, setEngine] = useState<string>(props.values[0]);
 
     useImperativeHandle(props.ref, () => ({
         getState: () => [!isPlayer, isPlayer ? usernameValueRef.current!.getState() : engine],
@@ -48,7 +52,7 @@ export const PlayerInfoBlock: React.FC<PlayerInfoBlockProps> = (props: PlayerInf
 
     let EngineOptions = [];
 
-    for (let value of engines) {
+    for (let value of props.values) {
         EngineOptions.push(<option style={{ margin: "4px", fontSize: 'large' }} key={uuidv4()} value={value}>{value}</option>)
     }
 

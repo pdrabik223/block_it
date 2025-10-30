@@ -3,8 +3,8 @@ import { DebugLevel } from "../GlobalSettings.tsx"
 
 export function logInfo(...data: any[]) {
 
-    if (globalSettingsState.debugLevel == DebugLevel.AllLogs ||
-        globalSettingsState.debugLevel == DebugLevel.Engine)
+    // if (globalSettingsState.debugLevel == DebugLevel.AllLogs ||
+    //     globalSettingsState.debugLevel == DebugLevel.Engine)
         console.log(data)
 }
 

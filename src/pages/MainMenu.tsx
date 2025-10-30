@@ -6,6 +6,7 @@ import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlo
 
 import { useNavigate } from 'react-router-dom';
 import { Column } from '../components/Column.tsx';
+import { advancedEnginesMap2Player, basicEnginesMap } from './EngineGameUI.tsx';
 
 interface Game2PlayerProps {
     setShowBackground: (val: boolean) => void
@@ -23,7 +24,7 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
     ]
 
     if (isPlaying) {
-        props.setShowBackground(false)
+        // props.setShowBackground(false)
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
@@ -34,11 +35,14 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
             playerInfo[i] = new PlayerInfo(name, isEngine);
         }
     };
-    props.setShowBackground(true)
+    let engines = Array.from(basicEnginesMap.keys());
+    engines = engines.concat(Array.from(advancedEnginesMap2Player.keys()))
+
+    // props.setShowBackground(true)
     return <Column>
         <h1>2 Player Mode</h1>
-        <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} />
-        <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
+        <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} values={engines} />
+        <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} values={engines} />
 
         <Button style={{ margin: "4px" }} onClick={() => { handleClick(); setIsPlaying(true) }}>Start</Button>
         <Button style={{ margin: "4px" }} onClick={() => navigate("/block_it/")}>Back</Button>
@@ -76,13 +80,17 @@ export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps)
         }
     };
     props.setShowBackground(true)
+
+    let engines = Array.from(basicEnginesMap.keys());
+
+
     return <Column>
         <h1>4 Player Mode</h1>
 
-        <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} />
-        <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} />
-        <PlayerInfoBlock ref={inputRefs[2]} cell={Cell.Green} />
-        <PlayerInfoBlock ref={inputRefs[3]} cell={Cell.Orange} />
+        <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} values={engines} />
+        <PlayerInfoBlock ref={inputRefs[1]} cell={Cell.Blue} values={engines} />
+        <PlayerInfoBlock ref={inputRefs[2]} cell={Cell.Green} values={engines} />
+        <PlayerInfoBlock ref={inputRefs[3]} cell={Cell.Orange} values={engines} />
 
         <Button style={{ margin: "4px" }} onClick={() => { handleClick(); setIsPlaying(true) }}>Start</Button>
         <Button style={{ margin: "4px" }} onClick={() => navigate("/block_it/")}>Back</Button>
@@ -91,7 +99,7 @@ export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps)
 interface MainMenuProps {
     setShowBackground: (val: boolean) => void
 }
-export const MainMenu: React.FC<MainMenuProps> = (props:MainMenuProps) => {
+export const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
 
     let navigate = useNavigate();
     props.setShowBackground(true)

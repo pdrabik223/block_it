@@ -13,7 +13,7 @@ export interface RowRef {
 export const Row: React.FC<RowRef> = (props: RowRef) => {
 
     let expanded = props.expanded != undefined ? props.expanded : false
-    let key = props.key != undefined ? props.key : uuidv4()
+    let key: React.Key = props.key != undefined ? props.key : uuidv4()
 
     return <div
         className={props.className}

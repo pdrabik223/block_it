@@ -1,6 +1,6 @@
 import React, { type JSX, useEffect, useRef } from "react";
 
-import type { Board, Move } from "../engine/Board.tsx";
+import { Board, type Move } from "../engine/Board.tsx";
 
 import type { Shape } from "../engine/Shape.tsx";
 import Randy from "../engine/randy.tsx";
@@ -13,17 +13,26 @@ import { Button } from "../components/Button.tsx";
 import pointer_coroner, { coroner } from "../engine/hanging_corners_maximizer.tsx";
 import AntiKiller from "../engine/dead_cells_minimizer.tsx";
 import { TitleGroup } from "./TitleGroup.tsx";
-import type { Cell } from "../engine/enum_definitions.tsx";
+import { Cell } from "../engine/enum_definitions.tsx";
 import { EvaluationBar } from "./EvaluationBar.tsx";
+import minMax2Player from "../engine/requ.tsx";
 
 
-export const engineMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
+export const basicEnginesMap = new Map<string, (board: Board, shapes: Shape[]) => Move | null>([
     ["Randy", Randy],
     ["Pointer", Pointer],
     ["Aggressive", Aggressive],
     ["PointerCoroner", pointer_coroner],
     ["Coroner", coroner],
-    ["AntiKiller", AntiKiller]
+    ["AntiKiller", AntiKiller],
+])
+
+export const advancedEnginesMap2Player = new Map<string, (playerColor: Cell, requDepth: number, board: Board, redShapes: Shape[], blueShapes: Shape[]) => Move | null>([
+    ["MinMax2Player", minMax2Player],
+])
+
+export const advancedEnginesMap4Player = new Map<string, (playerColor: Cell, requDepth: number, board: Board, redShapes: Shape[], blueShapes: Shape[]) => Move | null>([
+
 ])
 
 
@@ -33,21 +42,45 @@ export interface EngineGameUIProps {
     onMoveMade: (removedShapeId?: number) => void,
     onAbandonGame: () => void,
     onEndGame: () => void
-    shapes: Shape[],
+    shapes: Shape[][],
+    playerColor: Cell,
     engineName: string,
     iteration: number,
+    noPlayers: number,
     gameStatistics?: [color: Cell, noShapes: number, noPoints: number][]
     gameEvaluation?: [color: Cell, estimation: number][]
 
 }
 
+function getShapesForPlayer(player: Cell, shapes: Shape[][]): Shape[] {
+    switch (player) {
+        case Cell.Red:
+            return shapes[0]
+        case Cell.Orange:
+            return shapes[3]
+        case Cell.Green:
+            return shapes[2]
+        case Cell.Blue:
+            return shapes[1]
+
+    }
+    throw Error("Color not valid")
+}
+
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
+    let move: Move | null = null
 
     function engineFunction() {
 
-        let move = engineMap.get(props.engineName)!(props.board, props.shapes)
+        if (basicEnginesMap.get(props.engineName) != null)
+            move = basicEnginesMap.get(props.engineName)!(props.board, getShapesForPlayer(props.playerColor, props.shapes))
 
-        if (move == null) {
+        else if (advancedEnginesMap2Player.get(props.engineName) != null)
+            move = advancedEnginesMap2Player.get(props.engineName)!(props.playerColor, 3, props.board, props.shapes[0], props.shapes[1])
+
+        else throw Error(`Engine ${props.engineName} not found`)
+
+        if (move === null) {
             new Promise(() =>
                 setTimeout(() => {
                     props.onAbandonGame();
@@ -58,7 +91,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
             new Promise(() =>
                 setTimeout(() => {
-                    props.onMoveMade(move.shapeId)
+                    props.onMoveMade(move!.shapeId)
                 }, globalSettingsState.moveDelayMS));
 
         }
@@ -84,7 +117,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         </TitleGroup>
         <EvaluationBar gameStatistics={props.gameEvaluation}></EvaluationBar>
         <BoardWidget onMoveMade={() => { }} board={props.board} />
-        <ShapeList shapes={props.shapes} onPress={() => { }} lockSelection={true} selected={-1} />
+        <ShapeList shapes={getShapesForPlayer(props.playerColor, props.shapes)} onPress={() => { }} lockSelection={true} selected={-1} />
     </>;
 
 };

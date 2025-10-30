@@ -12,7 +12,7 @@ import { ShapeList } from "../components/ShapeList.tsx";
 import { PlayerGameUI } from "./PlayerGameUI.tsx";
 import { logInfo } from "../engine/logger.tsx";
 import { globalSettingsState } from "../App.tsx";
-import { Estimation } from "../engine/requ.tsx";
+import { Estimation2Player, Estimation4Player } from "../engine/requ.tsx";
 
 
 
@@ -99,6 +99,11 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         return gameIteration % noPlayers();
     }
 
+    function currentPLayerColor(): Cell {
+        let colors = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
+        return colors[currentPLayerID()];
+    }
+
     function isCurrentPlayerEngine() {
         return props.playerNames[currentPLayerID()].isEngine
     }
@@ -137,8 +142,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         if (selected != -1) setSelected(-1);
 
         let nextPLayer = nextPLayerID()
-
-        logInfo("PLayer:", nextPLayer)
 
         if (nextPLayer != null) {
 
@@ -179,10 +182,12 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             board={board}
             onEndGame={props.returnToMainMenu}
             onAbandonGame={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}
-            shapes={shapes[currentPLayerID()]}
+            shapes={shapes}
+            playerColor={currentPLayerColor()}
             onMoveMade={(v?: number) => (onMoveMade(v))}
             engineName={getPlayerNames()[currentPLayerID()]}
             iteration={moveCounter}
+            noPlayers={noPlayers()}
             gameStatistics={getGameState()}
             gameEvaluation={getEvaluation()}
         />
@@ -219,12 +224,10 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     function getEvaluation(): [Cell, number][] | undefined {
         if (!globalSettingsState.showPositionEvaluation) return undefined;
 
-        if (noPlayers() == 2) {
-            let result = Estimation(board, shapes[0], shapes[1], [], [])
-            return [result[0], result[1]]
-        }
+        if (noPlayers() == 2)
+            return Estimation2Player(board, shapes[0], shapes[1])
 
-        return Estimation(board, shapes[0], shapes[1], shapes[2], shapes[3])
+        return Estimation4Player(board, shapes[0], shapes[1], shapes[2], shapes[3])
     }
     return <PlayerGameUI
         title={getTitle()!}
