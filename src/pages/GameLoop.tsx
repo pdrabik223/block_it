@@ -25,7 +25,7 @@ function initShapeList(cell: Cell, noDuplicates: number = 1) {
 
 function checkIfPLayerWon(shapes: ShapeList[]) {
     for (var color = 0; color < shapes.length; color++) {
-        if (shapes[color].length() == 0) return color;
+        if (shapes[color].isEmpty()) return color;
     }
     return null;
 }

@@ -11,7 +11,7 @@ function calculateHangingCorners(board: Board, move: Move): number {
 }
 
 export default function pointer_coroner(board: Board, shapes: ShapeList): Move | null {
-    if (shapes.length() == 0)
+    if (shapes.isEmpty())
         return null
 
     let moves = board.getAllPossibleMovesForShapes(shapes)
@@ -59,7 +59,7 @@ function estimatedMovesSort(data: [number, Move][]) {
 }
 
 export function coroner(board: Board, shapes: ShapeList): Move | null {
-    if (shapes.length() == 0)
+    if (shapes.isEmpty())
         return null
 
     let moves = board.getAllPossibleMovesForShapes(shapes)

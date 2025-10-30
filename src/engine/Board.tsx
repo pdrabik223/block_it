@@ -206,7 +206,7 @@ export class Board {
     getAllPossibleMovesForShapes(shapes: ShapeList): Move[] {
 
 
-        if (shapes.length() == 0) return []
+        if (shapes.isEmpty()) return []
 
         let color = shapes.color
 

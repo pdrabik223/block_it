@@ -10,7 +10,7 @@ const ShapesCountWeight = -1;
 
 
 function getShapeWeight(shapes: ShapeList) {
-    if (shapes.length() == 0) return 10000
+    if (shapes.isEmpty()) return 10000
 
     return shapes.getPoints()
 }

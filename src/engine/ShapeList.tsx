@@ -29,7 +29,12 @@ export class ShapeList {
 
         return result
     }
-    
+
+    isEmpty(): boolean {
+        return this.data.length == 0
+
+    }
+
     length(): number {
         return this.data.length
 
@@ -42,7 +47,7 @@ export class ShapeList {
     remove(id: number) {
         this.data.splice(id, 1);
     }
-    
+
     getPoints() {
 
         let sum = 0;
