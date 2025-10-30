@@ -34,7 +34,9 @@ export class Shape {
 
         return true;
     }
+
     getColor() { return this.cellColor }
+
     constructor(shape: Shapes, cell: Cell) {
         this.shapeName = shape;
         this.cellColor = cell;
@@ -42,7 +44,7 @@ export class Shape {
         this.size = getShapeSize(shape);
         this.cellValue = getCellValue(shape);
         this.numberOfRotations = getNumberOfRotations(shape);
-        
+
         // Set canBeFlipped for specific shapes
         switch (shape) {
             case Shapes.Bolt:
@@ -60,14 +62,44 @@ export class Shape {
     }
 
     getPermutations(): Shape[] {
+        let permutations: Shape[] = [];
+        switch (this.numberOfRotations) {
+            case NoRotations.Zero:
+                permutations.push(this.copy());
+                break;
 
-        return []
+            case NoRotations.Two:
+                permutations.push(this.copy());
+                permutations.push(this.copy().rotate90deg());
+                break;
+
+            case NoRotations.Four:
+                let temp = this.copy()
+                permutations.push(temp.copy());
+                temp.rotate90deg()
+                permutations.push(temp.copy());
+                temp.rotate90deg()
+                permutations.push(temp.copy());
+                temp.rotate90deg()
+                permutations.push(temp.copy());
+                break;
+        }
+
+        let currentPermutations = permutations.length;
+
+        if (this.canBeFlipped) {
+            for (let i = 0; i < currentPermutations; i++) {
+                permutations.push(permutations[i].flipLR().copy());
+            }
+        }
+        // remove duplicates  
+        return permutations;
     }
 
     get(x: number, y: number): Cell {
 
-        if (x >= this.size) throw EvalError('x (${x}) is grater than Shape.size');
-        if (y >= this.size) throw EvalError('y (${y}) is grater than Shape.size');
+        if (x >= this.size) throw EvalError(`x (${x}) is grater than Shape.size`);
+        if (y >= this.size) throw EvalError(`y (${y}) is grater than Shape.size`);
 
         return this.data[x][y];
     }

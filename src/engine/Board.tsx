@@ -214,7 +214,7 @@ export class Board {
 
         for (let [position, hangingCorner] of this.getHangingCorners(color))
             for (let i = 0; i < shapes.length(); i++) {
-                for (let permutation of this.getShapePermutations(shapes.get(i))) {
+                for (let permutation of shapes.get(i).getPermutations()) {
                     for (let [[x, y], cellCorner] of permutation.getHangingCorners())
                         if (cellCorner == hangingCorner) {
                             let positionX = Math.floor(position / Board.width);
