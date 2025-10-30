@@ -1,8 +1,9 @@
 import type React from 'react';
 
 import "./RadialToolTip.css"
-import { NoRotations, type Shape } from '../engine/Shape.tsx';
+import {  type Shape } from '../engine/Shape.tsx';
 import { Button } from './Button.tsx';
+import { NoRotations } from '../engine/shapeDefinitions.tsx';
 
 
 export interface RadialToolTipProps {

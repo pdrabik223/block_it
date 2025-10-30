@@ -1,8 +1,9 @@
 // import type { Shape } from "./Shape";
 
-import { NoRotations, Shape } from "./Shape.tsx";
+import { Shape } from "./Shape.tsx";
 import { ShapeList } from "./ShapeList.tsx";
 import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_definitions.tsx"
+import { NoRotations } from "./shapeDefinitions.tsx";
 
 export class Move {
 
