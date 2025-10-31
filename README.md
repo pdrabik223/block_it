@@ -34,14 +34,14 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    27. ~~remove invisible cells around shapes~~
    28. ~~gh pages break~~
    29. Propagate settings changes and force elems using them to reload
-   30. When cursor moves over screen engines do moves quicker -> this probably is a issue with useEffect
+   30. When cursor moves over screen engines do moves quicker -> this probably is a issue with useEffect    
    31. ~~make playing board scalable~~
    32. we disable background during new state propagation inside page widget, this is a problem
    33. ~~Improve same shape count, try adding black circle around it~~
    34. Add prettier background to board, maybe simple background light
    35. ~~nav bar title is not centered~~
    36. Improve moves count for every player
-   37. Evaluation uses simple comparison
+   37. ~~Evaluation uses simple comparison~~
    38. ~~Evaluation Bard need's do be reversed, losing guy is has more space on it~~ 
    39. add infinity amount of shapes indicator in Painter mode
    40. Add "Sinematic Mode" to board when it's running only algorithms
@@ -55,9 +55,10 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
     4. Dead cells minimizer -> all cells adresant to piece are dead to the color, so minimizing those will lead to better groupings of cells + Pointer + Aggresive
     5. Hanging Corners maximizer -> Done but has issues
     6. Hanging Corners maximizer but without Pointer -> Done, still with issues
+    7. MinMax2players -> requires a lot of optimization to be useful
 
 3. Optymisation:
-   1. move generator generates duplicates
+   1. ~~move generator generates duplicates~~
    2. Also we do a lot of unnecessary redrawing since all cells in board are repainted every user action
 
 # Framework
