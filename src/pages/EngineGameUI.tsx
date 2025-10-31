@@ -68,14 +68,10 @@ function getShapesForPlayer(player: Cell, shapes: ShapeList[]): ShapeList {
     throw Error("Color not valid")
 }
 
-function round(x: number) { return Number(x).toFixed(2) }
-var average_execution_time = 0
-var executionsCount = 0
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
     let move: Move | null = null
 
     function engineFunction() {
-        let start = performance.now()
 
         if (basicEnginesMap.get(props.engineName) != null)
             move = basicEnginesMap.get(props.engineName)!(props.board, getShapesForPlayer(props.playerColor, props.shapes))
@@ -84,17 +80,6 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
             move = advancedEnginesMap2Player.get(props.engineName)!(props.playerColor, 3, props.board, props.shapes[0], props.shapes[1])
 
         else throw Error(`Engine ${props.engineName} not found`)
-        let elapsedTime = performance.now() - start
-
-        average_execution_time += elapsedTime;
-        executionsCount += 1;
-        // logInfo(`Engine execution time: ${round(elapsedTime)}ms, ${round((performance.now() - start) / getShapesForPlayer(props.playerColor, props.shapes).length())} ms/shape`)
-        if (executionsCount == 50) {
-            logInfo(`Average Engine execution time: ${round(average_execution_time / executionsCount)}ms`);
-            average_execution_time = 0
-            executionsCount = 0
-        }
-
 
         if (move === null) {
             new Promise(() =>
