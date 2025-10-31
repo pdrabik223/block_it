@@ -62,6 +62,7 @@ export class Shape {
     }
 
     getPermutations(): Shape[] {
+        // this can be made static, with simple lookup table
         let permutations: Shape[] = [];
         switch (this.numberOfRotations) {
             case NoRotations.Zero:
