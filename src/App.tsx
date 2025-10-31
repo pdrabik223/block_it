@@ -9,6 +9,7 @@ import { Painter } from './pages/Painter.tsx';
 import { GlobalState } from './GlobalSettings.tsx';
 import { useState } from 'react';
 import { BackGround } from './BackGround.tsx';
+import { AllShapePermutationsProps } from './pages/AllShapePermutations.tsx';
 
 export var globalSettingsState = new GlobalState();
 
@@ -29,6 +30,8 @@ function App() {
         <Route path="/game_4_player" element={<Game4Player setShowBackground={setShowBackground} />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/painter" element={<Painter setShowBackground={setShowBackground} />} />
+        <Route path="/shapes" element={<AllShapePermutationsProps />} />
+      
       </Routes>
     </Router>
 

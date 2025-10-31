@@ -1,5 +1,6 @@
 import { Cell, CellCorner } from "./enum_definitions.tsx"
 import { getShapeSize, shapeDefinitions, Shapes, getCellValue, getNumberOfRotations, NoRotations } from "./shapeDefinitions.tsx";
+import { shapePermutations } from "./shapePermutations.tsx";
 
 export class Shape {
     public data: Cell[][] = [[]];
@@ -37,6 +38,12 @@ export class Shape {
 
     getColor() { return this.cellColor }
 
+    static FromData(shape: Shapes, cell: Cell, data: Cell[][]) {
+        let result = new Shape(shape, cell)
+        result.data = data
+        return result
+    }
+
     constructor(shape: Shapes, cell: Cell) {
         this.shapeName = shape;
         this.cellColor = cell;
@@ -62,39 +69,13 @@ export class Shape {
     }
 
     getPermutations(): Shape[] {
-        // this can be made static, with simple lookup table
-        let permutations: Shape[] = [];
-        switch (this.numberOfRotations) {
-            case NoRotations.Zero:
-                permutations.push(this.copy());
-                break;
 
-            case NoRotations.Two:
-                permutations.push(this.copy());
-                permutations.push(this.copy().rotate90deg());
-                break;
-
-            case NoRotations.Four:
-                let temp = this.copy()
-                permutations.push(temp.copy());
-                temp.rotate90deg()
-                permutations.push(temp.copy());
-                temp.rotate90deg()
-                permutations.push(temp.copy());
-                temp.rotate90deg()
-                permutations.push(temp.copy());
-                break;
-        }
-
-        let currentPermutations = permutations.length;
-
-        if (this.canBeFlipped) {
-            for (let i = 0; i < currentPermutations; i++) {
-                permutations.push(permutations[i].flipLR().copy());
-            }
-        }
-        // remove duplicates  
-        return permutations;
+        let result: Shape[] = [];
+        shapePermutations[this.shapeName](this.cellColor).forEach((data: Cell[][]) => {
+            result.push(Shape.FromData(this.shapeName, this.cellColor, data))
+        })
+        return result
+      
     }
 
     get(x: number, y: number): Cell {

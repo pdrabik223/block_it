@@ -112,6 +112,8 @@ export const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
             <Button style={{ margin: "4px" }} onClick={() => navigate("/game_4_player")}>4 Player Mode</Button>
 
             <Button style={{ margin: "4px" }} onClick={() => navigate("/painter")}>Painter</Button>
+            <Button style={{ margin: "4px" }} onClick={() => navigate("/shapes")}>List of All Shapes</Button>
+
         </Column>
     </div>
 
