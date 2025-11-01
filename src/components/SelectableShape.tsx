@@ -23,7 +23,7 @@ export const SelectableShape: React.FC<SelectableShapeProps> = (props: Selectabl
     return <div
         // add on hover animation
         style={{ filter: class_name, padding: "8px", cursor: cursor }}
-        className='selectableShape'
+        className={lockSelection ? undefined : 'selectableShape'}
         key={uuidv4()}
         onClick={
             props.lockSelection ? undefined :
