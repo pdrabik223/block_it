@@ -68,11 +68,15 @@ function getShapesForPlayer(player: Cell, shapes: ShapeList[]): ShapeList {
     throw Error("Color not valid")
 }
 
-
+function delay(ms: number) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+}
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
     let move: Move | null = null
 
-    function engineFunction() {
+    async function engineFunction() {
         const startTime = performance.now()
 
         if (basicEnginesMap.get(props.engineName) != null)
@@ -87,19 +91,14 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
         logInfo(`${props.engineName}, time ${endTime - startTime} ms`)
 
+        await delay(globalSettingsState.moveDelayMS)
+        
         if (move === null) {
-            new Promise(() =>
-                setTimeout(() => {
-                    props.onAbandonGame();
-                }, globalSettingsState.moveDelayMS));
+            props.onAbandonGame();
 
         } else {
             props.board.makeMove(move)
-
-            new Promise(() =>
-                setTimeout(() => {
-                    props.onMoveMade(move!.shapeId)
-                }, globalSettingsState.moveDelayMS));
+            props.onMoveMade(move!.shapeId)
         }
     }
     // on prod this needs to be flipped
