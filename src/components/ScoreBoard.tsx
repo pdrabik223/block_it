@@ -47,11 +47,8 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
 
     for (let playerID = 0; playerID < props.playerNames.length; playerID++) {
 
-        var total = 0;
+        var total = props.shapes[playerID].getPoints()
 
-        for (let i = 0; i < props.shapes[playerID].length(); i++) {
-            total += props.shapes[playerID].get(i).points();
-        }
         points_placed += total
         scoreBoard.push(new PlayerResultInfo(props.playerNames[playerID], total, textColors[playerID]));
     }

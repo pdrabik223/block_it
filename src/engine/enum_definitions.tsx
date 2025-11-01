@@ -1,11 +1,11 @@
 export const enum Cell {
-    Red = 1,
-    Orange = 2,
-    Green = 3,
-    Blue = 4,
-    Empty = 5,
-    Border = 6,
-    None = 7,
+    Red,
+    Blue,
+    Green,
+    Orange,
+    Empty,
+    Border,
+    None,
 }
 export enum PlacementState {
     None = 0,

@@ -8,7 +8,7 @@ import { ShapeList } from "./ShapeList.tsx";
 const ShapesCountWeight = -1;
 
 
-function getShapeWeight(shapes: ShapeList) {
+function getShapeWeight(shapes: ShapeList): number {
     if (shapes.isEmpty()) return 10000
 
     return shapes.getPoints()
@@ -16,9 +16,6 @@ function getShapeWeight(shapes: ShapeList) {
 
 
 export function Estimation2Player(redShapes: ShapeList, blueShapes: ShapeList): [Cell, number][] {
-
-
-
 
     // TODO cache allPossibleMovesForShapes for given color
     let redMovesCount = 0 // board.getAllPossibleMovesForShapes(redShapes).length * MovesCountWeight
@@ -63,7 +60,7 @@ export function Estimation4Player(redShapes: ShapeList, blueShapes: ShapeList, g
 
 }
 
-function getEstimationForPlayer(playerMove: Cell, estimations: [Cell, number][]) {
+function getEstimationForPlayer(playerMove: Cell, estimations: [Cell, number][]): number {
     for (let e of estimations) {
         if (e[0] == playerMove) return e[1]
     }
@@ -81,7 +78,7 @@ function getNextPlayerColor2Player(playerColor: Cell): Cell {
     throw Error("not implemented")
 
 }
-
+// todo bogonia
 export default function minMax2Player(playerColor: Cell, requDepth: number, board: Board, redShapes: ShapeList, blueShapes: ShapeList): Move | null {
 
     logInfo(`Depth:${requDepth}`)
@@ -93,12 +90,16 @@ export default function minMax2Player(playerColor: Cell, requDepth: number, boar
 
     logInfo(`noMoves:${moves.length}`)
 
+    estimations = []
+
     for (let move of moves) {
         let local_board = new Board(board)
         local_board.makeMove(move)
-        removeShapeForPlayer(playerColor, move, redShapes, blueShapes)
-        estimations.push(reQu2player(requDepth - 1, playerColor, getNextPlayerColor2Player(playerColor), local_board, redShapes, blueShapes))
+        let shapes = removeShapeForPlayer(playerColor, move, redShapes, blueShapes)
+
+        estimations.push(reQu2player(requDepth - 1, playerColor, getNextPlayerColor2Player(playerColor), local_board, shapes[0], shapes[1]))
     }
+    logInfo(`estimations:${estimations}`)
 
     return moves[estimations.indexOf(Math.max.apply(null, estimations))]
 }
@@ -114,12 +115,11 @@ function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: C
 
     let estimations: number[] = []
 
-    logInfo(`depth: ${reQuDepth}, noMoves:${moves.length}`)
-
     for (let move of moves) {
         let local_board = new Board(board)
         local_board.makeMove(move)
         let shapes = removeShapeForPlayer(playerMove, move, redShapes, blueShapes)
+
         estimations.push(reQu2player(reQuDepth - 1, estimationForPLayer, getNextPlayerColor2Player(playerMove), local_board, shapes[0], shapes[1]))
     }
 
@@ -130,7 +130,7 @@ function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: C
 }
 
 function removeShapeForPlayer(playerMove: Cell, move: Move, redShapes: ShapeList, blueShapes: ShapeList): ShapeList[] {
-    let playerShapes = new ShapeList()
+    let playerShapes = null
 
     switch (playerMove) {
         case Cell.Red:

@@ -16,19 +16,8 @@ export interface ShapeListProps {
 export const ShapeListWidget: React.FC<ShapeListProps> = (props: ShapeListProps) => {
     function countShapes() {
         let shapes: [number, Shape, number][] = []
-        for (let s = 0; s < props.shapes.length(); s++) {
-
-            let isDuplicate = false;
-
-            for (let i = 0; i < shapes.length; i++) {
-                if (shapes[i][1].shapeName === props.shapes.get(s).shapeName) {
-                    shapes[i][0] += 1;
-                    isDuplicate = true;
-                    break;
-                }
-            }
-
-            if (isDuplicate === false) shapes.push([1, props.shapes.get(s), s]);
+        for (let s = 0; s < props.shapes.uniqueElementsLength(); s++) {
+            shapes.push([props.shapes.noDuplicates(s), props.shapes.get(s), s]);
         }
         return shapes
     }

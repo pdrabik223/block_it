@@ -112,7 +112,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             let endedPlay = props.playerNames[nextid].endedPLay;
             if (endedPlay) continue;
 
-            let hasShapesLeft = shapes[nextid].length() != 0
+            let hasShapesLeft = shapes[nextid].noShapes() != 0
             if (!hasShapesLeft) continue;
 
             let hasMoves = board.getAllPossibleMovesForShapes(shapes[nextid]).length != 0
@@ -199,15 +199,15 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         }
 
         if (noPlayers() == 2) return [
-            [Cell.Red, shapes[0].length(), points[0]],
-            [Cell.Blue, shapes[1].length(), points[1]]
+            [Cell.Red, shapes[0].noShapes(), points[0]],
+            [Cell.Blue, shapes[1].noShapes(), points[1]]
         ]
 
         return [
-            [Cell.Red, shapes[0].length(), points[0]],
-            [Cell.Blue, shapes[1].length(), points[1]],
-            [Cell.Green, shapes[2].length(), points[2]],
-            [Cell.Orange, shapes[3].length(), points[3]]
+            [Cell.Red, shapes[0].noShapes(), points[0]],
+            [Cell.Blue, shapes[1].noShapes(), points[1]],
+            [Cell.Green, shapes[2].noShapes(), points[2]],
+            [Cell.Orange, shapes[3].noShapes(), points[3]]
         ]
     }
 

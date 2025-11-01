@@ -3,7 +3,6 @@
 import { Shape } from "./Shape.tsx";
 import { ShapeList } from "./ShapeList.tsx";
 import { Cell, PlacementState, CellCorner, reverseCellCorner } from "./enum_definitions.tsx"
-import { NoRotations } from "./shapeDefinitions.tsx";
 
 export class Move {
 
@@ -168,40 +167,7 @@ export class Board {
         return hangingCorners;
     }
 
-    getShapePermutations(shape: Shape): Shape[] {
 
-
-        let permutations: Shape[] = [];
-        switch (shape.numberOfRotations) {
-            case NoRotations.Zero:
-                permutations.push(shape.copy());
-                break;
-
-            case NoRotations.Two:
-                permutations.push(shape.copy());
-                permutations.push(shape.copy().rotate90deg());
-                break;
-
-            case NoRotations.Four:
-                let temp = shape.copy()
-                permutations.push(temp.copy());
-                temp.rotate90deg()
-                permutations.push(temp.copy());
-                temp.rotate90deg()
-                permutations.push(temp.copy());
-                temp.rotate90deg()
-                permutations.push(temp.copy());
-                break;
-        }
-        let currentPermutations = permutations.length;
-        if (shape.canBeFlipped) {
-            for (let i = 0; i < currentPermutations; i++) {
-                permutations.push(permutations[i].flipLR().copy());
-            }
-        }
-        // remove duplicates  
-        return permutations;
-    }
 
     getAllPossibleMovesForShapes(shapes: ShapeList): Move[] {
 
@@ -213,7 +179,7 @@ export class Board {
         let possibleMoves: Move[] = []
 
         for (let [position, hangingCorner] of this.getHangingCorners(color))
-            for (let i = 0; i < shapes.length(); i++) {
+            for (let i = 0; i < shapes.uniqueElementsLength(); i++) {
                 for (let permutation of shapes.get(i).getPermutations()) {
                     for (let [[x, y], cellCorner] of permutation.getHangingCorners())
                         if (cellCorner == hangingCorner) {
@@ -329,7 +295,6 @@ export class Board {
 
     combineShape(shapePlacement: number, shape: Shape) {
 
-
         let x: number;
         let y: number;
 
@@ -337,6 +302,7 @@ export class Board {
 
         return this.combineShapeInternal(x, y, shape)
     }
+    
     combineShapeInternal(x: number, y: number, shape: Shape) {
         var ids_to_replace: number[] = []
         var cells: Cell[] = []
@@ -368,6 +334,28 @@ export class Board {
         return [ids_to_replace, cells, errors];
     }
 
+    isPlacementLegal(x: number, y: number, shape: Shape) {
+        for (let sx = 0; sx < shape.size; sx++) {
+            for (let sy = 0; sy < shape.size; sy++) {
+                if (shape.get(sx, sy) != shape.none) {
+                    let cellPlacementX = (x + sx);
+                    let cellPlacementY = (y + sy);
+                    let cellPlacement = cellPlacementX * Board.width + cellPlacementY;
+                    // TODO sort those from most likely to least 
+                    if (this.checkBoundingBoxError(cellPlacementX, cellPlacementY))
+                        return false
+                    else if (this.data[cellPlacement] != Cell.Empty)
+                        return false
+                    else if (this.checkForEdgeError(cellPlacementX, cellPlacementY, shape.get(sx, sy)) != null)
+                        return false
+                    else if (this.checkForSameCellCorner(cellPlacementX, cellPlacementY, shape.get(sx, sy)) != null)
+                        return false
+                }
+            }
+        }
+        return true;
+
+    }
     checkCollisions(shapePlacement: number, shape: Shape) {
         // assumes that shapePlacement points to top left corner of the shape
         let x = Math.floor(shapePlacement / Board.width);
