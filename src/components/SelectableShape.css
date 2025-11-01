@@ -1,0 +1,8 @@
+.selectableShape{
+transition-duration: 0.4s
+
+}
+
+.selectableShape:hover {
+    transform: scale(1.2);
+}

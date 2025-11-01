@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import "./SelectableShape.css"
+
 interface SelectableShapeProps {
     children: React.ReactNode,
     onPress: (v: number) => void,
@@ -18,10 +20,10 @@ export const SelectableShape: React.FC<SelectableShapeProps> = (props: Selectabl
 
     let cursor = lockSelection ? undefined : 'pointer'
 
-    return <div 
+    return <div
         // add on hover animation
         style={{ filter: class_name, padding: "8px", cursor: cursor }}
-
+        className='selectableShape'
         key={uuidv4()}
         onClick={
             props.lockSelection ? undefined :
