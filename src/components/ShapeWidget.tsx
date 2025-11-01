@@ -52,7 +52,7 @@ export const ShapeWidget: React.FC<ShapeWidgetProps> = (props: ShapeWidgetProps)
         for (let y of columns) {
 
             temp.push(
-                <CellWidget value={props.shape.get(x, y)} />
+                <CellWidget  key={uuidv4()}value={props.shape.get(x, y)} />
             );
         }
         data.push(<Row key={uuidv4()} >{temp}</Row>);

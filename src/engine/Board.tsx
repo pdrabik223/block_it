@@ -38,18 +38,16 @@ export class Board {
     public data: Cell[] = [];
     public cornerCells: Cell[] = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
 
-    public static height = 20; // no columns
-    public static width = 20;
+    public static height = 16; // no columns
+    public static width = 16;
 
     constructor();
     constructor(other: Board);
 
-
-
     constructor(other?: Board) {
         if (other != null) {
             this.data = other.data.slice();
-            this.cornerCells = other.cornerCells
+            this.cornerCells = other.cornerCells.slice()
         } else {
             this.data = new Array(Board.height * Board.width).fill(Cell.Empty);
         }
@@ -167,10 +165,7 @@ export class Board {
         return hangingCorners;
     }
 
-
-
     getAllPossibleMovesForShapes(shapes: ShapeList): Move[] {
-
 
         if (shapes.isEmpty()) return []
 
@@ -380,7 +375,7 @@ export class Board {
 
         return this.data[x * Board.width + y];
     }
-    
+
     set(x: number, y: number, value: Cell) {
 
         if (x >= Board.height) throw new Error(`x (${x}) is greater than or equal to Board.height (${Board.height})`);

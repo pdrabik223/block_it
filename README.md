@@ -46,8 +46,15 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    39. add infinity amount of shapes indicator in Painter mode
    40. Add "Sinematic Mode" to board when it's running only algorithms
    41. game settings shift slightly wnen changing between engine and player mode
-   
-2. Make a engine that calculates the best move in position:
+2. Terminal errors:
+    
+  ~~CellGrid.tsx:14 Each child in a list should have a unique "key" prop.  Check the render method of `Row`. It was passed a child from CellGrid. See https://react.dev/link/warning-keys for more information.~~
+   ~~MainMenu.tsx:27 Cannot update a component (`App`) while rendering a different component (`Game2Player`). To locate the bad setState() call inside `Game2Player`, follow the stack trace as described in https://react.dev/link/setstate-in-render~~
+
+
+   ~~Row.tsx:16 Row: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)~~
+
+3. Make a engine that calculates the best move in position:
     algos planned:
     1. Randy -> randomly picks one move from list of possible DONE
     2. Pointer -> places pieces in random places from biggest to smallest DONE
@@ -57,7 +64,7 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
     6. Hanging Corners maximizer but without Pointer -> Done, still with issues
     7. MinMax2players -> requires a lot of optimization to be useful
 
-3. Optymisation:
+4. Optymisation:
    1. ~~move generator generates duplicates~~
    2. Also we do a lot of unnecessary redrawing since all cells in board are repainted every user action
 

@@ -16,6 +16,7 @@ import { Cell } from "../engine/enum_definitions.tsx";
 import { EvaluationBar } from "./EvaluationBar.tsx";
 import minMax2Player from "../engine/requ.tsx";
 import type { ShapeList } from "../engine/ShapeList.tsx";
+import { logInfo } from "../engine/logger.tsx";
 
 
 export const basicEnginesMap = new Map<string, (board: Board, shapes: ShapeList) => Move | null>([
@@ -67,10 +68,12 @@ function getShapesForPlayer(player: Cell, shapes: ShapeList[]): ShapeList {
     throw Error("Color not valid")
 }
 
+
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
     let move: Move | null = null
 
     function engineFunction() {
+        const startTime = performance.now()
 
         if (basicEnginesMap.get(props.engineName) != null)
             move = basicEnginesMap.get(props.engineName)!(props.board, getShapesForPlayer(props.playerColor, props.shapes))
@@ -79,6 +82,10 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
             move = advancedEnginesMap2Player.get(props.engineName)!(props.playerColor, 3, props.board, props.shapes[0], props.shapes[1])
 
         else throw Error(`Engine ${props.engineName} not found`)
+
+        const endTime = performance.now()
+
+        logInfo(`${props.engineName}, time ${endTime - startTime} ms`)
 
         if (move === null) {
             new Promise(() =>
@@ -93,9 +100,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
                 setTimeout(() => {
                     props.onMoveMade(move!.shapeId)
                 }, globalSettingsState.moveDelayMS));
-
         }
-
     }
     // on prod this needs to be flipped
     const isInitialMount = useRef(false);

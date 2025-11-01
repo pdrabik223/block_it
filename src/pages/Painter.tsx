@@ -13,12 +13,8 @@ import { Column } from '../components/Column.tsx';
 import { ShapeList } from '../engine/ShapeList.tsx';
 
 
-interface PainterProps {
-    setShowBackground: (val: boolean) => void
-}
 
-
-export const Painter: React.FC<PainterProps> = (props: PainterProps) => {
+export const Painter: React.FC<{}> = () => {
 
     let navigate = useNavigate();
     const [removeShapeAfterPlacement, setRemoveShapeAfterPlacement] = useState(false)
@@ -27,10 +23,9 @@ export const Painter: React.FC<PainterProps> = (props: PainterProps) => {
     const [requireLegalPosition, setRequireLegalPositions] = useState(true)
 
     if (inPainterMode) {
-        props.setShowBackground(false)
         return <PaintLoop navigateHome={() => navigate("/block_it/")} removeShapeAfterPlacement={removeShapeAfterPlacement} paintSymmetrically={paintSymmetrically} requireLegalPositions={requireLegalPosition} />
     }
-    props.setShowBackground(true)
+
     return <>
         <h1>Settings </h1>
         <Column>

@@ -10,11 +10,8 @@ import { SelectableShape } from "../components/SelectableShape.tsx"
 import { v4 as uuidv4 } from 'uuid';
 import { shapeNameList } from "../engine/shapeDefinitions.tsx"
 
-interface Game2PlayerProps {
-    setShowBackground: (val: boolean) => void
-}
 
-export const AllShapePermutationsProps: React.FC<Game2PlayerProps> = (props: Game2PlayerProps) => {
+export const AllShapePermutationsProps: React.FC<{}> = () => {
 
     const [selectedColor, setSelectedColor] = useState<number>(0)
     const [update, setUpdate] = useState(0)
@@ -23,7 +20,7 @@ export const AllShapePermutationsProps: React.FC<Game2PlayerProps> = (props: Gam
     let colors = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
     let textColors = [cellRed, cellBlue, cellGreen, cellOrange]
 
-    props.setShowBackground(false)
+
     function onButtonClick(id: number) {
         setSelectedColor(id)
     }
@@ -45,7 +42,7 @@ export const AllShapePermutationsProps: React.FC<Game2PlayerProps> = (props: Gam
 
         for (let val of shapes.getAllShapes()) {
 
-            rows.push(<Row>
+            rows.push(<Row key={uuidv4()}>
                 <div>
                     <h1>{shapeNameList()[val.shapeName]}</h1>
                     <h3>Points: {val.cellValue}</h3>
@@ -73,7 +70,7 @@ export const AllShapePermutationsProps: React.FC<Game2PlayerProps> = (props: Gam
 
 
             }
-            rows.push(<Row expanded={true} style={{ margin: '40 px' }}> {rowComponents} </Row>)
+            rows.push(<Row key={uuidv4()} expanded={true} style={{ margin: '40 px' }}> {rowComponents} </Row>)
         }
         return rows
     }

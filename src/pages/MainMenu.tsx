@@ -7,12 +7,9 @@ import { PlayerInfoBlock, type PlayerInfoRef } from '../components/PlayerInfoBlo
 import { useNavigate } from 'react-router-dom';
 import { Column } from '../components/Column.tsx';
 import { advancedEnginesMap2Player, basicEnginesMap } from './EngineGameUI.tsx';
+import { BackGround } from '../BackGround.tsx';
 
-interface Game2PlayerProps {
-    setShowBackground: (val: boolean) => void
-}
-
-export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps) => {
+export const Game2Player: React.FC<{}> = () => {
 
     const [playerInfo] = useState<Array<PlayerInfo>>([]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -24,7 +21,6 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
     ]
 
     if (isPlaying) {
-        props.setShowBackground(false)
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
@@ -38,7 +34,6 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
     let engines = Array.from(basicEnginesMap.keys());
     engines = engines.concat(Array.from(advancedEnginesMap2Player.keys()))
 
-    props.setShowBackground(true)
     return <Column>
         <h1>2 Player Mode</h1>
         <PlayerInfoBlock ref={inputRefs[0]} cell={Cell.Red} values={engines} />
@@ -49,11 +44,8 @@ export const Game2Player: React.FC<Game2PlayerProps> = (props: Game2PlayerProps)
     </Column>
 }
 
-interface Game4PlayerProps {
-    setShowBackground: (val: boolean) => void
-}
 
-export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps) => {
+export const Game4Player: React.FC<{}> = () => {
 
     const [playerInfo] = useState<Array<PlayerInfo>>([]);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -68,7 +60,7 @@ export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps)
     ]
 
     if (isPlaying) {
-        props.setShowBackground(false)
+        
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
@@ -79,8 +71,7 @@ export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps)
             playerInfo[i] = new PlayerInfo(name, isEngine);
         }
     };
-    props.setShowBackground(true)
-
+    
     let engines = Array.from(basicEnginesMap.keys());
 
 
@@ -99,11 +90,11 @@ export const Game4Player: React.FC<Game4PlayerProps> = (props: Game4PlayerProps)
 interface MainMenuProps {
     setShowBackground: (val: boolean) => void
 }
-export const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
+export const MainMenu: React.FC<{}> = () => {
 
     let navigate = useNavigate();
-    props.setShowBackground(true)
     return <div>
+        <BackGround show={true} />
         <Column expanded={true} style={{ width: "200px" }}>
             <h1>{randomTitle()}</h1>
             <Button style={{ margin: "4px" }} onClick={() => navigate("/tutorial")}>Tutorial</Button>
