@@ -16,7 +16,6 @@ import { Cell } from "../engine/enum_definitions.tsx";
 import { EvaluationBar } from "./EvaluationBar.tsx";
 import minMax2Player from "../engine/requ.tsx";
 import type { ShapeList } from "../engine/ShapeList.tsx";
-import { logInfo } from "../engine/logger.tsx";
 
 
 export const basicEnginesMap = new Map<string, (board: Board, shapes: ShapeList) => Move | null>([

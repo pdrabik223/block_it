@@ -9,31 +9,32 @@ import { ShapeWidget } from "../components/ShapeWidget.tsx"
 import { SelectableShape } from "../components/SelectableShape.tsx"
 import { v4 as uuidv4 } from 'uuid';
 
-interface AllShapePermutationsProps {
-
-
+interface Game2PlayerProps {
+    setShowBackground: (val: boolean) => void
 }
 
-export const AllShapePermutationsProps: React.FC<AllShapePermutationsProps> = (props: AllShapePermutationsProps) => {
+
+export const AllShapePermutationsProps: React.FC<Game2PlayerProps> = (props: Game2PlayerProps) => {
 
     const [selectedColor, setSelectedColor] = useState<number>(0)
     const [update, setUpdate] = useState(0)
 
-    const [idsToOmmit, setIdsToOmit] = useState<number[]>([])
+    const [idsToOmmit] = useState<number[]>([])
     // const [shapeId, setShapeID] = useState(0)
     let colors = [Cell.Red, Cell.Blue, Cell.Orange, Cell.Green]
-
+    
+    props.setShowBackground(false)
     function onButtonClick(id: number) {
         setSelectedColor(id)
     }
-
+    
     let shapes = ShapeList.GenerateShapes(colors[selectedColor % 4])
 
     function getPermutationRow() {
         let rows = []
         var shapeID = 0
 
-        for (let val of shapes.data) {
+        for (let val of shapes.getAllShapes()) {
             let permutations = val.getPermutations()
 
             rows.push(<Row expanded={true} style={{ margin: '40 px' }}>{permutations.map((val: Shape) => {
@@ -62,7 +63,7 @@ export const AllShapePermutationsProps: React.FC<AllShapePermutationsProps> = (p
         let rows = []
         var shapeID = 0
 
-        for (let val of shapes.data) {
+        for (let val of shapes.getAllShapes()) {
             let permutations = val.getPermutations()
 
             rows.push(

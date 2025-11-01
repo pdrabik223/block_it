@@ -3,10 +3,9 @@ import { Shape } from "./Shape.tsx"
 import { shapeList } from "./shapeDefinitions.tsx";
 
 export class ShapeList {
-    public data: Shape[]
+    private data: Shape[]
     public color: Cell;
 
-    // constructor();
     constructor(other?: ShapeList) {
         if (other != undefined) {
             this.data = other.data.slice()
@@ -47,6 +46,10 @@ export class ShapeList {
 
     remove(id: number) {
         this.data.splice(id, 1);
+    }
+    
+    getAllShapes() {
+        return this.data
     }
 
     getPoints() {

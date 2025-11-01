@@ -30,8 +30,8 @@ function App() {
         <Route path="/game_4_player" element={<Game4Player setShowBackground={setShowBackground} />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/painter" element={<Painter setShowBackground={setShowBackground} />} />
-        <Route path="/shapes" element={<AllShapePermutationsProps />} />
-      
+        <Route path="/shapes" element={<AllShapePermutationsProps setShowBackground={setShowBackground} />} />
+
       </Routes>
     </Router>
 
