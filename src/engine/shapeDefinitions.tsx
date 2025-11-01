@@ -217,6 +217,34 @@ export function shapeList() {
     ]
 }
 
+
+export function shapeNameList(): string[] {
+    return [
+        'Dot',
+        'Tuple',
+        'Triple',
+        'Square',
+        'Cross',
+        'TripleLine',
+        'TripleT',
+        'BigTripleT',
+        'TripleC',
+        'Bolt',
+        'TripleL',
+        'BigTripleL',
+        'TripleP',
+        'OffsetCross',
+        'Snake',
+        'TripleW',
+        'QuadrupleLine',
+        'QuadrupleL',
+        'QuadrupleOffsetL',
+        'QuadrupleBolt',
+        'PentaLine'
+
+    ]
+}
+
 export function getCellValue(shape: Shapes): number {
     switch (shape) {
         case Shapes.Dot:
