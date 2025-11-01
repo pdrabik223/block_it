@@ -2,22 +2,20 @@ import { globalSettingsState } from "../App.tsx"
 import { DebugLevel } from "../GlobalSettings.tsx"
 
 export function logInfo(...data: any[]) {
-
-    if (globalSettingsState.debugLevel == DebugLevel.AllLogs ||
-        globalSettingsState.debugLevel == DebugLevel.Engine)
-        console.log(data)
+    if (globalSettingsState.debugLevel == DebugLevel.Error) return
+    if (globalSettingsState.debugLevel == DebugLevel.Off) return
+    console.log(data)
 }
 
 export function logWarning(...data: any[]) {
-    if (globalSettingsState.debugLevel == DebugLevel.AllLogs ||
-        globalSettingsState.debugLevel == DebugLevel.Engine)
-        console.warn(data)
+    if (globalSettingsState.debugLevel == DebugLevel.Error) return
+    if (globalSettingsState.debugLevel == DebugLevel.Off) return
+    console.warn(data)
 
 }
 
 export function logError(...data: any[]) {
-    if (globalSettingsState.debugLevel == DebugLevel.AllLogs ||
-        globalSettingsState.debugLevel == DebugLevel.Engine ||
-        globalSettingsState.debugLevel == DebugLevel.Error)
-        console.error(data)
+    if (globalSettingsState.debugLevel == DebugLevel.Off) return
+    console.error(data)
+
 }

@@ -1,4 +1,6 @@
 import React, { type JSX } from "react";
+import { v4 as uuidv4 } from 'uuid';
+
 import { Button } from "./Button.tsx";
 import { Column } from "./Column.tsx";
 import { Row } from "./Row.tsx";
@@ -59,7 +61,7 @@ export const ScoreBoard: React.FC<ScoreBoardProps> = (props: ScoreBoardProps) =>
     for (let player of scoreBoard) {
 
         column.push(
-            <Row>
+            <Row  key={uuidv4()}>
                 <h2 style={{ backgroundColor: "transparent", color: player.color }}>{player.name}</h2>
                 <h2 style={{ width: "4rem", backgroundColor: "transparent", color: player.color }} >{player.points}</h2>
             </Row>
