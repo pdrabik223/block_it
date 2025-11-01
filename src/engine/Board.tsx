@@ -14,13 +14,13 @@ export class Move {
     shape: Shape
     shapePositionX: number
     shapePositionY: number
-    idsToReplace: number[]
+
     constructor(position: number,
         shapeId: number,
         shape: Shape,
         orientation: CellCorner,
         shapePositionX: number,
-        shapePositionY: number, idsToReplace: number[]
+        shapePositionY: number,
     ) {
         this.position = position
         this.shape = shape
@@ -28,7 +28,7 @@ export class Move {
         this.orientation = orientation
         this.shapePositionX = shapePositionX
         this.shapePositionY = shapePositionY
-        this.idsToReplace = idsToReplace
+
     }
 }
 
@@ -185,11 +185,8 @@ export class Board {
                         if (cellCorner == hangingCorner) {
                             let positionX = Math.floor(position / Board.width);
                             let positionY = position % Board.width;
-                            let result = this.combineShapeInternal(positionX - x, positionY - y, permutation)
-                            let ids_to_replace = result[0]
-                            let errors = result[2]
-                            if (this.isValidPlacement(errors)) {
-
+                            let result = this.isPlacementLegal(positionX - x, positionY - y, permutation)
+                            if (result) {
                                 possibleMoves.push(new Move(
                                     position,
                                     i,
@@ -197,7 +194,6 @@ export class Board {
                                     cellCorner,
                                     x,
                                     y,
-                                    ids_to_replace
                                 ))
                             }
 
@@ -302,7 +298,7 @@ export class Board {
 
         return this.combineShapeInternal(x, y, shape)
     }
-    
+
     combineShapeInternal(x: number, y: number, shape: Shape) {
         var ids_to_replace: number[] = []
         var cells: Cell[] = []
@@ -334,7 +330,10 @@ export class Board {
         return [ids_to_replace, cells, errors];
     }
 
-    isPlacementLegal(x: number, y: number, shape: Shape) {
+    isPlacementLegal(x: number, y: number, shape: Shape): boolean {
+
+
+        let isOneTouchingEdge: boolean = false
         for (let sx = 0; sx < shape.size; sx++) {
             for (let sy = 0; sy < shape.size; sy++) {
                 if (shape.get(sx, sy) != shape.none) {
@@ -349,11 +348,12 @@ export class Board {
                     else if (this.checkForEdgeError(cellPlacementX, cellPlacementY, shape.get(sx, sy)) != null)
                         return false
                     else if (this.checkForSameCellCorner(cellPlacementX, cellPlacementY, shape.get(sx, sy)) != null)
-                        return false
+                        isOneTouchingEdge = true
                 }
             }
         }
-        return true;
+
+        return isOneTouchingEdge;
 
     }
     checkCollisions(shapePlacement: number, shape: Shape) {
@@ -380,6 +380,7 @@ export class Board {
 
         return this.data[x * Board.width + y];
     }
+    
     set(x: number, y: number, value: Cell) {
 
         if (x >= Board.height) throw new Error(`x (${x}) is greater than or equal to Board.height (${Board.height})`);
@@ -387,6 +388,7 @@ export class Board {
 
         this.data[x * Board.width + y] = value;
     }
+
     isValidPlacement(shapePlacementState: PlacementState[]): boolean {
         for (let cell of shapePlacementState) {
             switch (cell) {
