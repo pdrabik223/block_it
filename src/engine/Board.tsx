@@ -38,8 +38,8 @@ export class Board {
     public data: Cell[] = [];
     public cornerCells: Cell[] = [Cell.Red, Cell.Blue, Cell.Green, Cell.Orange]
 
-    public static height = 16; // no columns
-    public static width = 16;
+    public static height = 20; // no columns
+    public static width = 20;
 
     constructor();
     constructor(other: Board);
