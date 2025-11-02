@@ -172,7 +172,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             playerColor={currentPLayerColor()}
             onMoveMade={(v?: number) => (onMoveMade(v))}
             engineName={getPlayerNames()[currentPLayerID()]}
-            noPlayers={noPlayers()}
             gameStatistics={getGameState()}
             gameEvaluation={getEvaluation()}
         />

@@ -1,4 +1,4 @@
-import React, { type JSX, useEffect, useRef } from "react";
+import React, { type JSX, useEffect } from "react";
 
 import { Board, type Move } from "../engine/Board.tsx";
 
@@ -46,7 +46,6 @@ export interface EngineGameUIProps {
     shapes: ShapeList[],
     playerColor: Cell,
     engineName: string,
-    noPlayers: number,
     gameStatistics?: [color: Cell, noShapes: number, noPoints: number][]
     gameEvaluation?: [color: Cell, estimation: number][]
 
