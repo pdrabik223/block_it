@@ -173,15 +173,15 @@ export class Board {
 
         let possibleMoves: Move[] = []
 
-        for (let [position, hangingCorner] of this.getHangingCorners(color))
+        for (let [position, hangingCorner] of this.getHangingCorners(color)) {
+            let positionX = Math.floor(position / Board.width);
+            let positionY = position % Board.width;
+
             for (let i = 0; i < shapes.uniqueElementsLength(); i++) {
                 for (let permutation of shapes.get(i).getPermutations()) {
                     for (let [[x, y], cellCorner] of permutation.getHangingCorners())
                         if (cellCorner == hangingCorner) {
-                            let positionX = Math.floor(position / Board.width);
-                            let positionY = position % Board.width;
-                            let result = this.isPlacementLegal(positionX - x, positionY - y, permutation)
-                            if (result) {
+                            if (this.isPlacementLegal(positionX - x, positionY - y, permutation)) {
                                 possibleMoves.push(new Move(
                                     position,
                                     i,
@@ -195,7 +195,7 @@ export class Board {
                         }
                 }
             }
-
+        }
         return possibleMoves
     }
     checkBoundingBoxError(x: number, y: number) {
@@ -336,14 +336,15 @@ export class Board {
                     let cellPlacementY = (y + sy);
                     let cellPlacement = cellPlacementX * Board.width + cellPlacementY;
                     // TODO sort those from most likely to least 
-                    if (this.checkBoundingBoxError(cellPlacementX, cellPlacementY))
+                    if (this.data[cellPlacement] != Cell.Empty)
                         return false
-                    else if (this.data[cellPlacement] != Cell.Empty)
+                    else if (this.checkBoundingBoxError(cellPlacementX, cellPlacementY))
                         return false
                     else if (this.checkForEdgeError(cellPlacementX, cellPlacementY, shape.get(sx, sy)) != null)
                         return false
-                    else if (this.checkForSameCellCorner(cellPlacementX, cellPlacementY, shape.get(sx, sy)) != null)
-                        isOneTouchingEdge = true
+                    else if (!isOneTouchingEdge)
+                        if (this.checkForSameCellCorner(cellPlacementX, cellPlacementY, shape.get(sx, sy)) != null)
+                            isOneTouchingEdge = true
                 }
             }
         }
