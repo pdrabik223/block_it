@@ -51,21 +51,6 @@ export interface EngineGameUIProps {
 
 }
 
-function getShapesForPlayer(player: Cell, shapes: ShapeList[]): ShapeList {
-    switch (player) {
-        case Cell.Red:
-            return shapes[0]
-        case Cell.Orange:
-            return shapes[3]
-        case Cell.Green:
-            return shapes[2]
-        case Cell.Blue:
-            return shapes[1]
-
-    }
-    throw Error("Color not valid")
-}
-
 function delay(ms: number) {
     return new Promise(resolve => {
         setTimeout(resolve, ms);
@@ -79,7 +64,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         const startTime = performance.now()
 
         if (basicEnginesMap.get(props.engineName) != null)
-            move = basicEnginesMap.get(props.engineName)!(props.board, getShapesForPlayer(props.playerColor, props.shapes))
+            move = basicEnginesMap.get(props.engineName)!(props.board, props.shapes[props.playerColor])
 
         else if (advancedEnginesMap2Player.get(props.engineName) != null)
             move = advancedEnginesMap2Player.get(props.engineName)!(props.playerColor, 3, props.board, props.shapes[0], props.shapes[1])
@@ -112,7 +97,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         </TitleGroup>
         <EvaluationBar gameStatistics={props.gameEvaluation}></EvaluationBar>
         <BoardWidget onMoveMade={() => { }} board={props.board} />
-        <ShapeListWidget shapes={getShapesForPlayer(props.playerColor, props.shapes)} onPress={() => { }} lockSelection={true} selected={-1} />
+        <ShapeListWidget shapes={props.shapes[props.playerColor]} onPress={() => { }} lockSelection={true} selected={-1} />
     </>;
 
 };

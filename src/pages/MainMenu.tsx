@@ -60,7 +60,7 @@ export const Game4Player: React.FC<{}> = () => {
     ]
 
     if (isPlaying) {
-        
+
         return <GameLoop returnToMainMenu={() => { setIsPlaying(false); }} playerNames={playerInfo} />;
     }
 
@@ -71,7 +71,7 @@ export const Game4Player: React.FC<{}> = () => {
             playerInfo[i] = new PlayerInfo(name, isEngine);
         }
     };
-    
+
     let engines = Array.from(basicEnginesMap.keys());
 
 
@@ -87,9 +87,7 @@ export const Game4Player: React.FC<{}> = () => {
         <Button style={{ margin: "4px" }} onClick={() => navigate("/block_it/")}>Back</Button>
     </Column>
 }
-interface MainMenuProps {
-    setShowBackground: (val: boolean) => void
-}
+
 export const MainMenu: React.FC<{}> = () => {
 
     let navigate = useNavigate();
