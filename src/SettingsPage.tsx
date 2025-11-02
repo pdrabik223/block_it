@@ -85,7 +85,7 @@ export const SettingsPage: React.FC<SettingsPageRef> = (props: SettingsPageRef) 
                     new ButtonState('Debug level: Error only', DebugLevel.Error)
                 ]} style={{ width: "300px", margin: "10px auto", }} />
 
-            <p>Version 0.1.2</p>
+            <p>Version 0.2.0</p>
             <a onClick={() => window.open("https://github.com/pdrabik223", "_blank")}>Github</a>
         </Column>
     </>;
