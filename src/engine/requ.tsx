@@ -105,7 +105,7 @@ export default function minMax2Player(playerColor: Cell, requDepth: number, boar
 }
 
 function reQu2player(reQuDepth: number, estimationForPLayer: Cell, playerMove: Cell, board: Board, redShapes: ShapeList, blueShapes: ShapeList): number {
-
+    
     let estimation = Estimation2Player(redShapes, blueShapes)
 
     if (reQuDepth == 0) return getEstimationForPlayer(playerMove, estimation)

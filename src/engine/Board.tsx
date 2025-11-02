@@ -166,7 +166,7 @@ export class Board {
     }
 
     getAllPossibleMovesForShapes(shapes: ShapeList): Move[] {
-
+        // I need to find a way to cache this function
         if (shapes.isEmpty()) return []
 
         let color = shapes.color

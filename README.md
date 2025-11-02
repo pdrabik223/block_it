@@ -79,52 +79,19 @@ We can go full react mode, no backend all frontend app -> react + typescript
 ``` bash
 npm install -g serve
 ```
-2. Flip isInitialMount value in file Engine Game UI
-``` tsx
-
- // on prod this needs to be flipped
-    const isInitialMount = useRef(false);
-
-    useEffect(() => {
-        if (isInitialMount.current) {
-            isInitialMount.current = true;
-        } else {
-            engineFunction();
-        }
-
-    }, [props.iteration]);
-
-```
-
-3. Build project in prod mode
+2. Build project in prod mode
 ``` bash
 npm run build
 ```
-4. Serve project locally 
+3. Serve project locally 
 ``` bash
 serve -s dist
 ```
 
 # Deploy to GH pages
 
-1. Flip isInitialMount value in file Engine Game UI
-``` tsx
 
- // on prod this needs to be flipped
-    const isInitialMount = useRef(false);
-
-    useEffect(() => {
-        if (isInitialMount.current) {
-            isInitialMount.current = true;
-        } else {
-            engineFunction();
-        }
-
-    }, [props.iteration]);
-
-```
-
-2. Build app locally 
+1. Build app locally 
 ``` bash
 npm run build
 ```
