@@ -1,5 +1,5 @@
 import React, { useState, type JSX } from "react";
-
+import { v4 as uuidv4 } from 'uuid';
 import { Board } from "../engine/Board.tsx";
 import { Cell, cellBlue, cellGreen, cellOrange, cellRed } from "../engine/enum_definitions.tsx";
 import { BoardWidget } from "../components/BoardWidget.tsx";
@@ -164,6 +164,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     if (isCurrentPlayerEngine()) {
 
         return <EngineGameUI
+            iteration={uuidv4()}
             title={getTitle()!}
             board={board}
             onEndGame={props.returnToMainMenu}

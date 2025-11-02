@@ -46,6 +46,10 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    39. add infinity amount of shapes indicator in Painter mode
    40. Add "Sinematic Mode" to board when it's running only algorithms
    41. game settings shift slightly wnen changing between engine and player mode
+   
+
+   42. we need a way to compare time required to run algos like a benchmark or something xD
+   43. painter exports files well, but importing has issues
 2. Terminal errors:
     
   ~~CellGrid.tsx:14 Each child in a list should have a unique "key" prop.  Check the render method of `Row`. It was passed a child from CellGrid. See https://react.dev/link/warning-keys for more information.~~
@@ -67,6 +71,7 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
 4. Optymisation:
    1. ~~move generator generates duplicates~~
    2. Also we do a lot of unnecessary redrawing since all cells in board are repainted every user action
+   3. Corner generation algo can generate same corner multiple times  
 
 # Framework
 We can go full react mode, no backend all frontend app -> react + typescript 

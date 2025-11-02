@@ -1,4 +1,4 @@
-import React, { type JSX, useEffect } from "react";
+import React, { type JSX, useEffect, useState } from "react";
 
 import { Board, type Move } from "../engine/Board.tsx";
 
@@ -39,6 +39,7 @@ export const advancedEnginesMap4Player = new Map<string, (playerColor: Cell, req
 
 export interface EngineGameUIProps {
     title: JSX.Element,
+    iteration:string,
     board: Board,
     onMoveMade: (removedShapeId?: number) => void,
     onAbandonGame: () => void,
@@ -59,6 +60,8 @@ function delay(ms: number) {
 
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
 
+    const [_, setIndex] = useState(0)
+
     async function engineFunction() {
         let move: Move | null = null
         const startTime = performance.now()
@@ -75,19 +78,25 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
         logInfo(`${props.engineName}, time ${endTime - startTime} ms`)
 
-        await delay(globalSettingsState.moveDelayMS)
+
+        if (move !== null) {
+            // instead of making a move, show some indicator or something
+            props.board.makeMove(move)
+            setIndex(index => index + 1)
+            await delay(globalSettingsState.moveDelayMS)
+        }
 
         if (move === null) {
+            logInfo('Abandoning game')
             props.onAbandonGame();
         } else {
-            props.board.makeMove(move)
             props.onMoveMade(move!.shapeId)
         }
     }
 
     useEffect(() => {
         engineFunction();
-    });
+    }, [props.iteration]);
 
     return <>
         <TitleGroup gameStatistics={props.gameStatistics}

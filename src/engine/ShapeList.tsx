@@ -82,7 +82,6 @@ export class ShapeList {
     }
 
     getPoints(): number {
-
         let sum = 0;
         for (let i = 0; i < this.data.length; i++) {
             sum += this.data[i].points() * this.count[i]
@@ -90,4 +89,20 @@ export class ShapeList {
         return sum
     }
 
+    getCounts(): number[] {
+        return this.count.slice();
+    }
+
+    setCounts(counts: number[]): void {
+        this.count = counts.slice();
+    }
+    addShape(shape: Shape) {
+        const existingIndex = this.data.findIndex(s => s.shapeName === shape.shapeName);
+        if (existingIndex !== -1) {
+            this.count[existingIndex]++;
+        } else {
+            this.data.push(shape);
+            this.count.push(1);
+        }
+    }
 }

@@ -11,7 +11,28 @@ import * as htmlToImage from 'html-to-image';
 import { saveAs } from "file-saver";
 import { Column } from '../components/Column.tsx';
 import { ShapeList } from '../engine/ShapeList.tsx';
+import { FullScreenOverlay } from '../components/FullScreenOverlay.tsx';
+import { Row } from '../components/Row.tsx';
+import { Shape } from '../engine/Shape.tsx';
+import type { Shapes } from '../engine/shapeDefinitions.tsx';
 
+interface BoardSnapshot {
+    cells: Cell[];
+    width: number;
+    height: number;
+    cornerCells: Cell[];
+}
+
+interface ShapeListSnapshot {
+    color: Cell;
+    counts: number[];
+    shapes: Shapes[];
+}
+
+interface GameSnapshot {
+    board: BoardSnapshot;
+    shapes: ShapeListSnapshot[];
+}
 
 
 export const Painter: React.FC<{}> = () => {
@@ -73,9 +94,36 @@ export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
 
     const [selected, setSelected] = useState(-1)
     const [selectedColor, setSelectedColor] = useState(0)
-    const [board] = useState(new Board());
-    const [shapes] = useState(initShapes());
+    const [board, setBoard] = useState(new Board());
+    const [shapes, setShapes] = useState(initShapes());
     const [moveCounter, setMoveCounter] = useState(0);
+    const [showDownloadSettings, setShowDownloadSettings] = useState(false);
+
+    const loadSnapshot = (snapshot: GameSnapshot) => {
+        console.log(snapshot)
+
+        // Update board
+        const newBoard = new Board();
+        newBoard.data = snapshot.board.cells;
+        newBoard.cornerCells = snapshot.board.cornerCells;
+        setBoard(newBoard);
+
+        // Update shapes
+        const newShapes = snapshot.shapes.map(shapeListData => {
+            const shapeList = new ShapeList();
+            shapeList.color = shapeListData.color;
+            shapeList.setCounts(shapeListData.counts);
+
+            shapeListData.shapes.forEach((shapeData) => {
+                const shape = new Shape(shapeData, shapeListData.color);
+                shapeList.addShape(shape);
+            });
+
+            return shapeList;
+        });
+        setShapes(newShapes);
+    };
+
 
     function onMoveMade() {
 
@@ -89,6 +137,37 @@ export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
         return (selected != -1) ? shapes[selectedColor % 5].get(selected) : undefined
     }
 
+
+    let textColors = [cellRed, cellBlue, cellGreen, cellOrange, cellEmpty]
+
+    return <>
+        <h1 style={{ backgroundColor: "transparent", color: textColors[selectedColor % 5] }}>Painter</h1>
+        
+        <FullScreenOverlay onOutsideClick={() => setShowDownloadSettings(!showDownloadSettings)} show={showDownloadSettings} opacity={0.8}>
+            <SaveOverlay closeOverlay={() => setShowDownloadSettings(!showDownloadSettings)} board={board} shapes={shapes} onLoadSnapshot={loadSnapshot}></SaveOverlay>
+        </FullScreenOverlay>
+
+        <Button onClick={() => setSelectedColor(selectedColor + 3)} style={{ margin: "1%" }}> Previous Color </Button>
+        <Button onClick={() => props.navigateHome()} style={{ margin: "1%" }}> Exit </Button>
+        <Button onClick={() => setSelectedColor(4)} style={{ margin: "1%" }}> Eraser </Button>
+        <Button onClick={() => setShowDownloadSettings(!showDownloadSettings)} style={{ margin: "1%" }}> Save </Button>
+        <Button onClick={() => setSelectedColor(selectedColor + 1)} style={{ margin: "1%" }}> Next Color </Button>
+
+        <BoardWidget validateBeforePlacement={props.requireLegalPositions} onShapeCancel={() => setSelected(-1)} onMoveMade={() => onMoveMade()} board={board} highlightShape={getHighlightedShape()} />
+        <ShapeListWidget shapes={shapes[selectedColor % 5]} onPress={setSelected} lockSelection={false} selected={selected} />
+
+    </>
+}
+
+interface SaveOverlayProps {
+    board: Board;
+    shapes: ShapeList[];
+    onLoadSnapshot: (snapshot: GameSnapshot) => void;
+    closeOverlay: () => void
+}
+export const SaveOverlay: React.FC<SaveOverlayProps> = (props: SaveOverlayProps) => {
+
+
     function getImage() {
         var node = document.getElementById('cellGrid');
 
@@ -96,20 +175,75 @@ export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
             .then(function (dataUrl) {
                 saveAs(dataUrl, "BlockIt.png");
             });
+        props.closeOverlay()
     }
-    let textColors = [cellRed, cellBlue, cellGreen, cellOrange, cellEmpty]
 
-    return <>
-        <h1 style={{ backgroundColor: "transparent", color: textColors[selectedColor % 5] }}>Painter</h1>
+    function getShapes(data: Shape[]) {
+        let resp: Shapes[] = []
+        data.forEach((val) => { resp.push(val.shapeName) })
+        return resp
+    }
 
-        <Button onClick={() => setSelectedColor(selectedColor + 3)} style={{ margin: "1%" }}> Previous Color </Button>
-        <Button onClick={() => props.navigateHome()} style={{ margin: "1%" }}> Exit </Button>
-        <Button onClick={() => setSelectedColor(4)} style={{ margin: "1%" }}> Eraser </Button>
-        <Button onClick={() => getImage()} style={{ margin: "1%" }}> Save </Button>
-        <Button onClick={() => setSelectedColor(selectedColor + 1)} style={{ margin: "1%" }}> Next Color </Button>
+    function getShapshot() {
+        const snapshot: GameSnapshot = {
+            board: {
+                cells: props.board.data,
+                width: Board.width,
+                height: Board.height,
+                cornerCells: props.board.cornerCells
+            },
+            shapes: props.shapes.map(shapeList => ({
+                color: shapeList.color,
+                counts: shapeList.getCounts(),
+                shapes: getShapes(shapeList.getAllShapes())
+            }))
+        };
 
-        <BoardWidget validateBeforePlacement={props.requireLegalPositions} onShapeCancel={() => setSelected(-1)} onMoveMade={() => onMoveMade()} board={board} highlightShape={getHighlightedShape()} />
-        <ShapeListWidget shapes={shapes[selectedColor % 5]} onPress={setSelected} lockSelection={false} selected={selected} />
+        const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+        saveAs(blob, "Blokus.json");
+        props.closeOverlay()
+    }
 
-    </>
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        console.log("aAAAA")
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const snapshot = JSON.parse(e.target?.result as string) as GameSnapshot;
+                    console.log(snapshot)
+                    props.onLoadSnapshot(snapshot);
+                } catch (error) {
+                    console.error('Error loading snapshot:', error);
+                    alert('Invalid snapshot file');
+                }
+            };
+            reader.readAsText(file);
+            props.closeOverlay()
+        }
+    };
+
+    return <Row expanded={true}>
+        <div>
+            <Column expanded={true} style={{ width: "400px" }}>
+                <Button onClick={() => getImage()} style={{ margin: "1%" }}> Download png </Button>
+                <Button onClick={() => getShapshot()} style={{ margin: "1%" }}> Download Board Snapshot </Button>
+                <div style={{ margin: "1%", width: "400px" }}>
+                    <input
+                        type="file"
+                        accept=".json"
+                        onChange={handleFileUpload}
+                        style={{ display: 'none' }}
+                        id="upload-snapshot"
+                    />
+                    <Button
+                        style={{ width: "400px" }}
+                        onClick={() => document.getElementById('upload-snapshot')?.click()}>
+                        Upload Board Snapshot
+                    </Button>
+                </div>
+            </Column>
+        </div>
+    </Row>
 }

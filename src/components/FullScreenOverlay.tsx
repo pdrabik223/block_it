@@ -5,8 +5,8 @@ import type React from 'react';
 export interface FullScreenOverlayProps {
     children: React.ReactNode,
     show: boolean,
+    onOutsideClick?: () => void
     opacity?: number;
-    key?: React.Key | null,
     style?: React.CSSProperties
     id?: string
 }
@@ -17,8 +17,8 @@ export const FullScreenOverlay: React.FC<FullScreenOverlayProps> = (props: FullS
 
     if (props.show)
         return <div
+            onClick={props.onOutsideClick}
             id={props.id}
-            key={props.key}
             style={
                 (() => {
                     const baseStyle: React.CSSProperties = {

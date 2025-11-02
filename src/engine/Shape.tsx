@@ -80,8 +80,8 @@ export class Shape {
 
     get(x: number, y: number): Cell {
 
-        if (x >= this.size) throw EvalError(`x (${x}) is grater than Shape.size`);
-        if (y >= this.size) throw EvalError(`y (${y}) is grater than Shape.size`);
+        // if (x >= this.size) throw EvalError(`x (${x}) is grater than Shape.size`);
+        // if (y >= this.size) throw EvalError(`y (${y}) is grater than Shape.size`);
 
         return this.data[x][y];
     }
