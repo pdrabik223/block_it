@@ -46,7 +46,6 @@ export interface EngineGameUIProps {
     shapes: ShapeList[],
     playerColor: Cell,
     engineName: string,
-    iteration: number,
     noPlayers: number,
     gameStatistics?: [color: Cell, noShapes: number, noPoints: number][]
     gameEvaluation?: [color: Cell, estimation: number][]
@@ -73,10 +72,11 @@ function delay(ms: number) {
         setTimeout(resolve, ms);
     });
 }
+
 export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIProps) => {
-    let move: Move | null = null
 
     async function engineFunction() {
+        let move: Move | null = null
         const startTime = performance.now()
 
         if (basicEnginesMap.get(props.engineName) != null)
@@ -92,26 +92,18 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
         logInfo(`${props.engineName}, time ${endTime - startTime} ms`)
 
         await delay(globalSettingsState.moveDelayMS)
-        
+
         if (move === null) {
             props.onAbandonGame();
-
         } else {
             props.board.makeMove(move)
             props.onMoveMade(move!.shapeId)
         }
     }
-    // on prod this needs to be flipped
-    const isInitialMount = useRef(false);
 
     useEffect(() => {
-        if (isInitialMount.current) {
-            isInitialMount.current = false;
-        } else {
-            engineFunction();
-        }
-
-    }, [props.iteration]);
+        engineFunction();
+    });
 
     return <>
         <TitleGroup gameStatistics={props.gameStatistics}

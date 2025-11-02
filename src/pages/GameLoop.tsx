@@ -66,7 +66,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     const [gameIteration, setGameIteration] = useState(0);
     const [board, setBoard] = useState(initBoard(props.playerNames));
     const [shapes, setShapes] = useState(initShapes(props.playerNames));
-    const [moveCounter, setMoveCounter] = useState(0);
     const [gameEnded, setGameEnded] = useState<boolean>(false)
 
     function resetState() {
@@ -74,7 +73,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         setGameIteration(0)
         setBoard(initBoard(props.playerNames))
         setShapes(initShapes(props.playerNames))
-        setMoveCounter(0)
         setGameEnded(false)
         for (let i = 0; i < props.playerNames.length; i++) {
             props.playerNames[i].endedPLay = false;
@@ -134,8 +132,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
         let nextPLayer = nextPLayerID()
 
         if (nextPLayer != null) {
-
-            setMoveCounter(moveCounter + 1);
             setGameIteration(nextPLayer);
         }
         else {
@@ -176,7 +172,6 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
             playerColor={currentPLayerColor()}
             onMoveMade={(v?: number) => (onMoveMade(v))}
             engineName={getPlayerNames()[currentPLayerID()]}
-            iteration={moveCounter}
             noPlayers={noPlayers()}
             gameStatistics={getGameState()}
             gameEvaluation={getEvaluation()}
