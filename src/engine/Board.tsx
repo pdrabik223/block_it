@@ -156,12 +156,17 @@ export class Board {
             for (let offset of offsets) {
                 let result = this.getCellPlacementWithOffset(position, offset)
                 if (result !== null) {
-                    if (this.data[result] == Cell.Empty)
-                        hangingCorners.push([result, reverseCellCorner(offset)])
+                    if (this.data[result] == Cell.Empty) {
+
+                        if (result % Board.width != 0 && this.data[result - 1] == color) continue;
+                        else if (result % Board.width != Board.width - 1 && this.data[result + 1] == color) continue;
+                        else if (result >= Board.width && this.data[result - Board.width] == color) continue;
+                        else if (result < Board.width * Board.height && this.data[result + Board.width] == color) continue;
+                        else hangingCorners.push([result, reverseCellCorner(offset)])
+                    }
                 }
             }
         }
-
         return hangingCorners;
     }
 
@@ -174,7 +179,7 @@ export class Board {
         let possibleMoves: Move[] = []
 
         for (let [position, hangingCorner] of this.getHangingCorners(color)) {
-            
+
             let positionX = Math.floor(position / Board.width);
             let positionY = position % Board.width;
             console.log(positionX, positionY, hangingCorner)
