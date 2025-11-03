@@ -8,6 +8,7 @@ import { NavBar } from './components/NavBar.tsx';
 import { Painter } from './pages/Painter.tsx';
 import { GlobalState } from './GlobalSettings.tsx';
 import { AllShapePermutationsProps } from './pages/AllShapePermutations.tsx';
+import { TestPage } from './pages/TestPage.tsx';
 
 export var globalSettingsState = new GlobalState();
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/painter" element={<Painter />} />
         <Route path="/shapes" element={<AllShapePermutationsProps />} />
+        <Route path="/test" element={<TestPage />} />
 
       </Routes>
     </Router>

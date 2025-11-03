@@ -142,7 +142,7 @@ export const PaintLoop: React.FC<PaintLoopProps> = (props: PaintLoopProps) => {
 
     return <>
         <h1 style={{ backgroundColor: "transparent", color: textColors[selectedColor % 5] }}>Painter</h1>
-        
+
         <FullScreenOverlay onOutsideClick={() => setShowDownloadSettings(!showDownloadSettings)} show={showDownloadSettings} opacity={0.8}>
             <SaveOverlay closeOverlay={() => setShowDownloadSettings(!showDownloadSettings)} board={board} shapes={shapes} onLoadSnapshot={loadSnapshot}></SaveOverlay>
         </FullScreenOverlay>

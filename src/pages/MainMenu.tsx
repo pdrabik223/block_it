@@ -102,6 +102,7 @@ export const MainMenu: React.FC<{}> = () => {
 
             <Button style={{ margin: "4px" }} onClick={() => navigate("/painter")}>Painter</Button>
             <Button style={{ margin: "4px" }} onClick={() => navigate("/shapes")}>List of All Shapes</Button>
+            <Button style={{ margin: "4px" }} onClick={() => navigate("/test")}>Test Page</Button>
 
         </Column>
     </div>

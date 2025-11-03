@@ -34,9 +34,9 @@ Deployed to [Github Pages](https://pdrabik223.github.io/block_it/)
    27. ~~remove invisible cells around shapes~~
    28. ~~gh pages break~~
    29. Propagate settings changes and force elems using them to reload
-   30. When cursor moves over screen engines do moves quicker -> this probably is a issue with useEffect    
+   30. ~~When cursor moves over screen engines do moves quicker -> this probably is a issue with useEffect~~
    31. ~~make playing board scalable~~
-   32. we disable background during new state propagation inside page widget, this is a problem
+   32. ~~we disable background during new state propagation inside page widget, this is a problem~~
    33. ~~Improve same shape count, try adding black circle around it~~
    34. Add prettier background to board, maybe simple background light
    35. ~~nav bar title is not centered~~

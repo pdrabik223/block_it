@@ -174,8 +174,10 @@ export class Board {
         let possibleMoves: Move[] = []
 
         for (let [position, hangingCorner] of this.getHangingCorners(color)) {
+            
             let positionX = Math.floor(position / Board.width);
             let positionY = position % Board.width;
+            console.log(positionX, positionY, hangingCorner)
 
             for (let i = 0; i < shapes.uniqueElementsLength(); i++) {
                 for (let permutation of shapes.get(i).getPermutations()) {
