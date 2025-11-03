@@ -149,7 +149,7 @@ export class Board {
         for (let i = 0; i < this.data.length; i++) {
             if (this.data[i] == color) listOfSameColorCells.push(i)
         }
-
+            // todo we might be able to remove the corner distinction
         const offsets = [CellCorner.BottomRight, CellCorner.BottomLeft, CellCorner.TopLeft, CellCorner.TopRight]
 
         for (let position of listOfSameColorCells) {
@@ -182,7 +182,6 @@ export class Board {
 
             let positionX = Math.floor(position / Board.width);
             let positionY = position % Board.width;
-            console.log(positionX, positionY, hangingCorner)
 
             for (let i = 0; i < shapes.uniqueElementsLength(); i++) {
                 for (let permutation of shapes.get(i).getPermutations()) {
