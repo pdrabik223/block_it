@@ -64,6 +64,7 @@ export const EngineGameUI: React.FC<EngineGameUIProps> = (props: EngineGameUIPro
 
     async function engineFunction() {
         let move: Move | null = null
+        
         const startTime = performance.now()
 
         if (basicEnginesMap.get(props.engineName) != null)

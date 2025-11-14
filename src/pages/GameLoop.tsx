@@ -11,6 +11,7 @@ import { PlayerGameUI } from "./PlayerGameUI.tsx";
 import { globalSettingsState } from "../App.tsx";
 import { Estimation2Player, Estimation4Player } from "../engine/requ.tsx";
 import { ShapeList } from "../engine/ShapeList.tsx";
+import { logInfo } from "../engine/logger.tsx";
 
 
 function checkIfPLayerWon(shapes: ShapeList[]) {
@@ -124,17 +125,21 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
     function onMoveMade(id?: number): void {
 
+        logInfo('On move made')
+
         if (id != undefined)
             shapes[currentPLayerID()].remove(id);
 
-        if (selected != -1) setSelected(-1);
+        if (selected != -1) setSelected(() => -1);
 
         let nextPLayer = nextPLayerID()
 
         if (nextPLayer != null) {
-            setGameIteration(nextPLayer);
+            logInfo(`Next player id: ${nextPLayer}`)
+            setGameIteration(() => nextPLayer);
         }
         else {
+            logInfo('Game ended')
             setGameEnded(true)
         }
     }
@@ -153,6 +158,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     }
 
     if (gameEnded) {
+        logInfo("Game ended")
         return <>
             <BoardWidget onMoveMade={() => { }} board={board} highlightShape={undefined} />
             <FullScreenOverlay show={true} opacity={0.8}>
@@ -162,7 +168,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     }
 
     if (isCurrentPlayerEngine()) {
-
+        logInfo(`Engine ${getPlayerNames()[currentPLayerID()]} turn`)
         return <EngineGameUI
             iteration={uuidv4()}
             title={getTitle()!}
@@ -214,6 +220,8 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
         return Estimation4Player(shapes[0], shapes[1], shapes[2], shapes[3])
     }
+
+    logInfo(`Player ${getPlayerNames()[currentPLayerID()]} turn`)
     return <PlayerGameUI
         title={getTitle()!}
         onEndGame={props.returnToMainMenu}

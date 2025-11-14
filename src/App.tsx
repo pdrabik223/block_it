@@ -30,7 +30,6 @@ function App() {
         <Route path="/painter" element={<Painter />} />
         <Route path="/shapes" element={<AllShapePermutationsProps />} />
         <Route path="/test" element={<TestPage />} />
-
       </Routes>
     </Router>
 
