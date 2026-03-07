@@ -170,6 +170,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
     if (isCurrentPlayerEngine()) {
         logInfo(`Engine ${getPlayerNames()[currentPLayerID()]} turn`)
         return <EngineGameUI
+
             iteration={uuidv4()}
             title={getTitle()!}
             board={board}
@@ -223,6 +224,7 @@ export const GameLoop: React.FC<GameLoopProps> = (props: GameLoopProps) => {
 
     logInfo(`Player ${getPlayerNames()[currentPLayerID()]} turn`)
     return <PlayerGameUI
+        onTryAgain={resetState}
         title={getTitle()!}
         onEndGame={props.returnToMainMenu}
         onGameAbandonButton={() => { props.playerNames[currentPLayerID()].endedPLay = true; onMoveMade() }}

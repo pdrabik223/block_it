@@ -11,6 +11,7 @@ import { EvaluationBar } from "./EvaluationBar.tsx";
 
 export interface PlayerGameUIProps {
     title: JSX.Element,
+    onTryAgain: () => void
     onGameAbandonButton: () => void
     onSkipTurnButton: () => void
     onMoveMade: () => void
@@ -29,6 +30,7 @@ export const PlayerGameUI: React.FC<PlayerGameUIProps> = (props: PlayerGameUIPro
         return <div className="abandon_game_button">
             <Button onClick={props.onSkipTurnButton} style={{ margin: "1%" }}> Skip turn </Button>
             <Button style={{ margin: "1%" }} onClick={props.onGameAbandonButton}> Abandon Game </Button>
+            <Button style={{ margin: "1%" }} onClick={props.onTryAgain}> Try Again </Button>
             <Button onClick={props.onEndGame} style={{ margin: "1%" }}> End Game </Button>
         </div>;
     }
