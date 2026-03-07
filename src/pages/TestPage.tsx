@@ -43,7 +43,7 @@ function initShapes() {
     (ShapeList.GenerateShapes(Cell.Empty))]
 }
 
-export const TestPage: React.FC<TestPageProps> = (props: TestPageProps) => {
+export const TestPage: React.FC<TestPageProps> = () => {
     const [selectedColor, setSelectedColor] = useState(0)
     const [selected, setSelected] = useState(-1)
     const [board, setBoard] = useState(new Board());
@@ -130,6 +130,7 @@ export const TestPage: React.FC<TestPageProps> = (props: TestPageProps) => {
         <Button onClick={() => setSelectedColor(selectedColor + 3)} style={{ margin: "1%" }}> Previous Color </Button>
         <Button onClick={() => setSelectedColor(selectedColor + 1)} style={{ margin: "1%" }}> Next Color </Button>
         <StateButton
+            style={{ margin: "1%" }}
             initialValue={1}
             onClick={changeCornersState}
             buttonStates={
@@ -147,10 +148,12 @@ export const TestPage: React.FC<TestPageProps> = (props: TestPageProps) => {
             id="upload-snapshot"
         />
         <Button
+            style={{ margin: "1%" }}
             onClick={() => document.getElementById('upload-snapshot')?.click()}>
             Upload Board Snapshot
         </Button>
         <Button
+            style={{ margin: "1%" }}
             onClick={() => console.log(board.getAllPossibleMovesForShapes(shapes[selectedColor % 5]))}>
             Calculate Stuff
         </Button>
